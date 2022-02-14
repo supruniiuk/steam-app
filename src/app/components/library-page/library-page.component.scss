@@ -1,0 +1,34 @@
+.games-list {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.games-list div {
+  justify-self: center;
+  align-self: center;
+}
+
+.btn-download,
+.btn-share {
+  width: 48%;
+}
+
+.btn-download {
+  background-color: var(--bs-purple);
+}
+
+.btn-share {
+  color: var(--bs-purple);
+}
+
+.card {
+  width: 300px !important;
+}
+
+.img-imitation {
+  height: 150px;
+  width: 100%;
+  background: var(--bs-pink);
+}
