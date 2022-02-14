@@ -2,7 +2,8 @@
   width: 80%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-row-gap: 20px;
 }
 
 .games-list div {
@@ -23,12 +24,22 @@
   color: var(--bs-purple);
 }
 
-.card {
-  width: 300px !important;
-}
-
 .img-imitation {
   height: 150px;
   width: 100%;
   background: var(--bs-pink);
+}
+
+.card {
+  width: 19rem !important;
+}
+
+@media screen and (max-width: 460px) {
+  .card {
+    width: 80% !important;
+  }
+
+  .games-list {
+    width: 80%;
+  }
 }
