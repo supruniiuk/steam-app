@@ -2,7 +2,7 @@
   width: 80%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-row-gap: 20px;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .card {
-  width: 19rem !important;
+  width: 90% !important;
 }
 
 @media screen and (max-width: 460px) {
@@ -40,6 +40,6 @@
   }
 
   .games-list {
-    width: 80%;
+    width: 100%;
   }
 }
