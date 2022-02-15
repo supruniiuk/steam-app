@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { FriendsPageComponent } from './components/friends-page/friends-page.component';
 import { GamesPageComponent } from './components/games-page/games-page.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 import { LibraryPageComponent } from './components/library-page/library-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
@@ -9,9 +10,10 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
 const routes: Routes = [
   {
     path: '',
-    component: LoginPageComponent,
+    component: HomePageComponent,
     children: [
       { path: '', redirectTo: '/', pathMatch: 'full' },
+      { path: 'login', component: LoginPageComponent },
       { path: 'friends', component: FriendsPageComponent },
       { path: 'games', component: GamesPageComponent },
       { path: 'library', component: LibraryPageComponent },

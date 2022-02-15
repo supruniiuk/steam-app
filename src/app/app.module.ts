@@ -8,6 +8,7 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
 import { FriendsPageComponent } from './components/friends-page/friends-page.component';
 import { LibraryPageComponent } from './components/library-page/library-page.component';
 import { GamesPageComponent } from './components/games-page/games-page.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { GamesPageComponent } from './components/games-page/games-page.component
     ProfilePageComponent,
     FriendsPageComponent,
     LibraryPageComponent,
-    GamesPageComponent
+    GamesPageComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
