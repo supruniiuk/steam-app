@@ -16,6 +16,11 @@ body {
   width: 100%;
 }
 
+.w-90 {
+  width: 90%;
+  margin: 0 auto;
+}
+
 .custom-shadow {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -33,9 +38,25 @@ nav {
   color: var(--bs-purple) !important;
 }
 
+.custom-shadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
 .btn-purple {
   background-color: var(--bs-purple);
   color: white;
+  border-radius: 4px !important;
+}
+
+.btn-remove {
+  background: #ff6f6f;
+  border-radius: 4px;
+  color: white;
+}
+
+.btn-remove:hover {
+  color: #ff6f6f;
+  background-color: white;
 }
 
 .btn-purple:hover {
@@ -45,8 +66,6 @@ nav {
 }
 
 .btn-purple:active {
-  color: var(--bs-purple) !important;
-  background-color: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -70,6 +89,12 @@ nav {
 
 .form-group {
   margin-bottom: 1.5em;
+}
+
+.search {
+  margin-right: 20px;
+  height: fit-content;
+  border-radius: 4px !important;
 }
 
 @media screen and (max-width: 640px) {

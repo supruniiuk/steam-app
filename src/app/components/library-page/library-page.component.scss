@@ -6,23 +6,23 @@
   grid-row-gap: 20px;
 }
 
-
 .games-list div {
   justify-self: center;
   align-self: center;
 }
 
-.btn-download,
+.btn-purple,
 .btn-share {
   width: 48%;
 }
 
-.btn-download {
-  background-color: var(--bs-purple);
-}
-
 .btn-share {
   color: var(--bs-purple);
+}
+
+.btn-share:hover {
+  color: white;
+  background-color: var(--bs-purple);
 }
 
 .img-imitation {
