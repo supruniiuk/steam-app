@@ -12,5 +12,67 @@
       />
       <button class="btn btn-purple custom-shadow">Search</button>
     </div>
+
+    <p class="heading-custom pb-2">Featured Games</p>
+
+    <div class="d-flex">
+      <div class="game-list">
+        <app-game-item></app-game-item>
+
+        <app-game-item></app-game-item>
+
+        <app-game-item></app-game-item>
+
+        <app-game-item></app-game-item>
+
+        <app-game-item></app-game-item>
+      </div>
+
+      <aside class="filters px-3">
+        <div>
+          <p class="heading-custom pb-2">Filter by price</p>
+          <div class="d-block input-group price-range text-center px-3">
+            <input
+              type="range"
+              class="form-control-range slider custom-range"
+              type="range"
+              min="100"
+              max="500"
+              value="250"
+              id="rangeinput"
+              step="50"
+              (change)="setCurrentPrice($event)"
+              (input)="setCurrentPrice($event)"
+            />
+            <p>{{ currentPrice }} UAH</p>
+          </div>
+        </div>
+        <div>
+          <p class="heading-custom pb-2">Filter by tag</p>
+          <div class="px-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" />
+              <label class="form-check-label" for="flexCheckIndeterminate">
+                Indie
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" />
+              <label class="form-check-label" for="flexCheckIndeterminate">
+                Action
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" />
+              <label class="form-check-label" for="flexCheckIndeterminate">
+                Adventure
+              </label>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
   </div>
 </div>
