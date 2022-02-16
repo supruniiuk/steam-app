@@ -30,8 +30,8 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav">
+    <div class="collapse navbar-collapse" *ngIf="authService.isAuthenticated()">
+      <ul class="navbar-nav" *ngIf="authService.isAuthenticated()">
         <li class="nav-item active">
           <a
             class="nav-link text-dark"
@@ -63,6 +63,9 @@
             routerLinkActive="active"
             >Profile</a
           >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" (click)="logout($event)">Log out</a>
         </li>
       </ul>
     </div>

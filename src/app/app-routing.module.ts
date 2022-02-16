@@ -6,6 +6,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { LibraryPageComponent } from './components/library-page/library-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { AuthGuard } from './shared/services/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,10 +15,26 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/', pathMatch: 'full' },
       { path: '', component: LoginPageComponent },
-      { path: 'friends', component: FriendsPageComponent },
-      { path: 'games', component: GamesPageComponent },
-      { path: 'library', component: LibraryPageComponent },
-      { path: 'profile', component: ProfilePageComponent },
+      {
+        path: 'friends',
+        component: FriendsPageComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'games',
+        component: GamesPageComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'library',
+        component: LibraryPageComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'profile',
+        component: ProfilePageComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
 ];

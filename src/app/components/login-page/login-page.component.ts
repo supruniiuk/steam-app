@@ -11,9 +11,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class LoginPageComponent implements OnInit {
   loginForm: FormGroup;
-  user: User;
+  isSubmited: boolean;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -26,27 +26,43 @@ export class LoginPageComponent implements OnInit {
   }
 
   submit() {
+    this.isSubmited = false;
     if (this.loginForm.invalid) {
       return;
     }
 
-    this.user = {
+    const user = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
 
-    console.log(this.user);
-    this.authService.login(this.user).subscribe(
-      (res) => {
-        console.log('res');
-      },
-      (err: Error) => {
-        console.log(err);
-      },
-      () => {
-        console.log('done');
-      }
-    );
+
+    this.authService.login(user).subscribe((res) => {
+      this.isSubmited = true;
+      this.loginForm.reset();
+      this.router.navigate(['/games']);
+    });
+
+    //this.loginForm.reset();
+  }
+
+  registration() {
+    this.isSubmited = false;
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    const user = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+    };
+
+    this.authService.registration(user).subscribe((res) => {
+      this.isSubmited = true;
+      this.loginForm.reset();
+      this.router.navigate(['/games']);
+    });
+
     this.loginForm.reset();
   }
 }

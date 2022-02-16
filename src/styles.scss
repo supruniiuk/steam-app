@@ -37,6 +37,10 @@ nav {
   font-size: 1.4em;
 }
 
+.nav-item {
+  cursor: pointer;
+}
+
 .nav-link:hover,
 .active {
   color: var(--main-purple) !important;
