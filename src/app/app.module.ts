@@ -10,6 +10,7 @@ import { LibraryPageComponent } from './components/library-page/library-page.com
 import { GamesPageComponent } from './components/games-page/games-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { FriendItemComponent } from './components/friends-page/friend-item/friend-item.component';
+import { GameItemComponent } from './components/games-page/game-item/game-item.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FriendItemComponent } from './components/friends-page/friend-item/frien
     LibraryPageComponent,
     GamesPageComponent,
     HomePageComponent,
-    FriendItemComponent
+    FriendItemComponent,
+    GameItemComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
+:root {
+  --main-purple: #6C69FF;
+}
+
 body {
   background-color: var(--bs-gray-200);
   color: black;
@@ -35,7 +39,7 @@ nav {
 
 .nav-link:hover,
 .active {
-  color: var(--bs-purple) !important;
+  color: var(--main-purple) !important;
 }
 
 .custom-shadow {
@@ -43,7 +47,7 @@ nav {
 }
 
 .btn-purple {
-  background-color: var(--bs-purple);
+  background-color: var(--main-purple);
   color: white;
   border-radius: 4px !important;
 }
@@ -60,7 +64,7 @@ nav {
 }
 
 .btn-purple:hover {
-  color: var(--bs-purple) !important;
+  color: var(--main-purple) !important;
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -75,9 +79,11 @@ nav {
   margin: 0 auto;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  margin-top: 50px;
-
+  margin-top: 10vh;
   min-height: 80%;
+}
+#ex1RangePicker .rangepicker-selection {
+  background: #bababa;
 }
 
 .profile {
@@ -89,6 +95,12 @@ nav {
 
 .form-group {
   margin-bottom: 1.5em;
+}
+
+.img-imitation {
+  height: 150px;
+  width: 100%;
+  background: var(--bs-pink);
 }
 
 .search {
