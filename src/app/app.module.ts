@@ -11,6 +11,7 @@ import { GamesPageComponent } from './components/games-page/games-page.component
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { FriendItemComponent } from './components/friends-page/friend-item/friend-item.component';
 import { GameItemComponent } from './components/games-page/game-item/game-item.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { GameItemComponent } from './components/games-page/game-item/game-item.c
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
