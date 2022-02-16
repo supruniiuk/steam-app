@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-img-top img-imitation">
     <p class="game-name heading-custom pb-2">Doom Ethernal</p>
-    <p class="game-price heading-custom pb-2">200 UAH</p>
+    <p *ngIf="!isOwned" class="game-price heading-custom pb-2">200 UAH</p>
   </div>
 
   <div class="card-body">
@@ -11,8 +11,16 @@
       final destruction of humanity. The only thing they fear... is you.
     </p>
 
-    <a href="#" class="btn w-100 text-light btn-purple custom-shadow"
+    <a
+      *ngIf="!isOwned"
+      href="#"
+      class="btn w-100 text-light btn-purple custom-shadow"
       >Add to library</a
     >
+
+    <div *ngIf="isOwned" class="d-flex justify-content-between">
+      <a href="#" class="btn text-light btn-purple custom-shadow">Download</a>
+      <a href="#" class="btn btn-light custom-shadow">Share</a>
+    </div>
   </div>
 </div>

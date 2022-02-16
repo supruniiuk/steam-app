@@ -1,26 +1,23 @@
-.card {
-  width: 85% !important;
-  overflow: hidden !important;
-}
-
 .img-imitation {
   position: relative;
 }
 
-.game-name,
-.game-price {
-  position: absolute;
-  padding: 10px;
-  margin: 0;
-  color: white;
+.card {
+  width: 90% !important;
+  overflow: hidden !important;
 }
 
-.game-name {
-  left: 0;
-  top: 0;
+.btn-purple,
+.btn-light {
+  width: 48%;
 }
 
-.game-price {
-  right: 0;
-  bottom: 0;
+@media screen and (max-width: 460px) {
+  .card {
+    width: 80% !important;
+  }
+
+  .games-list {
+    width: 100%;
+  }
 }

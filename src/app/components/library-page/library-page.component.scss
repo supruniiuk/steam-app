@@ -10,37 +10,3 @@
   justify-self: center;
   align-self: center;
 }
-
-.btn-purple,
-.btn-share {
-  width: 48%;
-}
-
-.btn-share {
-  color: var(--main-purple);
-}
-
-.btn-share:hover {
-  color: white;
-  background-color: var(--main-purple);
-}
-
-.img-imitation {
-  height: 150px;
-  width: 100%;
-  background: var(--bs-pink);
-}
-
-.card {
-  width: 90% !important;
-}
-
-@media screen and (max-width: 460px) {
-  .card {
-    width: 80% !important;
-  }
-
-  .games-list {
-    width: 100%;
-  }
-}

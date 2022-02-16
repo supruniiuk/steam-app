@@ -2,7 +2,7 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 :root {
-  --main-purple: #6C69FF;
+  --main-purple: #6c69ff;
 }
 
 body {
@@ -42,6 +42,10 @@ nav {
   color: var(--main-purple) !important;
 }
 
+.navbar {
+  z-index: 2;
+}
+
 .custom-shadow {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -50,6 +54,10 @@ nav {
   background-color: var(--main-purple);
   color: white;
   border-radius: 4px !important;
+}
+
+.btn-light {
+  color: var(--main-purple);
 }
 
 .btn-remove {
@@ -61,6 +69,11 @@ nav {
 .btn-remove:hover {
   color: #ff6f6f;
   background-color: white;
+}
+
+.btn-light:hover {
+  color: white;
+  background-color: var(--main-purple);
 }
 
 .btn-purple:hover {
@@ -81,9 +94,6 @@ nav {
   border-radius: 4px;
   margin-top: 10vh;
   min-height: 80%;
-}
-#ex1RangePicker .rangepicker-selection {
-  background: #bababa;
 }
 
 .profile {
@@ -107,6 +117,25 @@ nav {
   margin-right: 20px;
   height: fit-content;
   border-radius: 4px !important;
+}
+
+/* game cards */
+.game-name,
+.game-price {
+  position: absolute;
+  padding: 10px;
+  margin: 0;
+  color: white;
+}
+
+.game-name {
+  left: 0;
+  top: 0;
+}
+
+.game-price {
+  right: 0;
+  bottom: 0;
 }
 
 @media screen and (max-width: 640px) {
