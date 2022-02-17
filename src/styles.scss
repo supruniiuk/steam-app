@@ -37,6 +37,10 @@ nav {
   font-size: 1.4em;
 }
 
+.nav-item {
+  cursor: pointer;
+}
+
 .nav-link:hover,
 .active {
   color: var(--main-purple) !important;
@@ -128,6 +132,7 @@ nav {
   color: white;
 }
 
+
 .game-name {
   left: 0;
   top: 0;
@@ -141,10 +146,5 @@ nav {
 @media screen and (max-width: 640px) {
   .custom-container {
     width: 90%;
-  }
-
-  .games-list {
-    width: 95%;
-    margin: 0 auto;
   }
 }

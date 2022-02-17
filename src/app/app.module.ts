@@ -11,6 +11,10 @@ import { GamesPageComponent } from './components/games-page/games-page.component
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { FriendItemComponent } from './components/friends-page/friend-item/friend-item.component';
 import { GameItemComponent } from './components/games-page/game-item/game-item.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AuthService } from './shared/services/auth.service';
+import { UserService } from './shared/services/user.service';
 
 @NgModule({
   declarations: [
@@ -26,9 +30,12 @@ import { GameItemComponent } from './components/games-page/game-item/game-item.c
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
