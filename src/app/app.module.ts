@@ -11,7 +11,7 @@ import { GamesPageComponent } from './components/games-page/games-page.component
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { FriendItemComponent } from './components/friends-page/friend-item/friend-item.component';
 import { GameItemComponent } from './components/games-page/game-item/game-item.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './shared/services/auth.service';
 
@@ -31,6 +31,7 @@ import { AuthService } from './shared/services/auth.service';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [AuthService],

@@ -66,9 +66,13 @@ export class AuthService {
         this.error$.next('Email not found');
         break;
       case 'EMAIL_EXISTS':
-        this.error$.next('Email exists');
+        this.error$.next('User with this email already exists');
         break;
     }
+
+    setTimeout(() => {
+      this.error$.next('');
+    }, 2000);
 
     return throwError(error);
   }

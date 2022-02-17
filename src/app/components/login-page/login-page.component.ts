@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/shared/interface/user.interface';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -17,8 +16,8 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [
+      email: new FormControl('', [Validators.email, Validators.required]),
+      password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
       ]),
@@ -36,14 +35,11 @@ export class LoginPageComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-
     this.authService.login(user).subscribe((res) => {
       this.isSubmited = true;
       this.loginForm.reset();
       this.router.navigate(['/games']);
     });
-
-    //this.loginForm.reset();
   }
 
   registration() {
@@ -57,12 +53,16 @@ export class LoginPageComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-    this.authService.registration(user).subscribe((res) => {
-      this.isSubmited = true;
-      this.loginForm.reset();
-      this.router.navigate(['/games']);
-    });
-
-    this.loginForm.reset();
+    this.authService.registration(user).subscribe(
+      (res) => {},
+      (err) => {
+        this.loginForm.controls['password'].setValue('');
+      },
+      () => {
+        this.isSubmited = true;
+        this.loginForm.reset();
+        this.router.navigate(['/games']);
+      }
+    );
   }
 }

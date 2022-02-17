@@ -7,6 +7,12 @@
   width: 100%;
 }
 
+@media screen and (max-width: 1200px) {
+  .custom-container {
+    max-width: 40%;
+  }
+}
+
 @media screen and (max-width: 992px) {
   .custom-container {
     max-width: 50%;
