@@ -57,6 +57,7 @@ export class LoginPageComponent implements OnInit {
       (res) => {},
       (err) => {
         this.loginForm.controls['password'].setValue('');
+        console.log(err);
       },
       () => {
         this.isSubmited = true;
