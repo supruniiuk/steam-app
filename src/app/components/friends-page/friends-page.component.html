@@ -8,14 +8,29 @@
         class="form-control search border-dark"
         placeholder="Search friends"
         id="basic-url"
+        [(ngModel)]="srcStr"
       />
       <button class="btn btn-purple custom-shadow">Search</button>
     </div>
 
-    <p class="heading-custom pb-2">My friends</p>
+    <div *ngIf="friendsList && !srcStr">
+      <p class="heading-custom pb-2">My friends</p>
+      <app-friend-item
+        *ngFor="let f of friendsList; first as isFirst"
+        [friend]="f"
+        [isFriend]="true"
+        (removeFriend)="remove($event)"
+      ></app-friend-item>
+    </div>
 
-    <app-friend-item></app-friend-item>
-    <app-friend-item></app-friend-item>
-    <app-friend-item></app-friend-item>
+    <div *ngIf="users && srcStr">
+      <p class="heading-custom pb-2">Search Friends: {{ srcStr }}</p>
+
+      <app-friend-item
+        *ngFor="let u of users | search: srcStr; first as isFirst"
+        [friend]="u"
+        (addFriend)="add($event)"
+      ></app-friend-item>
+    </div>
   </div>
 </div>
