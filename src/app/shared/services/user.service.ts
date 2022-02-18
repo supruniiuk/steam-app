@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -14,7 +14,7 @@ export class UserService {
     return this.http.get<User[]>(`${environment.dbURL}/users.json`);
   }
 
-  getUserById(id: string): Observable<User> {
+  getUserById(id: string | null): Observable<User> {
     return this.http.get<User>(`${environment.dbURL}/users/${id}.json`);
   }
 
@@ -23,5 +23,9 @@ export class UserService {
       `${environment.dbURL}/users.json`,
       user
     );
+  }
+
+  updateUser(user: User, id: string): any {
+    return this.http.patch<User>(`${environment.dbURL}/users/${id}.json`, user);
   }
 }

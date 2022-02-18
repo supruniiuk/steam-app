@@ -8,6 +8,7 @@ export interface LoginInfo {
     idToken: string;
     expiresIn: string;
     localId?: string;
+    email: string;
   }
   
   export interface User {
