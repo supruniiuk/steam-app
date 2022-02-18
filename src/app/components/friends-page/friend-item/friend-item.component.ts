@@ -10,6 +10,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class FriendItemComponent implements OnInit {
   user: User;
   isSubmitted: boolean;
+  delete: boolean = false;
 
   @Input() isFriend: boolean = false;
   @Input() friend: Friend | User = null;

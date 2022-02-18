@@ -12,6 +12,7 @@ export class ProfilePageComponent implements OnInit {
   profileForm: FormGroup;
   user: User;
   isSubmited: boolean;
+  saved: boolean = false;
 
   errorMessage: string = '';
 
@@ -45,10 +46,21 @@ export class ProfilePageComponent implements OnInit {
         this.isSubmited = true;
         let updatedUser = { ...this.user, ...res };
         localStorage.setItem('userInfo', JSON.stringify(updatedUser));
+        this.showAlert();
       },
       (err: Error) => {
         this.errorMessage = err.message;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 2000);
       }
     );
+  }
+
+  showAlert() {
+    this.saved = true;
+    setTimeout(() => {
+      this.saved = false;
+    }, 2000);
   }
 }

@@ -10,7 +10,7 @@
         id="basic-url"
         [(ngModel)]="srcStr"
       />
-      <button class="btn btn-purple custom-shadow">Search</button>
+      <button class="btn btn-purple custom-shadow" (click)="srcStr=' '">Search</button>
     </div>
 
     <div *ngIf="friendsList && !srcStr">
@@ -23,7 +23,7 @@
       ></app-friend-item>
     </div>
 
-    <div *ngIf="users && srcStr">
+    <div *ngIf="(users && srcStr) || (users && friendsList.length==0 && !srcStr)">
       <p class="heading-custom pb-2">Search Friends: {{ srcStr }}</p>
 
       <app-friend-item

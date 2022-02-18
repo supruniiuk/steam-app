@@ -1,6 +1,12 @@
 <div class="profile">
   <div class="custom-container bg-light p-5">
     <p class="heading-custom text-center pb-2">Profile</p>
+    <div class="alert alert-success" *ngIf="saved">
+      Profile successfully updated
+    </div>
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
 
     <form class="user-info" [formGroup]="profileForm" (submit)="save()">
       <div class="form-group">
