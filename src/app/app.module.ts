@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './shared/services/auth.service';
 import { UserService } from './shared/services/user.service';
+import { SearchPipe } from './shared/search.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UserService } from './shared/services/user.service';
     GamesPageComponent,
     HomePageComponent,
     FriendItemComponent,
-    GameItemComponent
+    GameItemComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

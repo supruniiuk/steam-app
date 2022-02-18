@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { Observable, Subject, throwError } from 'rxjs';
-import { FirebaseToken, LoginInfo, ResponseName, User } from '../interfaces';
+import {
+  FirebaseToken,
+  LoginInfo,
+  ResponseName,
+  User,
+} from '../interfaces';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -16,7 +20,7 @@ export class AuthService {
   constructor(private http: HttpClient, private userService: UserService) {}
 
   get token(): string | null {
-    const expiresIn: any = localStorage.getItem('expiresIn');
+    const expiresIn: string = localStorage.getItem('expiresIn');
     const expDate = new Date(expiresIn);
     if (new Date() > expDate) {
       this.logout();
@@ -32,10 +36,14 @@ export class AuthService {
         `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
         user
       )
-      .pipe(tap(this.setToken), catchError(this.handleError.bind(this)));
+      .pipe(
+        tap(this.setToken),
+        map((response: FirebaseToken) => this.setUserId(response)),
+        catchError(this.handleError.bind(this))
+      );
   }
 
-  registration(user: LoginInfo): Observable<any> {
+  registration(user: LoginInfo): Observable<FirebaseToken> {
     user.returnSecureToken = true;
     return this.http
       .post(
@@ -44,7 +52,7 @@ export class AuthService {
       )
       .pipe(
         tap(this.setToken),
-        map((response: any) => this.createUser(response)),
+        map((response: FirebaseToken) => this.createUser(response)),
         catchError(this.handleError.bind(this))
       );
   }
@@ -68,7 +76,7 @@ export class AuthService {
         this.error$.next('Invalid password');
         break;
       case 'EMAIL_NOT_FOUND':
-        this.error$.next('Email not found');
+        this.error$.next('User with this email not found');
         break;
       case 'EMAIL_EXISTS':
         this.error$.next('User with this email already exists');
@@ -82,11 +90,12 @@ export class AuthService {
     return throwError(error);
   }
 
-  private setToken(response: any | null) {
+  private setToken(response: FirebaseToken): void {
     if (response) {
       const expDate = new Date(
         new Date().getTime() + +response.expiresIn * 1000
       );
+      localStorage.setItem('email', response.email);
       localStorage.setItem('token', response.idToken);
       localStorage.setItem('expiresIn', expDate.toString());
     } else {
@@ -94,7 +103,7 @@ export class AuthService {
     }
   }
 
-  private createUser(response: any | null) {
+  private createUser(response: FirebaseToken) {
     if (response) {
       const user: User = {
         email: response.email,
@@ -104,9 +113,24 @@ export class AuthService {
         gamesList: [],
       };
 
-      this.userService.createUser(user).subscribe((response: ResponseName) => {
-        localStorage.setItem('userId', response.name);
+      this.userService.createUser(user).subscribe((res: ResponseName) => {
+        this.setUserId(user);
       });
     }
+  }
+
+  private setUserId(response: FirebaseToken | User): void {
+    this.userService.getAllUsers().subscribe((res: User[]) => {
+      const users = Object.keys(res).map((key: any) => {
+        res[key].id = key;
+        return res[key];
+      });
+
+      const userInfo: User = users.filter(
+        (u: User) => u.email == response.email
+      )[0];
+      
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    });
   }
 }
