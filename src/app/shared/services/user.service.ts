@@ -10,6 +10,12 @@ import { ResponseName, User } from '../interfaces';
 export class UserService {
   constructor(private http: HttpClient) {}
 
+  getCurrentUserInfo(): User {
+    const userInfo: string | null = localStorage.getItem('userInfo');
+    const user = JSON.parse(userInfo ? userInfo : '');
+    return user;
+  }
+
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.dbURL}/users.json`);
   }

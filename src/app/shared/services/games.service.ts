@@ -17,5 +17,4 @@ export class GameService {
   getGameById(id: string | null): Observable<Game> {
     return this.http.get<Game>(`${environment.dbURL}/games/${id}.json`);
   }
-
 }
