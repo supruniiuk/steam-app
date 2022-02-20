@@ -9,38 +9,36 @@
         class="form-control search border-dark"
         placeholder="Search games"
         id="basic-url"
+        [(ngModel)]="srcStr"
       />
-      <button class="btn btn-purple custom-shadow">Search</button>
+      <button class="btn btn-purple custom-shadow" (click)="srcStr=' '">Search</button>
     </div>
 
     <p class="heading-custom pb-2">Featured Games</p>
 
     <div class="content-display">
-      <div class="games-list">
-        <app-game-item></app-game-item>
-
-        <app-game-item></app-game-item>
-
-        <app-game-item></app-game-item>
-
-        <app-game-item></app-game-item>
-
-        <app-game-item></app-game-item>
+      <div class="games-list" *ngIf="games">
+        <app-game-item
+          *ngFor="let g of games | gameFilter:currentPrice:tags | search:'title':srcStr; first as isFirst"
+          [game]="g"
+        ></app-game-item>
       </div>
 
       <aside class="filters px-3">
         <div>
           <p class="heading-custom pb-2">Filter by price</p>
-          <div class="d-block input-group price-range text-center px-1">
+          <div
+            *ngIf="priceRange"
+            class="d-block input-group price-range text-center px-1"
+          >
             <input
-              type="range"
               class="form-control-range slider custom-range"
               type="range"
-              min="100"
-              max="500"
-              value="250"
+              min="{{ priceRange.min }}"
+              max="{{ priceRange.max }}"
+              value="{{ currentPrice }}"
               id="rangeinput"
-              step="50"
+              step="1"
               (change)="setCurrentPrice($event)"
               (input)="setCurrentPrice($event)"
             />
@@ -49,23 +47,23 @@
         </div>
         <div>
           <p class="heading-custom pb-2">Filter by tag</p>
-          <div class="px-1">
+          <div class="px-1" (change) = "pickTag()">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" />
+              <input class="form-check-input" type="checkbox" name="tag" value="indie"/>
               <label class="form-check-label" for="flexCheckIndeterminate">
                 Indie
               </label>
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" />
+              <input class="form-check-input" type="checkbox" name="tag" value="action"/>
               <label class="form-check-label" for="flexCheckIndeterminate">
                 Action
               </label>
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" />
+              <input class="form-check-input" type="checkbox" name="tag" value="adventure"/>
               <label class="form-check-label" for="flexCheckIndeterminate">
                 Adventure
               </label>

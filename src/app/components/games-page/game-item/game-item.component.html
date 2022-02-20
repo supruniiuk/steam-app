@@ -1,26 +1,29 @@
-<div class="card">
+<div class="card" *ngIf="game">
   <div class="card-img-top img-imitation">
-    <p class="game-name heading-custom pb-2">Doom Ethernal</p>
-    <p *ngIf="!isOwned" class="game-price heading-custom pb-2">200 UAH</p>
+    <p class="game-name heading-custom pb-2">{{ game.title }}</p>
+    <p *ngIf="!isOwned" class="game-price heading-custom pb-2">
+      {{ game.price }} UAH
+    </p>
   </div>
 
   <div class="card-body">
     <p class="card-text">
-      Hell's armies have invaded Earth. Become the Slayer in an epic
-      single-player campaign to conquer demons across dimansions and stop the
-      final destruction of humanity. The only thing they fear... is you.
+      {{ game.description }}
     </p>
 
-    <a
+    <button
       *ngIf="!isOwned"
       href="#"
       class="btn w-100 text-light btn-purple custom-shadow"
-      >Add to library</a
+      (click)="addGame()"
+      [disabled]="isSubmitted || isOwned"
     >
+      Add to library
+    </button>
 
     <div *ngIf="isOwned" class="d-flex justify-content-between">
-      <a href="#" class="btn text-light btn-purple custom-shadow">Download</a>
-      <a href="#" class="btn btn-light custom-shadow">Share</a>
+      <button href="#" class="btn text-light btn-purple custom-shadow">Download</button>
+      <button href="#" class="btn btn-light custom-shadow">Share</button>
     </div>
   </div>
 </div>

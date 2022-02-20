@@ -27,7 +27,7 @@
       <p class="heading-custom pb-2">Search Friends: {{ srcStr }}</p>
 
       <app-friend-item
-        *ngFor="let u of users | search: srcStr; first as isFirst"
+        *ngFor="let u of users | search:'email':srcStr; first as isFirst"
         [friend]="u"
         (addFriend)="add($event)"
       ></app-friend-item>

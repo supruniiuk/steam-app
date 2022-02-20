@@ -17,7 +17,7 @@ export interface User {
   username: string;
   age: number | null;
   friendsList: Friend[];
-  gamesList: string[];
+  gamesList: Game[];
 }
 
 export interface ResponseName {
@@ -32,8 +32,8 @@ export interface Friend {
 
 export interface Game {
   id: string;
-  title: string;
-  price: number;
-  description: string;
-  tag: string[];
+  title?: string;
+  price?: number;
+  description?: string;
+  tag?: string[];
 }

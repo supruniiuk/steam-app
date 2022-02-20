@@ -16,6 +16,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './shared/services/auth.service';
 import { UserService } from './shared/services/user.service';
 import { SearchPipe } from './shared/search.pipe';
+import { GameFilterPipe } from './shared/price-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SearchPipe } from './shared/search.pipe';
     HomePageComponent,
     FriendItemComponent,
     GameItemComponent,
-    SearchPipe
+    SearchPipe,
+    GameFilterPipe
   ],
   imports: [
     BrowserModule,

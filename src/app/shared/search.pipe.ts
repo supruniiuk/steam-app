@@ -1,17 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { User } from './interfaces';
+import { Game, User } from './interfaces';
 
 @Pipe({
-  name: 'search'
+  name: 'search',
 })
 export class SearchPipe implements PipeTransform {
-  transform(users: User[], search = ''): User[] {
-    if (!search.trim()) {
-      return users
+  transform(array: any, field: string, str = ''): any {
+    if (!str.trim()) {
+      return array;
     }
 
-    return users.filter(u => {
-      return u.email.includes(search.toLowerCase())
-    })
+    return array.filter((item) => {
+      return item[field].toString().toLowerCase().includes(str.toLowerCase());
+    });
   }
 }
