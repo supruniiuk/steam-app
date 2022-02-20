@@ -1,9 +1,21 @@
 <div class="custom-container bg-light p-4">
   <p class="heading-custom px-5 pb-2">My games</p>
 
-  <div class="games-list">
-    <app-game-item [isOwned]="true"></app-game-item>
-    <app-game-item [isOwned]="true"></app-game-item>
-    <app-game-item [isOwned]="true"></app-game-item>
+  <div class="alert alert-danger" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="games-list" *ngIf="gamesList">
+    <app-game-item
+      [isOwned]="true"
+      *ngFor="let g of gamesList; first as isFirst"
+      [game]="g"
+    ></app-game-item>
+  </div>
+
+  <div *ngIf="!gamesList">
+    <div class="alert alert-primary" role="alert">
+      You don`t have saved games!
+    </div>
   </div>
 </div>

@@ -17,8 +17,8 @@ export class FriendsPageComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    const userInfo: string | null = localStorage.getItem('userInfo');
-    this.user = JSON.parse(userInfo ? userInfo : '');
+    this.user = this.userService.getCurrentUserInfo();
+
     if (this.user.friendsList && this.user.friendsList.length > 0) {
       this.friendsList = this.user.friendsList;
     } else {
@@ -34,7 +34,12 @@ export class FriendsPageComponent implements OnInit {
 
         this.users = this.filterUsers();
       },
-      (err) => (this.errorMessage = err.message)
+      (err) => {
+        this.errorMessage = err.message;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 2000);
+      }
     );
   }
 

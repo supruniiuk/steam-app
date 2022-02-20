@@ -22,8 +22,7 @@ export class FriendItemComponent implements OnInit {
   ngOnInit(): void {}
 
   getUserInfo() {
-    const userInfo: string | null = localStorage.getItem('userInfo');
-    this.user = JSON.parse(userInfo ? userInfo : '');
+    this.user = this.userService.getCurrentUserInfo();
 
     if (!this.user.friendsList) {
       this.user.friendsList = [];

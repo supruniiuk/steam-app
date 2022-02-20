@@ -3,12 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
-import {
-  FirebaseToken,
-  LoginInfo,
-  ResponseName,
-  User,
-} from '../interfaces';
+import { FirebaseToken, LoginInfo, ResponseName, User } from '../interfaces';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -129,7 +124,7 @@ export class AuthService {
       const userInfo: User = users.filter(
         (u: User) => u.email == response.email
       )[0];
-      
+
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
     });
   }

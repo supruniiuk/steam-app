@@ -60,9 +60,7 @@
             *ngIf="loginForm.get('password').errors.minlength"
           >
             Password must be at least
-            {{
-              loginForm.get("password").errors.minlength.requiredLength
-            }}
+            {{ loginForm.get("password").errors.minlength.requiredLength }}
             symbols.
           </small>
         </div>
