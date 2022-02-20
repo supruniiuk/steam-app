@@ -1,7 +1,7 @@
 # SteamApp
 This is an imitation of steam. Applications were created for the practice of creating projects using the Angular framework. For authorization and data storage, was used Firebase. 
 
-# How to run?
+## How to run?
  Please make sure you have installed node and npm in your system.
  ```
  node --v
