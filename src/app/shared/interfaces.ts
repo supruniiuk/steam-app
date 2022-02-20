@@ -28,3 +28,12 @@ export interface Friend {
   email: string;
   id: string;
 }
+
+
+export interface Game {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+  tag: string[];
+}
