@@ -4,8 +4,8 @@ This is an imitation of steam. Applications were created for the practice of cre
 ## How to run?
  Please make sure you have installed node and npm in your system.
  ```
- node --v
- npm --v
+ node -v
+ npm -v
  ```
  
  After checking if you have Node installed in your system, you can start app:
