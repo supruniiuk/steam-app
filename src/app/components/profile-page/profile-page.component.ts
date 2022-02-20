@@ -19,8 +19,7 @@ export class ProfilePageComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    const userInfo: string | null = localStorage.getItem('userInfo');
-    this.user = JSON.parse(userInfo ? userInfo : '');
+    this.user = this.userService.getCurrentUserInfo();
 
     this.profileForm = new FormGroup({
       email: new FormControl(this.user.email),

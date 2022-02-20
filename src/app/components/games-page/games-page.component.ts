@@ -14,6 +14,7 @@ export class GamesPageComponent implements OnInit {
   errorMessage: string = '';
   tags: string[] = [];
   srcStr: string = '';
+
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
@@ -24,21 +25,15 @@ export class GamesPageComponent implements OnInit {
           return res[key];
         });
 
-       //this.filterGames();
         this.setPricesRange();
       },
-      (err) => (this.errorMessage = err.message)
+      (err) => {
+        this.errorMessage = err.message;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 2000);
+      }
     );
-  }
-
-  filterGames() {
-    const userInfo: string | null = localStorage.getItem('userInfo');
-    const user = JSON.parse(userInfo ? userInfo : '');
-    if (user.gamesList && user.gamesList.length > 0) {
-      const userGames = user.gamesList.map((g) => g.id);
-
-      this.games = this.games.filter((g) => !userGames.includes(g.id));
-    }
   }
 
   setPricesRange() {

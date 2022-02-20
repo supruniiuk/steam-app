@@ -10,7 +10,13 @@
         id="basic-url"
         [(ngModel)]="srcStr"
       />
-      <button class="btn btn-purple custom-shadow" (click)="srcStr=' '">Search</button>
+      <button class="btn btn-purple custom-shadow" (click)="srcStr = ' '">
+        Search
+      </button>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
     </div>
 
     <div *ngIf="friendsList && !srcStr">
@@ -23,11 +29,13 @@
       ></app-friend-item>
     </div>
 
-    <div *ngIf="(users && srcStr) || (users && friendsList.length==0 && !srcStr)">
+    <div
+      *ngIf="(users && srcStr) || (users && friendsList.length == 0 && !srcStr)"
+    >
       <p class="heading-custom pb-2">Search Friends: {{ srcStr }}</p>
 
       <app-friend-item
-        *ngFor="let u of users | search:'email':srcStr; first as isFirst"
+        *ngFor="let u of users | search: 'email':srcStr; first as isFirst"
         [friend]="u"
         (addFriend)="add($event)"
       ></app-friend-item>

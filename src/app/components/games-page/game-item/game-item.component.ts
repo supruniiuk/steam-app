@@ -10,6 +10,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class GameItemComponent implements OnInit {
   user: User;
   isSubmitted: boolean = false;
+  errorMessage: string = '';
 
   @Input() isOwned: boolean = false;
   @Input() game: Game;
@@ -17,13 +18,12 @@ export class GameItemComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    const userInfo: string | null = localStorage.getItem('userInfo');
-    this.user = JSON.parse(userInfo ? userInfo : '');
+    this.user = this.userService.getCurrentUserInfo();
 
     if (!this.user.gamesList) {
       this.user.gamesList = [];
     }
-    
+
     this.isSubmitted = !!this.user.gamesList.filter(
       (g) => g.id == this.game.id
     )[0];
@@ -43,9 +43,8 @@ export class GameItemComponent implements OnInit {
         id: null,
       };
 
-      this.userService
-        .updateUser(updatedUser, this.user.id)
-        .subscribe((res) => {
+      this.userService.updateUser(updatedUser, this.user.id).subscribe(
+        (res) => {
           this.isSubmitted = true;
 
           const updUser = {
@@ -53,7 +52,11 @@ export class GameItemComponent implements OnInit {
             id: this.user.id,
           };
           localStorage.setItem('userInfo', JSON.stringify(updUser));
-        });
+        },
+        (err) => {
+          this.errorMessage = err.message;
+        }
+      );
     }
   }
 }

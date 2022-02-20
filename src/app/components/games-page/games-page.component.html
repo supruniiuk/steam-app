@@ -11,15 +11,26 @@
         id="basic-url"
         [(ngModel)]="srcStr"
       />
-      <button class="btn btn-purple custom-shadow" (click)="srcStr=' '">Search</button>
+      <button class="btn btn-purple custom-shadow" (click)="srcStr = ' '">
+        Search
+      </button>
     </div>
 
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    
     <p class="heading-custom pb-2">Featured Games</p>
 
     <div class="content-display">
       <div class="games-list" *ngIf="games">
         <app-game-item
-          *ngFor="let g of games | gameFilter:currentPrice:tags | search:'title':srcStr; first as isFirst"
+          *ngFor="
+            let g of games
+              | gameFilter: currentPrice:tags
+              | search: 'title':srcStr;
+            first as isFirst
+          "
           [game]="g"
         ></app-game-item>
       </div>
@@ -47,23 +58,38 @@
         </div>
         <div>
           <p class="heading-custom pb-2">Filter by tag</p>
-          <div class="px-1" (change) = "pickTag()">
+          <div class="px-1" (change)="pickTag()">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="tag" value="indie"/>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="tag"
+                value="indie"
+              />
               <label class="form-check-label" for="flexCheckIndeterminate">
                 Indie
               </label>
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="tag" value="action"/>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="tag"
+                value="action"
+              />
               <label class="form-check-label" for="flexCheckIndeterminate">
                 Action
               </label>
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="tag" value="adventure"/>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="tag"
+                value="adventure"
+              />
               <label class="form-check-label" for="flexCheckIndeterminate">
                 Adventure
               </label>

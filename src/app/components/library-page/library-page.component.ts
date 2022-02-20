@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Game, User } from 'src/app/shared/interfaces';
 import { GameService } from 'src/app/shared/services/games.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-library-page',
@@ -13,11 +14,13 @@ export class LibraryPageComponent implements OnInit {
   allGames: Array<Game>;
   errorMessage: string = '';
 
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    const userInfo: string | null = localStorage.getItem('userInfo');
-    this.user = JSON.parse(userInfo ? userInfo : '');
+    this.user = this.userService.getCurrentUserInfo();
 
     if (!this.user.gamesList) {
       this.user.gamesList = [];
@@ -32,11 +35,16 @@ export class LibraryPageComponent implements OnInit {
 
         this.filterGames();
       },
-      (err) => (this.errorMessage = err.message)
+      (err) => {
+        this.errorMessage = err.message;
+        setTimeout(() => {
+          this.errorMessage = '';
+        });
+      }
     );
   }
 
-  filterGames() {;
+  filterGames() {
     if (this.user.gamesList && this.user.gamesList.length > 0) {
       const userGames = this.user.gamesList.map((g) => g.id);
 

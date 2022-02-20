@@ -14,7 +14,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.isAuth = this.authService.isAuthenticated();
   }
-  
+
   logout(event: Event) {
     event.preventDefault();
     this.authService.logout();
