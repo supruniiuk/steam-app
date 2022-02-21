@@ -51,7 +51,8 @@ export class GameItemComponent implements OnInit {
             ...res,
             id: this.user.id,
           };
-          localStorage.setItem('userInfo', JSON.stringify(updUser));
+
+          this.userService.setCurrentUserInfo(updUser);
         },
         (err) => {
           this.errorMessage = err.message;
