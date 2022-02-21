@@ -14,10 +14,10 @@ export interface FirebaseToken {
 export interface User {
   id?: string;
   email: string;
-  username: string;
-  age: number | null;
-  friendsList: Friend[];
-  gamesList: Game[];
+  username?: string;
+  age?: number | null;
+  friendsList?: Friend[];
+  gamesList?: Game[];
 }
 
 export interface ResponseName {

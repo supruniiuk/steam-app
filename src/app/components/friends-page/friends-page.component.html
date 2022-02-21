@@ -33,7 +33,6 @@
       *ngIf="(users && srcStr) || (users && friendsList.length == 0 && !srcStr)"
     >
       <p class="heading-custom pb-2">Search Friends: {{ srcStr }}</p>
-
       <app-friend-item
         *ngFor="let u of users | search: 'email':srcStr; first as isFirst"
         [friend]="u"

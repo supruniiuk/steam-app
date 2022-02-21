@@ -1,7 +1,6 @@
 <div class="custom-container bg-light p-4">
   <div class="w-90">
     <p class="heading-custom pb-2">Games</p>
-
     <label>Search games</label>
     <div class="search input-group mb-3">
       <input
@@ -19,10 +18,13 @@
     <div class="alert alert-danger" *ngIf="errorMessage">
       {{ errorMessage }}
     </div>
-    
     <p class="heading-custom pb-2">Featured Games</p>
 
     <div class="content-display">
+      <div class="games-list align-self-center" *ngIf="!games">
+        <app-loader></app-loader>
+      </div>
+
       <div class="games-list" *ngIf="games">
         <app-game-item
           *ngFor="

@@ -13,8 +13,8 @@
     ></app-game-item>
   </div>
 
-  <div *ngIf="!gamesList">
-    <div class="alert alert-primary" role="alert">
+  <div *ngIf="!gamesList || gamesList.length == 0">
+    <div class="alert alert-primary mx-5" role="alert">
       You don`t have saved games!
     </div>
   </div>

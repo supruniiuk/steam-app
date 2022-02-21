@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-login-page',
@@ -9,12 +10,13 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
   isSubmited: boolean;
 
-  constructor(public authService: AuthService, private router: Router) {}
-
-  ngOnInit(): void {
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [
@@ -24,7 +26,13 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  submit() {
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated) {
+      this.router.navigate(['/games']);
+    }
+  }
+
+  login() {
     this.isSubmited = false;
     if (this.loginForm.invalid) {
       return;
@@ -42,7 +50,7 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  registration() {
+  public registration() {
     this.isSubmited = false;
     if (this.loginForm.invalid) {
       return;

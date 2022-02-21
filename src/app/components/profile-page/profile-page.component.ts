@@ -44,7 +44,8 @@ export class ProfilePageComponent implements OnInit {
       (res: User) => {
         this.isSubmited = true;
         let updatedUser = { ...this.user, ...res };
-        localStorage.setItem('userInfo', JSON.stringify(updatedUser));
+
+        this.userService.setCurrentUserInfo(updatedUser);
         this.showAlert();
       },
       (err: Error) => {

@@ -8,7 +8,7 @@ import { UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./friends-page.component.scss'],
 })
 export class FriendsPageComponent implements OnInit {
-  users: User[] = [];
+  public users: User[] = [];
   errorMessage: string = '';
   srcStr: string = '';
   user: User;
@@ -32,7 +32,7 @@ export class FriendsPageComponent implements OnInit {
           return res[key];
         });
 
-        this.users = this.filterUsers();
+        this.filterUsers();
       },
       (err) => {
         this.errorMessage = err.message;
@@ -45,8 +45,7 @@ export class FriendsPageComponent implements OnInit {
 
   filterUsers() {
     const friends = this.friendsList.map((f) => f.id);
-
-    return this.users.filter(
+    this.users = this.users.filter(
       (u) => u.email !== this.user.email && !friends.includes(u.id)
     );
   }
