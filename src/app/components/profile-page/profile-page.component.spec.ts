@@ -1,35 +1,38 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { EMPTY } from 'rxjs';
+import { User } from 'src/app/shared/interfaces';
 import { UserService } from 'src/app/shared/services/user.service';
 
 import { ProfilePageComponent } from './profile-page.component';
 
 describe('ProfilePageComponent', () => {
-  let component: ProfilePageComponent;
   let userService: UserService;
+  let component: ProfilePageComponent;
+  let info: User = {
+    age: 50,
+    email: 'exmple@gmail.com',
+    friendsList: [],
+    gamesList: [],
+    id: '-MwDFeGzNW8gbGRQicfQ',
+    username: 'test',
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ProfilePageComponent],
-      imports: [HttpClientTestingModule, ReactiveFormsModule],
+      imports: [HttpClientTestingModule],
     }).compileComponents();
 
-    const info = {
-      age: 50,
-      email: 'example@gmail.com',
-      friendsList: [],
-      gamesList: [],
-      username: 'name',
-      id: '-id',
-    };
     userService = TestBed.inject(UserService);
     component = new ProfilePageComponent(userService);
-    localStorage.setItem('userInfo', JSON.stringify(info));
+    spyOn(userService, 'getCurrentUserInfo').and.callFake(() => {
+      return info;
+    });
+    component.ngOnInit();
   });
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
