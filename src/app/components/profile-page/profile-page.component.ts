@@ -16,9 +16,7 @@ export class ProfilePageComponent implements OnInit {
 
   errorMessage: string = '';
 
-  constructor(private userService: UserService) {}
-
-  ngOnInit(): void {
+  constructor(private userService: UserService) {
     this.user = this.userService.getCurrentUserInfo();
 
     this.profileForm = new FormGroup({
@@ -34,6 +32,8 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void {}
+
   save() {
     this.isSubmited = false;
     if (this.profileForm.invalid) {
@@ -44,7 +44,8 @@ export class ProfilePageComponent implements OnInit {
       (res: User) => {
         this.isSubmited = true;
         let updatedUser = { ...this.user, ...res };
-        localStorage.setItem('userInfo', JSON.stringify(updatedUser));
+
+        this.userService.setCurrentUserInfo(updatedUser);
         this.showAlert();
       },
       (err: Error) => {

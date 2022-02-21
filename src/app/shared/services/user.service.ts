@@ -16,6 +16,10 @@ export class UserService {
     return user;
   }
 
+  setCurrentUserInfo(user: User): void {
+    localStorage.setItem('userInfo', JSON.stringify(user));
+  }
+
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.dbURL}/users.json`);
   }
