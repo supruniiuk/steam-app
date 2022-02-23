@@ -38,7 +38,6 @@ body {
   z-index: 3;
 }
 
-
 .w-90 {
   width: 90%;
   margin: 0 auto;
@@ -66,7 +65,7 @@ nav {
 }
 
 .navbar {
-  z-index: 2;
+  z-index: 3;
 }
 
 .center-block {
@@ -169,5 +168,12 @@ nav {
 @media screen and (max-width: 640px) {
   .custom-container {
     width: 90%;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .menu {
+    background: white;
+    width: 100%;
   }
 }

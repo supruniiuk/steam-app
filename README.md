@@ -1,5 +1,8 @@
 # SteamApp
-This is an imitation of steam. Applications were created for the practice of creating projects using the Angular framework. For authorization and data storage, was used Firebase. 
+This is an imitation of steam. Applications were created for the practice of creating projects using the Angular framework. For authorization and data storage, was used Firebase.
+
+## Deployment
+https://supruniuk-steam-app.herokuapp.com/
 
 ## How to run?
  Please make sure you have installed node and npm in your system.
@@ -14,4 +17,8 @@ This is an imitation of steam. Applications were created for the practice of cre
  cd steam-app
  npm install
  ng serve
+ ```   
+ Testing:
+  ```
+ ng test
  ```   
