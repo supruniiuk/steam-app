@@ -27,10 +27,11 @@
       aria-controls="navbarNav"
       aria-expanded="false"
       aria-label="Toggle navigation"
+      (click)="showMenu()"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" *ngIf="authService.isAuthenticated()">
+    <div class="collapse navbar-collapse"  #menu *ngIf="authService.isAuthenticated()">
       <ul class="navbar-nav" *ngIf="authService.isAuthenticated()">
         <li class="nav-item active">
           <a
