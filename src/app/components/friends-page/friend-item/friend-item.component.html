@@ -1,8 +1,53 @@
 <div class="friend-item mb-3 custom-shadow">
   <div class="card">
     <div class="card-body d-flex justify-content-between">
-      <p>yuliiasupruniuk23</p>
-      <button class="btn btn-remove custom-shadow">Remove Friend</button>
+      <p>{{ friend.email }}</p>
+      <button
+        *ngIf="isFriend"
+        class="btn btn-remove custom-shadow"
+        (click)="delete = true"
+        [disabled]="isSubmitted"
+      >
+        Remove Friend
+      </button>
+      <button
+        *ngIf="!isFriend"
+        class="btn btn-purple custom-shadow"
+        (click)="add()"
+        [disabled]="isSubmitted"
+      >
+        Add Friend
+      </button>
     </div>
+  </div>
+</div>
+
+<div class="backdrop" *ngIf="delete == true"></div>
+<div
+  class="alert alert-danger center-alert w-50"
+  *ngIf="delete == true"
+  role="alert"
+>
+  <h4 class="alert-heading">
+    Are you sure you want to remove friend {{ friend.email }}?
+  </h4>
+  <hr />
+  <div class="d-flex justify-content-between">
+    <button
+      type="button"
+      class="btn btn-danger"
+      data-dismiss="alert"
+      (click)="remove(); delete = false"
+    >
+      Remove
+    </button>
+    <button
+      type="button"
+      class="btn btn-purple"
+      data-dismiss="alert"
+      (click)="delete = false"
+    >
+      Cancel
+    </button>
   </div>
 </div>

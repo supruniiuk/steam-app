@@ -3,21 +3,18 @@
 }
 
 .card {
-  width: 90% !important;
+  width: 95% !important;
+  max-width: 300px !important;
   overflow: hidden !important;
+  margin: 0 auto !important;
+}
+
+.card-text {
+  height: 150px;
+  overflow: scroll;
 }
 
 .btn-purple,
 .btn-light {
   width: 48%;
-}
-
-@media screen and (max-width: 460px) {
-  .card {
-    width: 80% !important;
-  }
-
-  .games-list {
-    width: 100%;
-  }
 }

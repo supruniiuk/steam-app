@@ -2,11 +2,12 @@
   width: 80%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-row-gap: 20px;
 }
 
-.games-list div {
-  justify-self: center;
-  align-self: center;
+@media screen and (max-width: 576px) {
+  .games-list {
+    width: 100%;
+  }
 }
