@@ -20,6 +20,7 @@
       </svg>
     </a>
     <button
+      *ngIf="authService.isAuthenticated()"
       class="navbar-toggler"
       type="button"
       data-toggle="collapse"
@@ -31,7 +32,11 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse"  #menu *ngIf="authService.isAuthenticated()">
+    <div
+      class="collapse navbar-collapse"
+      #menu
+      *ngIf="authService.isAuthenticated()"
+    >
       <ul class="navbar-nav" *ngIf="authService.isAuthenticated()">
         <li class="nav-item active">
           <a
