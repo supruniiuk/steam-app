@@ -109,7 +109,7 @@ export class AuthService {
       };
 
       this.userService.createUser(user).subscribe((res: ResponseName) => {
-        this.setUserId(user);
+        this.setUserId({ email: user.email });
       });
     }
   }
@@ -125,7 +125,7 @@ export class AuthService {
         (u: User) => u.email == response.email
       )[0];
 
-      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+      this.userService.setCurrentUserInfo(userInfo);
     });
   }
 }
