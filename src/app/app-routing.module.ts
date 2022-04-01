@@ -35,8 +35,12 @@ const routes: Routes = [
         component: ProfilePageComponent,
         canActivate: [AuthGuard],
       },
+      { path: '**', component: GamesPageComponent, canActivate: [AuthGuard] },
     ],
   },
+  // lazy-loading
+  // очистка подписок
+  // методы rxjs
 ];
 
 @NgModule({
