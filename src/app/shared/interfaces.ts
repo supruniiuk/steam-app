@@ -10,11 +10,11 @@ export interface FirebaseToken {
   localId?: string;
   email: string;
 }
-
+// extend 
 export interface User {
   id?: string;
   email: string;
-  username?: string;
+  username?: string; //req
   age?: number | null;
   friendsList?: Friend[];
   gamesList?: Game[];

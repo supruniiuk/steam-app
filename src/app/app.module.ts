@@ -12,12 +12,13 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { FriendItemComponent } from './components/friends-page/friend-item/friend-item.component';
 import { GameItemComponent } from './components/games-page/game-item/game-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './shared/services/auth.service';
 import { UserService } from './shared/services/user.service';
-import { SearchPipe } from './shared/search.pipe';
-import { GameFilterPipe } from './shared/price-filter.pipe';
+import { SearchPipe } from './shared/pipes/search.pipe';
+import { GameFilterPipe } from './shared/pipes/price-filter.pipe';
 import { LoaderComponent } from './shared/loader/loader.component';
+import { RequestService } from './shared/services/requests.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { LoaderComponent } from './shared/loader/loader.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, UserService],
+  providers: [AuthService, UserService, RequestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

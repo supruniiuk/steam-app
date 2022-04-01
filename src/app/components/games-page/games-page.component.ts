@@ -47,6 +47,8 @@ export class GamesPageComponent implements OnInit {
   }
 
   pickTag(): void {
+    // Renderer2!!!!!!!!
+    
     this.tags = [];
     const checked = document.querySelectorAll('input[name=tag]:checked');
     for (let i = 0; i < checked.length; i++) {

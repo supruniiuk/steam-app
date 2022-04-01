@@ -1,4 +1,4 @@
-<div class="profile center-block ">
+<div class="profile center-block">
   <div class="custom-container bg-light p-5">
     <p class="heading-custom text-center pb-2">Sign in</p>
     <div class="alert alert-danger" *ngIf="authService.error$ | async as error">
@@ -14,6 +14,7 @@
           type="email"
           placeholder="Email"
         />
+
         <div
           *ngIf="
             loginForm.get('email').invalid && loginForm.get('email').touched
@@ -43,6 +44,7 @@
           class="form-control"
           placeholder="Password"
         />
+
         <div
           *ngIf="
             loginForm.get('password').invalid &&
@@ -68,7 +70,7 @@
 
       <button
         class="btn btn-purple custom-shadow mb-3"
-        [disabled]="loginForm.invalid || isSubmited"
+        [disabled]="isBtnDisabled()"
         (click)="login()"
       >
         Sign in
@@ -76,7 +78,7 @@
 
       <button
         class="btn btn-purple custom-shadow"
-        [disabled]="loginForm.invalid || isSubmited"
+        [disabled]="isBtnDisabled()"
         (click)="registration()"
       >
         Sign up

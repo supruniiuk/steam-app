@@ -13,10 +13,7 @@ export class LoginPageComponent implements OnInit {
   public loginForm: FormGroup;
   isSubmited: boolean;
 
-  constructor(
-    public authService: AuthService,
-    private router: Router
-  ) {
+  constructor(public authService: AuthService, private router: Router) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [
@@ -72,5 +69,9 @@ export class LoginPageComponent implements OnInit {
         this.router.navigate(['/games']);
       }
     );
+  }
+
+  isBtnDisabled() {
+    return this.loginForm.invalid || this.isSubmited;
   }
 }
