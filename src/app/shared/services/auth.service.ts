@@ -24,13 +24,13 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  login(user: LoginInfo): Observable<FirebaseToken> {
-    user.returnSecureToken = true;
+  login(data: LoginInfo): Observable<FirebaseToken> {
+    const user = {
+      ...data,
+      returnSecureToken: true,
+    };
     return this.http
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
-        user
-      )
+      .post(`${environment.loginURL + environment.apiKey}`, user)
       .pipe(
         tap(this.setToken),
         map((response: FirebaseToken) => this.setUserId(response)),
@@ -38,13 +38,13 @@ export class AuthService {
       );
   }
 
-  registration(user: LoginInfo): Observable<FirebaseToken> {
-    user.returnSecureToken = true;
+  registration(data: LoginInfo): Observable<FirebaseToken> {
+    const user = {
+      ...data,
+      returnSecureToken: true,
+    };
     return this.http
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.apiKey}`,
-        user
-      )
+      .post(`${environment.registrationURL + environment.apiKey}`, user)
       .pipe(
         tap(this.setToken),
         map((response: FirebaseToken) => this.createUser(response)),

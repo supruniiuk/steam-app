@@ -2,12 +2,12 @@
   <div class="w-90">
     <p class="heading-custom pb-2">Games</p>
     <label>Search games</label>
+
     <div class="search input-group mb-3">
       <input
         type="text"
         class="form-control search border-dark"
         placeholder="Search games"
-        id="basic-url"
         [(ngModel)]="srcStr"
       />
       <button class="btn btn-purple custom-shadow" (click)="srcStr = ' '">
@@ -15,90 +15,29 @@
       </button>
     </div>
 
-    <div class="alert alert-danger" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </div>
     <p class="heading-custom pb-2">Featured Games</p>
 
     <div class="content-display">
-      <div class="games-list align-self-center" *ngIf="!games">
-        <app-loader></app-loader>
-      </div>
-
-      <div class="games-list" *ngIf="games">
+      <div class="games-list">
+        <!--              | gameFilter: currentPrice:tags-->
         <app-game-item
           *ngFor="
-            let g of games
+            let game of games
               | gameFilter: currentPrice:tags
               | search: 'title':srcStr;
             first as isFirst
           "
-          [game]="g"
+          [game]="game"
         ></app-game-item>
       </div>
 
-      <aside class="filters px-3">
-        <div>
-          <p class="heading-custom pb-2">Filter by price</p>
-          <div
-            *ngIf="priceRange"
-            class="d-block input-group price-range text-center px-1"
-          >
-            <input
-              class="form-control-range slider custom-range"
-              type="range"
-              min="{{ priceRange.min }}"
-              max="{{ priceRange.max }}"
-              value="{{ currentPrice }}"
-              id="rangeinput"
-              step="1"
-              (change)="setCurrentPrice($event)"
-              (input)="setCurrentPrice($event)"
-            />
-            <p>{{ currentPrice }} UAH</p>
-          </div>
-        </div>
-        <div>
-          <p class="heading-custom pb-2">Filter by tag</p>
-          <div class="px-1" (change)="pickTag()">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="tag"
-                value="indie"
-              />
-              <label class="form-check-label" for="flexCheckIndeterminate">
-                Indie
-              </label>
-            </div>
-
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="tag"
-                value="action"
-              />
-              <label class="form-check-label" for="flexCheckIndeterminate">
-                Action
-              </label>
-            </div>
-
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="tag"
-                value="adventure"
-              />
-              <label class="form-check-label" for="flexCheckIndeterminate">
-                Adventure
-              </label>
-            </div>
-          </div>
-        </div>
-      </aside>
+      <app-game-filter
+        class="filters"
+        *ngIf="games.length > 0"
+        [games]="games"
+        (curPrice)="setCurrentPrice($event)"
+        (gameTypes)="setTags($event)"
+      ></app-game-filter>
     </div>
   </div>
 </div>

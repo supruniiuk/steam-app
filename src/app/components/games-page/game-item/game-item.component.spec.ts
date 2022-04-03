@@ -28,7 +28,7 @@ describe('GameItemComponent', () => {
     age: 50,
     email: 'exmple@gmail.com',
     friendsList: [],
-    gamesList: [{ id: 'id1' }],
+    gamesList: ['id1'],
     id: '-MwDFeGzNW8gbGRQicfQ',
     username: 'test',
   };

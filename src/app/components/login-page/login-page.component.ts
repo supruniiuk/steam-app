@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-login-page',
@@ -10,6 +10,7 @@ import { UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
+  subs: Subscription[] = [];
   public loginForm: FormGroup;
   isSubmited: boolean;
 
@@ -27,6 +28,11 @@ export class LoginPageComponent implements OnInit {
     if (this.authService.isAuthenticated) {
       this.router.navigate(['/games']);
     }
+
+    const errorSubscription = this.authService.error$.subscribe({
+      next: (v) => this.loginForm.controls['password'].setValue(''),
+    });
+    this.subs.push(errorSubscription);
   }
 
   login() {
@@ -40,11 +46,12 @@ export class LoginPageComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-    this.authService.login(user).subscribe((res) => {
+    const loginSubsriber = this.authService.login(user).subscribe(() => {
       this.isSubmited = true;
       this.loginForm.reset();
       this.router.navigate(['/games']);
     });
+    this.subs.push(loginSubsriber);
   }
 
   public registration() {
@@ -58,20 +65,21 @@ export class LoginPageComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-    this.authService.registration(user).subscribe(
-      (res) => {},
-      (err) => {
-        this.loginForm.controls['password'].setValue('');
-      },
-      () => {
+    const registrationSubscriber = this.authService
+      .registration(user)
+      .subscribe(() => {
         this.isSubmited = true;
         this.loginForm.reset();
         this.router.navigate(['/games']);
-      }
-    );
+      });
+    this.subs.push(registrationSubscriber);
   }
 
-  isBtnDisabled() {
+  isBtnDisabled() : boolean {
     return this.loginForm.invalid || this.isSubmited;
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

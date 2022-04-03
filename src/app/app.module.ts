@@ -19,6 +19,7 @@ import { SearchPipe } from './shared/pipes/search.pipe';
 import { GameFilterPipe } from './shared/pipes/price-filter.pipe';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { RequestService } from './shared/services/requests.service';
+import { GameFilterComponent } from './components/games-page/game-filter/game-filter.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RequestService } from './shared/services/requests.service';
     GameItemComponent,
     SearchPipe,
     GameFilterPipe,
-    LoaderComponent
+    LoaderComponent,
+    GameFilterComponent
   ],
   imports: [
     BrowserModule,

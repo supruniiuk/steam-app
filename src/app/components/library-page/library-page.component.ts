@@ -46,7 +46,7 @@ export class LibraryPageComponent implements OnInit {
 
   filterGames() {
     if (this.user.gamesList && this.user.gamesList.length > 0) {
-      const userGames = this.user.gamesList.map((g) => g.id);
+      const userGames = this.user.gamesList;
 
       this.gamesList = this.allGames.filter((g) => userGames.includes(g.id));
     }

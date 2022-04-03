@@ -25,7 +25,7 @@ export class GameItemComponent implements OnInit {
     }
 
     this.isSubmitted = !!this.user.gamesList.filter(
-      (g) => g.id == this.game.id
+      (gameID) => gameID == this.game.id
     )[0];
   }
 
@@ -33,9 +33,7 @@ export class GameItemComponent implements OnInit {
     if (!this.isSubmitted) {
       this.isSubmitted = false;
 
-      const newGame: Game = {
-        id: this.game.id,
-      };
+      const newGame = this.game.id;
 
       this.user.gamesList.push(newGame);
       const updatedUser = {

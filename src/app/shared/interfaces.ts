@@ -1,23 +1,26 @@
 export interface LoginInfo {
   email: string;
   password: string;
-  returnSecureToken?: boolean;
+}
+
+export interface FirebaseLoginRequest extends LoginInfo {
+  returnSecureToken: boolean;
 }
 
 export interface FirebaseToken {
   idToken: string;
   expiresIn: string;
-  localId?: string;
+  localId: string;
   email: string;
 }
-// extend 
+
 export interface User {
   id?: string;
   email: string;
   username?: string; //req
   age?: number | null;
   friendsList?: Friend[];
-  gamesList?: Game[];
+  gamesList?: Array<string>;
 }
 
 export interface ResponseName {
@@ -29,11 +32,10 @@ export interface Friend {
   id: string;
 }
 
-
 export interface Game {
   id: string;
-  title?: string;
-  price?: number;
-  description?: string;
-  tag?: string[];
+  title: string;
+  price: number;
+  description: string;
+  tag: string[];
 }
