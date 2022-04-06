@@ -4,7 +4,6 @@ import { Game } from 'src/app/shared/interfaces';
 @Component({
   selector: 'app-game-filter',
   templateUrl: './game-filter.component.html',
-  styleUrls: ['./game-filter.component.scss'],
 })
 export class GameFilterComponent implements OnInit {
   currentPrice: number;
@@ -21,6 +20,7 @@ export class GameFilterComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log("from filter", this.games)
     this.setPricesRange();
   }
 

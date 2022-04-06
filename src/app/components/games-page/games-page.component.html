@@ -17,8 +17,9 @@
 
     <p class="heading-custom pb-2">Featured Games</p>
 
+    <app-loader *ngIf="!currentPrice"></app-loader>
     <div class="content-display">
-      <div class="games-list">
+      <div class="games-list" *ngIf="currentPrice">
         <!--              | gameFilter: currentPrice:tags-->
         <app-game-item
           *ngFor="
@@ -32,8 +33,8 @@
       </div>
 
       <app-game-filter
-        class="filters"
         *ngIf="games.length > 0"
+        class="filters"
         [games]="games"
         (curPrice)="setCurrentPrice($event)"
         (gameTypes)="setTags($event)"

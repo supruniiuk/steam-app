@@ -4,8 +4,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-friends-page',
-  templateUrl: './friends-page.component.html',
-  styleUrls: ['./friends-page.component.scss'],
+  templateUrl: './friends-page.component.html'
 })
 export class FriendsPageComponent implements OnInit {
   public users: User[] = [];

@@ -30,6 +30,14 @@ body {
   z-index: 3;
 }
 
+.bg-main-purple {
+  background-color: var(--main-purple);
+}
+
+.txt-color-main {
+  color: var(--main-purple);
+}
+
 .center-alert {
   position: fixed;
   top: 50%;
@@ -165,3 +173,15 @@ nav {
   bottom: 0;
 }
 
+@media screen and (max-width: 991px) {
+  .menu {
+    background: white;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .custom-container {
+    width: 90%;
+  }
+}

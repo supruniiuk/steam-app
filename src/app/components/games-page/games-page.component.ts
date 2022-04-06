@@ -21,12 +21,10 @@ export class GamesPageComponent implements OnInit {
     const gamesSubscription = this.gameService
       .getAllGames()
       .subscribe((res) => {
-        if (res) {
-          this.games = Object.keys(res).map((key: any) => {
-            res[key].id = key;
-            return res[key];
-          });
-        }
+        this.games = Object.keys(res).map((key: any) => {
+          res[key].id = key;
+          return res[key];
+        });
       });
 
     this.subs.push(gamesSubscription);

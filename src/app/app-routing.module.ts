@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { FriendsPageComponent } from './components/friends-page/friends-page.component';
-import { GamesPageComponent } from './components/games-page/games-page.component';
+import {
+  NoPreloading,
+  RouterModule,
+  Routes,
+} from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { LibraryPageComponent } from './components/library-page/library-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
-import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { AuthGuard } from './shared/services/auth.guard';
 
 const routes: Routes = [
@@ -17,36 +17,52 @@ const routes: Routes = [
       { path: '', component: LoginPageComponent },
       {
         path: 'friends',
-        component: FriendsPageComponent,
+        loadChildren: () =>
+          import('./components/friends-page/friends-page.module').then(
+            (m) => m.FriendsPageModule
+          ),
         canActivate: [AuthGuard],
       },
       {
         path: 'games',
-        component: GamesPageComponent,
+        loadChildren: () =>
+          import('./components/games-page/games-page.module').then(
+            (m) => m.GamesPageModule
+          ),
         canActivate: [AuthGuard],
       },
       {
         path: 'library',
-        component: LibraryPageComponent,
+        loadChildren: () =>
+          import('./components/library-page/library-page.module').then(
+            (m) => m.LibraryPageModule
+          ),
         canActivate: [AuthGuard],
       },
       {
         path: 'profile',
-        component: ProfilePageComponent,
+        loadChildren: () =>
+          import('./components/profile-page/profile-page.module').then(
+            (m) => m.ProfilePageModule
+          ),
         canActivate: [AuthGuard],
       },
-      { path: '**', component: GamesPageComponent, canActivate: [AuthGuard] },
+      {
+        path: '**',
+        loadChildren: () =>
+          import('./components/games-page/games-page.module').then(
+            (m) => m.GamesPageModule
+          ),
+        canActivate: [AuthGuard],
+      },
     ],
   },
-  // lazy-loading
-  // очистка подписок
-  // методы rxjs
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules,
+      preloadingStrategy: NoPreloading,
     }),
   ],
   exports: [RouterModule],
