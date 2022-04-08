@@ -5,7 +5,6 @@ import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-friend-item',
   templateUrl: './friend-item.component.html',
-  styleUrls: ['./friend-item.component.scss'],
 })
 export class FriendItemComponent implements OnInit {
   user: User;

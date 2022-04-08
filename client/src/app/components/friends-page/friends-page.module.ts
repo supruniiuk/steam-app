@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FriendItemComponent } from './friend-item/friend-item.component';
-import { PipesModule } from 'src/app/shared/modules/pipes.module';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { FriendsPageComponent } from './friends-page.component';
 
 @NgModule({
@@ -11,7 +11,7 @@ import { FriendsPageComponent } from './friends-page.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    PipesModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: '',

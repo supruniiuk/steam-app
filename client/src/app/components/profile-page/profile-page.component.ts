@@ -6,7 +6,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.scss'],
+  styleUrls: ['../../../scss/_profile-form.scss']
 })
 export class ProfilePageComponent implements OnInit {
   profileForm: FormGroup;

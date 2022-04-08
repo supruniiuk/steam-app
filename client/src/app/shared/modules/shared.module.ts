@@ -8,4 +8,4 @@ import { LoaderComponent } from '../loader/loader.component';
   declarations: [SearchPipe, GameFilterPipe, LoaderComponent],
   exports: [CommonModule, SearchPipe, GameFilterPipe, LoaderComponent],
 })
-export class PipesModule {}
+export class SharedModule {}

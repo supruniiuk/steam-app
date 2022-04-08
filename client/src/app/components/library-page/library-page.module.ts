@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { PipesModule } from 'src/app/shared/modules/pipes.module';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { GamesPageModule } from '../games-page/games-page.module';
 import { LibraryPageComponent } from './library-page.component';
 
@@ -11,7 +11,7 @@ import { LibraryPageComponent } from './library-page.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    PipesModule,
+    SharedModule,
     GamesPageModule,
     RouterModule.forChild([
       {

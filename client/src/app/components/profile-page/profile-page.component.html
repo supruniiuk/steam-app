@@ -1,9 +1,10 @@
-<div class="profile center-block ">
-  <div class="custom-container bg-light p-5">
+<div class="profile center-block">
+  <div class="custom-container w-30 bg-light p-5">
     <p class="heading-custom text-center pb-2">Profile</p>
     <div class="alert alert-success" *ngIf="saved">
       Profile successfully updated
     </div>
+
     <div class="alert alert-danger" *ngIf="errorMessage">
       {{ errorMessage }}
     </div>
@@ -45,7 +46,7 @@
       <button
         type="submit"
         [disabled]="profileForm.invalid || isSubmited"
-        class="btn btn-purple custom-shadow"
+        class="btn btn-purple custom-shadow w-100"
       >
         Save
       </button>

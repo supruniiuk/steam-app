@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+  styleUrls: ['../../../scss/_profile-form.scss']
 })
 export class LoginPageComponent implements OnInit {
   subs: Subscription[] = [];
