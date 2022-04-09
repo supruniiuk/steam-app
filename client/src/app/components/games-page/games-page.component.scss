@@ -1,0 +1,44 @@
+@use "../../../scss/variables";
+
+.content-display {
+  display: flex;
+}
+
+.filters {
+  flex-basis: 20%;
+}
+
+.form-check-input:checked {
+  background-color: variables.$main-purple;
+  border-color: variables.$main-purple;
+}
+
+@media screen and (max-width: 1300px) {
+  .game-list {
+    flex-basis: 70%;
+  }
+
+  .filters {
+    flex-basis: 30%;
+  }
+
+  .heading-custom {
+    font-size: 1.2em;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .games-list {
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .filters {
+    width: 100%;
+    padding-bottom: 2em;
+  }
+  
+  .content-display {
+    flex-direction: column-reverse;
+  }
+}

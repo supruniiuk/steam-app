@@ -1,0 +1,36 @@
+@use "./variables";
+
+@mixin dark-btn($bg-color: variables.$main-purple, $txt-color: white) {
+  background: $bg-color;
+  color: $txt-color;
+  border-radius: 4px !important;
+  box-shadow: variables.$main-shadow;
+}
+
+.btn-purple {
+  @include dark-btn(variables.$main-purple);
+}
+
+.btn-light {
+  color: variables.$main-purple;
+}
+
+.btn-remove {
+  @include dark-btn(variables.$main-red);
+}
+
+.btn-remove:hover {
+  @include dark-btn(white, variables.$main-red);
+}
+
+.btn-light:hover {
+  @include dark-btn();
+}
+
+.btn-purple:hover {
+  @include dark-btn(white, variables.$main-purple);
+}
+
+.btn-purple:active {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}

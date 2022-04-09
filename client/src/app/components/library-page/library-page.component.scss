@@ -1,0 +1,10 @@
+.games-list {
+  margin: 0 auto;
+  grid-row-gap: 20px;
+}
+
+@media screen and (max-width: 576px) {
+  .games-list {
+    width: 100%;
+  }
+}
