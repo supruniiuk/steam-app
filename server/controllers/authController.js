@@ -83,7 +83,7 @@ class AuthController {
       await user.save();
 
       res.json({
-        message: "Success. User created successfully!",
+        message: "User created successfully!",
       });
     } catch (e) {
       return next(ApiError.internal(`Server error`));

@@ -20,7 +20,6 @@ const userSchema = new Schema({
     type: Date,
     required: true,
   },
-  games: [String], 
   password: {
     type: String,
     required: true,
