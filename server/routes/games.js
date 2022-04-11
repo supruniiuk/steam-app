@@ -1,12 +1,12 @@
 const Router = require('express');
 const router = new Router();
 
-const gameController = require('../controllers/gameController');
+const GameController = require('../controllers/gameController');
 const authMiddleware = require("../middleware/authMiddleware");
 
-router.get('/', authMiddleware, gameController.getAllGames)
-router.post('/', authMiddleware, gameController.createGame);
-router.put('/', authMiddleware, gameController.updateGame)
-router.delete('/', authMiddleware, gameController.deleteGame)
+router.get('/', authMiddleware, GameController.getAllGames)
+router.post('/', authMiddleware, GameController.createGame);
+router.put('/:id', authMiddleware, GameController.updateGame)
+router.delete('/:id', authMiddleware, GameController.deleteGame)
 
 module.exports = router;

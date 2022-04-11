@@ -1,13 +1,14 @@
+const mongoose = require("mongoose");
 const ApiError = require("../errors/apiError");
 const Game = require("../models/game");
 
 class GameController {
   async getAllGames(req, res, next) {
-    try { 
-        const games = await Game.find() || [];
-        res.json(games);
+    try {
+      const games = (await Game.find()) || [];
+      res.json(games);
     } catch (err) {
-        return next(ApiError.internal(`Server error`));
+      return next(ApiError.internal(`Server error`));
     }
   }
 
@@ -21,6 +22,10 @@ class GameController {
     }
 
     try {
+      const checkGame = await Game.findOne({ title })
+      if(checkGame) {
+        return next(ApiError.badRequest(`Game '${title}' already exists`));
+      }
       const game = new Game({
         title,
         price,
@@ -36,11 +41,50 @@ class GameController {
   }
 
   async updateGame(req, res, next) {
-    console.log("update game");
+    const game = req.body.game
+    const creatorId = req.user.id
+    const gameId = req.params.id
+
+    if (!mongoose.isValidObjectId(gameId)) {
+      return next(ApiError.badRequest(`Invalid game id`));
+    }
+
+    if (!game.creatorId) {
+      return next(ApiError.badRequest(`Field 'creatorId' is required`));
+    }
+
+    if (creatorId !== game.creatorId.toString()) {
+      return next(ApiError.badRequest(`You can't change this game`));
+    }
+
+    try {
+      await Game.findOneAndUpdate({ _id: gameId }, {...game});
+      res.json({ message: "Game successfully updated" });
+    } catch (err) {
+      return next(ApiError.internal(`Server error`));
+    }
   }
 
   async deleteGame(req, res, next) {
-    console.log("delete game");
+    const creatorId = req.user.id;
+    const gameId = req.params.id;
+
+    if (!mongoose.isValidObjectId(gameId)) {
+      return next(ApiError.badRequest(`Invalid game id`));
+    }
+
+    try {
+      const game = await Game.findOne({ _id: gameId });
+
+      if (creatorId !== game.creatorId.toString()) {
+        return next(ApiError.badRequest(`You can't delete this game`));
+      }
+
+      await Game.findByIdAndDelete({ _id: gameId });
+      res.json({ message: "Game successfully deleted" });
+    } catch (err) {
+      return next(ApiError.internal(`Server error`));
+    }
   }
 }
 

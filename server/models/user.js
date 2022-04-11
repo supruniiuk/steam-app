@@ -25,7 +25,7 @@ const userSchema = new Schema({
     required: true,
   },
 },
-{timestamps: {createdAt: 'createdDate'}},
+{timestamps: true},
 );
 
 module.exports = model('User', userSchema);

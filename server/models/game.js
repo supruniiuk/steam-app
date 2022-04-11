@@ -1,10 +1,10 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const gameSchema = new Schema({
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   price: {
     type: Number,
@@ -13,15 +13,19 @@ const gameSchema = new Schema({
   description: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   tags: [String],
   creatorId: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
-},
-{timestamps: {createdAt: 'createdDate'}},
+  approved: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+}, {timestamps: true},
 );
 
-module.exports = model('Game', gameSchema);
+module.exports = model("Game", gameSchema);
