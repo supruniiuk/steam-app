@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const ApiError = require("../errors/apiError");
-const Friend = require("../models/friend");
+const mongoose = require('mongoose');
+const ApiError = require('../errors/apiError');
+const Friend = require('../models/friend');
 
 class FriendController {
   async getFriends(req, res, next) {
@@ -27,7 +27,7 @@ class FriendController {
     try {
       const friend = new Friend({ subscriberId: userId, publisherId });
       friend.save();
-      res.json({ message: "Friend's request successfully created" });
+      res.json({ message: `Friend's request successfully created` });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
@@ -42,12 +42,12 @@ class FriendController {
     }
 
     try {
-      const request = await Friend.findOne({_id: requestId})
-      if(userId !== request.publisherId.toString()) {
+      const request = await Friend.findOne({ _id: requestId });
+      if (userId !== request.publisherId.toString()) {
         return next(ApiError.badRequest(`You can't approve request`));
       }
       await Friend.findByIdAndUpdate({ _id: requestId }, { approved: true });
-      res.json({ message: "Friend's request successfully approved" });
+      res.json({ message: `Friend's request successfully approved` });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
@@ -62,11 +62,10 @@ class FriendController {
 
     try {
       await Friend.findByIdAndDelete({ _id: requestId });
-      res.json({ message: "Friend successfully deleted" });
+      res.json({ message: 'Friend successfully deleted' });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
-
   }
 }
 

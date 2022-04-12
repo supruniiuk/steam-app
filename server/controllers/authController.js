@@ -1,10 +1,17 @@
-const ApiError = require("../errors/apiError");
-const User = require("../models/user");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const ApiError = require('../errors/apiError');
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SECRET_KEY;
 
-const generateToken = ({_id, username, email, role, birthday, createdDate}) => {
+const generateToken = ({
+  _id,
+  username,
+  email,
+  role,
+  birthday,
+  createdDate,
+}) => {
   return jwt.sign(
     {
       id: _id,
@@ -15,34 +22,37 @@ const generateToken = ({_id, username, email, role, birthday, createdDate}) => {
       createdDate,
     },
     SECRET_KEY,
-    { expiresIn: "24h" }
+    { expiresIn: '24h' }
   );
 };
 
 class AuthController {
+  static async checkPassword(password, userPassword) {
+    const comparePassword = await bcrypt.compare(password, userPassword);
+    if (!comparePassword) {
+      return next(ApiError.badRequest('Wrong password'));
+    }
+  }
+
   async login(req, res, next) {
-    const { password, email} = req.body;
+    const { password, email } = req.body;
 
     if (!email) {
       return next(ApiError.badRequest(`Field 'email' is required`));
     } else if (!password) {
       return next(ApiError.badRequest(`Field 'password' is required`));
-    } 
-
+    }
 
     try {
       const user = await User.findOne({ email: email });
       if (!user) {
-        return next(ApiError.badRequest("User not found"));
+        return next(ApiError.badRequest('User not found'));
       }
 
-      const comparePassword = await bcrypt.compare(password, user.password);
-      if (!comparePassword) {
-        return next(ApiError.badRequest("Wrong password"));
-      }
+      AuthController.checkPassword(password, user.password)
 
       const token = generateToken(user);
-      return res.json({ message: "Success", jwt_token: token });
+      return res.json({ message: 'Success', jwt_token: token });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
@@ -78,12 +88,12 @@ class AuthController {
         email,
         role,
         birthday,
-        games: []
+        games: [],
       });
       await user.save();
 
       res.json({
-        message: "User created successfully!",
+        message: 'User created successfully!',
       });
     } catch (e) {
       return next(ApiError.internal(`Server error`));

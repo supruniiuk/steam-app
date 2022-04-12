@@ -1,5 +1,7 @@
-const ApiError = require("../errors/apiError");
-const User = require("../models/user");
+const ApiError = require('../errors/apiError');
+const AuthController = require('./authController')
+const User = require('../models/user');
+const Game = require('../models/game');
 
 class UserController {
   async getAllUsers(req, res, next) {
@@ -32,7 +34,7 @@ class UserController {
       }
       await User.findOneAndUpdate({ _id: userId }, { username, birthday });
 
-      res.json({ message: "User successfuly updated" });
+      res.json({ message: 'User successfuly updated' });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
@@ -42,15 +44,21 @@ class UserController {
     const password = req.body.password;
     const userId = req.params.id;
 
-    if(!password) {
-        return next(ApiError.badRequest(`Field 'password' is required`));
+    if (!password) {
+      return next(ApiError.badRequest(`Field 'password' is required`));
     }
 
     try {
-        await User.findOneAndDelete({ _id: userId })
-        res.json({ message: "User successfuly deleted" });
+      const user = await User.findOne({ _id: userId });
+
+      AuthController.checkPassword(password, user.password)
+
+      await User.findOneAndDelete({ _id: userId });
+      await Game.deleteMany({ creatorId: userId });
+
+      res.json({ message: 'User successfuly deleted' });
     } catch (err) {
-        return next(ApiError.internal(`Server error`));
+      return next(ApiError.internal(`Server error`));
     }
   }
 }
