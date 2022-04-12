@@ -1,88 +1,32 @@
-<div class="profile center-block">
-  <div class="custom-container bg-light p-5">
-    <p class="heading-custom text-center pb-2">Sign in</p>
+<div class="profile">
+  <div class="custom-container center-block bg-light p-5">
     <div class="alert alert-danger" *ngIf="authService.error$ | async as error">
       {{ error }}
     </div>
 
-    <form class="user-info" [formGroup]="loginForm">
-      <div class="form-group">
-        <label>Email</label>
-        <input
-          class="form-control"
-          formControlName="email"
-          type="email"
-          placeholder="Email"
-        />
-
-        <div
-          *ngIf="
-            loginForm.get('email').invalid && loginForm.get('email').touched
-          "
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item">
+        <a
+          class="nav-link heading-custom pb-2"
+          [class.active]="isLogin"
+          (click)="isLogin = true"
+          >Sign in</a
         >
-          <small
-            class="text-danger"
-            *ngIf="loginForm.get('email').errors.required"
-          >
-            Field "email" can not be empty
-          </small>
+      </li>
 
-          <small
-            class="text-danger"
-            *ngIf="loginForm.get('email').errors.email"
-          >
-            Enter correct email
-          </small>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-        <input
-          type="password"
-          formControlName="password"
-          class="form-control"
-          placeholder="Password"
-        />
-
-        <div
-          *ngIf="
-            loginForm.get('password').invalid &&
-            loginForm.get('password').touched
-          "
+      <li class="nav-item">
+        <a
+          class="nav-link heading-custom pb-2"
+          [class.active]="!isLogin"
+          (click)="isLogin = false"
+          >Sign up</a
         >
-          <small
-            class="text-danger"
-            *ngIf="loginForm.get('password').errors.required"
-          >
-            Password can not be empty
-          </small>
-          <small
-            class="text-danger"
-            *ngIf="loginForm.get('password').errors.minlength"
-          >
-            Password must be at least
-            {{ loginForm.get("password").errors.minlength.requiredLength }}
-            symbols.
-          </small>
-        </div>
-      </div>
+      </li>
+    </ul>
 
-      <button
-        class="btn btn-purple custom-shadow w-100 mb-3"
-        [disabled]="isBtnDisabled()"
-        (click)="login()"
-      >
-        Sign in
-      </button>
-
-      <button
-        class="btn btn-purple custom-shadow w-100"
-        [disabled]="isBtnDisabled()"
-        (click)="registration()"
-      >
-        Sign up
-      </button>
-    </form>
+    <app-sign-in-form *ngIf="isLogin; else registration"></app-sign-in-form>
+    <ng-template #registration>
+      <app-sign-up-form></app-sign-up-form>
+    </ng-template>
   </div>
 </div>
