@@ -7,11 +7,11 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from './shared/services/auth.service';
 import { RequestService } from './shared/services/requests.service';
 import { CommonModule } from '@angular/common';
 import { SignInFormComponent } from './components/login-page/sign-in-form/sign-in-form.component';
 import { SignUpFormComponent } from './components/login-page/sign-up-form/sign-up-form.component';
+import { SharedModule } from './shared/modules/shared.module';
 
 @NgModule({
   declarations: [
@@ -27,9 +27,10 @@ import { SignUpFormComponent } from './components/login-page/sign-up-form/sign-u
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule,
   ],
-  providers: [AuthService, RequestService],
+  providers: [RequestService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

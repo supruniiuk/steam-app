@@ -18,6 +18,7 @@ export class GamesPageComponent implements OnInit {
   constructor(public gameService: GameService) {}
 
   ngOnInit(): void {
+    console.log("GAMES")
     const gamesSubscription = this.gameService
       .getAllGames()
       .subscribe((res) => {

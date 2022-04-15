@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FriendItemComponent } from './friend-item/friend-item.component';
 import { SharedModule } from 'src/app/shared/modules/shared.module';
-import { FriendsPageComponent } from './friends-page.component';
+import { FriendsPageComponent } from 'src/app/components/friends-page/friends-page.component';
+import { FriendItemComponent } from 'src/app/components/friends-page/friend-item/friend-item.component';
 
 @NgModule({
   imports: [

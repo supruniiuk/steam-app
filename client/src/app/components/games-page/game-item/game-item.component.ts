@@ -50,7 +50,7 @@ export class GameItemComponent implements OnInit {
             id: this.user.id,
           };
 
-          this.userService.setCurrentUserInfo(updUser);
+          //this.userService.setCurrentUserInfo(updUser);
         },
         (err) => {
           this.errorMessage = err.message;

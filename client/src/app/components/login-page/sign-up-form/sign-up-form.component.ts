@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { RequestService } from 'src/app/shared/services/requests.service';
 
 @Component({
   selector: 'app-sign-up-form',
@@ -13,21 +13,21 @@ export class SignUpFormComponent implements OnInit {
   public registrationForm: FormGroup;
   isSubmited: boolean;
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(
+    public authService: AuthService,
+    private requestService: RequestService
+  ) {
     this.registrationForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.email, Validators.required]),
       role: new FormControl('gamer', [Validators.required]),
       birthday: new FormControl('', [Validators.required]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
+      password: new FormControl('', [Validators.required]),
     });
   }
 
   ngOnInit(): void {
-    const errorSubscription = this.authService.error$.subscribe({
+    const errorSubscription = this.requestService.error$.subscribe({
       next: (v) => this.registrationForm.controls['password'].setValue(''),
     });
     this.subs.push(errorSubscription);
@@ -40,17 +40,16 @@ export class SignUpFormComponent implements OnInit {
     }
 
     const user = this.registrationForm.value;
+    user.username = user.username.trim();
+    user.birthday = new Date(user.birthday).toISOString();
 
-    console.log(user);
-
-    /*  const registrationSubscriber = this.authService
+    const registrationSubscriber = this.authService
       .registration(user)
       .subscribe(() => {
         this.isSubmited = true;
         this.registrationForm.reset();
-        this.router.navigate(['/games']);
       });
-    this.subs.push(registrationSubscriber);*/
+    this.subs.push(registrationSubscriber);
   }
 
   isBtnDisabled(): boolean {

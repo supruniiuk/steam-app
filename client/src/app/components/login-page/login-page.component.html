@@ -1,9 +1,5 @@
 <div class="profile">
   <div class="custom-container center-block bg-light p-5">
-    <div class="alert alert-danger" *ngIf="authService.error$ | async as error">
-      {{ error }}
-    </div>
-
     <ul class="nav nav-tabs mb-4">
       <li class="nav-item">
         <a
@@ -23,6 +19,8 @@
         >
       </li>
     </ul>
+
+    <app-allert></app-allert>
 
     <app-sign-in-form *ngIf="isLogin; else registration"></app-sign-in-form>
     <ng-template #registration>

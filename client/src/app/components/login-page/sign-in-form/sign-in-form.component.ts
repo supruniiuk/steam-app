@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { RequestService } from 'src/app/shared/services/requests.service';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -13,18 +14,19 @@ export class SignInFormComponent implements OnInit {
   public loginForm: FormGroup;
   isSubmited: boolean;
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private requestService: RequestService
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
+      password: new FormControl('', [Validators.required]),
     });
   }
 
   ngOnInit(): void {
-    const errorSubscription = this.authService.error$.subscribe({
+    const errorSubscription = this.requestService.error$.subscribe({
       next: (v) => this.loginForm.controls['password'].setValue(''),
     });
     this.subs.push(errorSubscription);

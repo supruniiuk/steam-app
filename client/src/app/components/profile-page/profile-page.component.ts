@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/shared/interfaces';
+import { User } from 'src/app/shared/newInterfaces';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
-  styleUrls: ['../../../scss/_profile-form.scss']
+  styleUrls: ['../../../scss/_profile-form.scss'],
 })
 export class ProfilePageComponent implements OnInit {
   profileForm: FormGroup;
@@ -14,23 +15,20 @@ export class ProfilePageComponent implements OnInit {
   isSubmited: boolean;
   saved: boolean = false;
 
-  errorMessage: string = '';
-
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getCurrentUserInfo();
+    this.user = AuthService.getTokenInfo();
 
     this.profileForm = new FormGroup({
       email: new FormControl(this.user.email),
-      username: new FormControl(
-        this.user.username ? this.user.username : '',
-        Validators.required
-      ),
-      age: new FormControl(
-        this.user.age ? this.user.age : '',
-        Validators.required
-      ),
+      username: new FormControl(this.user.username, Validators.required),
+      birthday: new FormControl(this.user.birthday.split('T')[0], [
+        Validators.required,
+      ]),
     });
   }
 
@@ -39,28 +37,18 @@ export class ProfilePageComponent implements OnInit {
     if (this.profileForm.invalid) {
       return;
     }
+    const formData = this.profileForm.value;
 
-    this.userService.updateUser(this.profileForm.value, this.user.id).subscribe(
-      (res: User) => {
-        this.isSubmited = true;
-        let updatedUser = { ...this.user, ...res };
+    const userUpdated = {
+      email: formData.email,
+      username: formData.username.trim(),
+      birthday: new Date(formData.birthday).toISOString(),
+    };
 
-        this.userService.setCurrentUserInfo(updatedUser);
-        this.showAlert();
-      },
-      (err: Error) => {
-        this.errorMessage = err.message;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 2000);
-      }
-    );
-  }
-
-  showAlert() {
-    this.saved = true;
-    setTimeout(() => {
-      this.saved = false;
-    }, 2000);
+    this.userService.updateUser(userUpdated, this.user.id).subscribe(() => {
+      this.isSubmited = true;
+      this.user = { ...this.user, ...formData };
+      this.authService.setUserInfo(this.user);
+    });
   }
 }

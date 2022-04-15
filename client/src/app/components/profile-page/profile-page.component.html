@@ -1,24 +1,15 @@
-<div class="profile center-block">
-  <div class="custom-container w-30 bg-light p-5">
-    <p class="heading-custom text-center pb-2">Profile</p>
-    <div class="alert alert-success" *ngIf="saved">
-      Profile successfully updated
-    </div>
+<div class="profile">
+  <div class="custom-container center-block bg-light p-5">
+    <p class="heading-custom text-center pb-2">
+      Profile: {{ user.role[0].toUpperCase() + user.role.slice(1) }}
+    </p>
 
-    <div class="alert alert-danger" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </div>
+    <app-allert></app-allert>
 
     <form class="user-info" [formGroup]="profileForm" (submit)="save()">
       <div class="form-group">
         <label>Username</label>
-        <input
-          class="form-control"
-          placeholder="{{
-            profileForm.value.username ? profileForm.value.username : ''
-          }}"
-          formControlName="username"
-        />
+        <input class="form-control" formControlName="username" />
       </div>
 
       <div class="form-group">
@@ -32,15 +23,8 @@
       </div>
 
       <div class="form-group">
-        <label>Age</label>
-        <input
-          type="number"
-          min="16"
-          max="115"
-          class="form-control"
-          formControlName="age"
-          placeholder="{{ profileForm.value.age ? profileForm.value.age : '' }}"
-        />
+        <label>Birthdate</label>
+        <input type="date" class="form-control" formControlName="birthday" />
       </div>
 
       <button

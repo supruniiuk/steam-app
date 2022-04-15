@@ -18,7 +18,7 @@ const routes: Routes = [
       {
         path: 'friends',
         loadChildren: () =>
-          import('./components/friends-page/friends-page.module').then(
+          import('./shared/modules/friends-page.module').then(
             (m) => m.FriendsPageModule
           ),
         canActivate: [AuthGuard],
@@ -26,7 +26,7 @@ const routes: Routes = [
       {
         path: 'games',
         loadChildren: () =>
-          import('./components/games-page/games-page.module').then(
+          import('./shared/modules/games-page.module').then(
             (m) => m.GamesPageModule
           ),
         canActivate: [AuthGuard],
@@ -34,7 +34,7 @@ const routes: Routes = [
       {
         path: 'library',
         loadChildren: () =>
-          import('./components/library-page/library-page.module').then(
+          import('./shared/modules/library-page.module').then(
             (m) => m.LibraryPageModule
           ),
         canActivate: [AuthGuard],
@@ -42,7 +42,7 @@ const routes: Routes = [
       {
         path: 'profile',
         loadChildren: () =>
-          import('./components/profile-page/profile-page.module').then(
+          import('./shared/modules/profile-page.module').then(
             (m) => m.ProfilePageModule
           ),
         canActivate: [AuthGuard],
@@ -50,7 +50,7 @@ const routes: Routes = [
       {
         path: '**',
         loadChildren: () =>
-          import('./components/games-page/games-page.module').then(
+          import('./shared/modules/games-page.module').then(
             (m) => m.GamesPageModule
           ),
         canActivate: [AuthGuard],
