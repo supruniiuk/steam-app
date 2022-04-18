@@ -25,7 +25,7 @@ class UserController {
 
     try {
       const user = await User.findOne({ username });
-      if (user) {
+      if (user && user._id.toString() !== userId) {
         return next(
           ApiError.badRequest(
             `User with username '${username}' is already exists`
@@ -51,7 +51,7 @@ class UserController {
     try {
       const user = await User.findOne({ _id: userId });
 
-      AuthController.checkPassword(password, user.password)
+      AuthController.checkPassword(next, password, user.password)
 
       await User.findOneAndDelete({ _id: userId });
       await Game.deleteMany({ creatorId: userId });

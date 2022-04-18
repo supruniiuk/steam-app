@@ -1,7 +1,7 @@
-const ApiError = require('../errors/apiError');
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const ApiError = require("../errors/apiError");
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const generateToken = ({
@@ -22,15 +22,15 @@ const generateToken = ({
       createdDate,
     },
     SECRET_KEY,
-    { expiresIn: '24h' }
+    { expiresIn: "24h" }
   );
 };
 
 class AuthController {
-  static async checkPassword(password, userPassword) {
+  static async checkPassword(next, password, userPassword) {
     const comparePassword = await bcrypt.compare(password, userPassword);
     if (!comparePassword) {
-      return next(ApiError.badRequest('Wrong password'));
+      return next(ApiError.badRequest("Wrong password"));
     }
   }
 
@@ -44,15 +44,20 @@ class AuthController {
     }
 
     try {
-      const user = await User.findOne({ email: email });
+      const user = await User.findOne({ email });
+
       if (!user) {
-        return next(ApiError.badRequest('User not found'));
+        return next(ApiError.badRequest("User not found"));
       }
 
-      AuthController.checkPassword(password, user.password)
+      const comparePassword = await bcrypt.compare(password, user.password);
+
+      if (!comparePassword) {
+        return next(ApiError.badRequest("Wrong password"));
+      }
 
       const token = generateToken(user);
-      return res.json({ message: 'Success', jwt_token: token });
+      return res.json({ jwt_token: token });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
@@ -93,7 +98,7 @@ class AuthController {
       await user.save();
 
       res.json({
-        message: 'User created successfully!',
+        message: "User created successfully!",
       });
     } catch (e) {
       return next(ApiError.internal(`Server error`));

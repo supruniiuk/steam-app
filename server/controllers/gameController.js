@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const ApiError = require('../errors/apiError');
-const Game = require('../models/game');
+const mongoose = require("mongoose");
+const ApiError = require("../errors/apiError");
+const Game = require("../models/game");
 
 class GameController {
   async getAllGames(req, res, next) {
     try {
-      const games =
+      let games =
         (await Game.find(
           {},
           {
@@ -14,9 +14,21 @@ class GameController {
             price: 1,
             description: 1,
             tags: 1,
+            createdAt: 1,
           }
         )) || [];
 
+      games = games.map((game) => {
+        game.id = game._id;
+        return {
+          id: game.id,
+          title: game.title,
+          price: game.price,
+          description: game.description,
+          tags: game.tags,
+          createdAt: game.createdAt,
+        };
+      });
       res.json(games);
     } catch (err) {
       return next(ApiError.internal(`Server error`));
@@ -28,7 +40,7 @@ class GameController {
     const creatorId = req.user.id;
     const { title, price, description, tags } = req.body;
 
-    if (role !== 'developer') {
+    if (role !== "developer") {
       return next(ApiError.badRequest(`You're not allowed to create games`));
     }
 
@@ -44,8 +56,11 @@ class GameController {
         tags,
         creatorId,
       });
-      await game.save();
-      res.json({ message: 'Game successfully created' });
+      
+      const newGame = await game.save();
+      newGame.id = newGame._id;
+
+      res.json({ message: "Game successfully created", game: newGame });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
@@ -70,7 +85,7 @@ class GameController {
 
     try {
       await Game.findOneAndUpdate({ _id: gameId }, { ...game });
-      res.json({ message: 'Game successfully updated' });
+      res.json({ message: "Game successfully updated" });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
@@ -92,7 +107,7 @@ class GameController {
       }
 
       await Game.findByIdAndDelete({ _id: gameId });
-      res.json({ message: 'Game successfully deleted' });
+      res.json({ message: "Game successfully deleted" });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }

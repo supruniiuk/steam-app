@@ -9,12 +9,14 @@ const app = express();
 const router = require('./routes/routes');
 
 const errorMiddleware = require('./middleware/errorMiddleware');
+const authMiddleware = require('./middleware/authMiddleware');
 
 app.use(cors());
 app.use(express.json());
 
 app.use('/api', router);
 app.use(errorMiddleware);
+app.use(authMiddleware);
 
 async function start() {
   await mongoose.connect(DB_URL, {
