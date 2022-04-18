@@ -48,6 +48,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'dev-games',
+        loadChildren: () =>
+          import('./shared/modules/dev-games.module').then(
+            (m) => m.DevGamesModule
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
         path: '**',
         loadChildren: () =>
           import('./shared/modules/games-page.module').then(

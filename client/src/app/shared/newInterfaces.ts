@@ -26,3 +26,15 @@ export interface User {
 export interface MessageResponse {
   message: string;
 }
+
+export interface GameRequest {
+  title: string;
+  price: number;
+  description: string;
+  tag: string[];
+}
+
+export interface Game extends GameRequest {
+  id: string;
+  createdAt: string;
+}

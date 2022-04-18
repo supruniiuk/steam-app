@@ -18,3 +18,12 @@
 .btn-light {
   width: 48%;
 }
+
+.card-text::-webkit-scrollbar {
+  display: none;
+}
+
+.card-text {
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game } from 'src/app/shared/interfaces';
+import { Game } from 'src/app/shared/newInterfaces';
 import { GameService } from 'src/app/shared/services/games.service';
 
 @Component({
@@ -18,14 +18,10 @@ export class GamesPageComponent implements OnInit {
   constructor(public gameService: GameService) {}
 
   ngOnInit(): void {
-    console.log("GAMES")
     const gamesSubscription = this.gameService
       .getAllGames()
       .subscribe((res) => {
-        this.games = Object.keys(res).map((key: any) => {
-          res[key].id = key;
-          return res[key];
-        });
+        this.games = res;
       });
 
     this.subs.push(gamesSubscription);

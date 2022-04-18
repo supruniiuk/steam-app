@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Game, User } from 'src/app/shared/interfaces';
+import { Game, User } from 'src/app/shared/newInterfaces';
 import { GameService } from 'src/app/shared/services/games.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -20,7 +20,7 @@ export class LibraryPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getCurrentUserInfo();
+    /*this.user = this.userService.getCurrentUserInfo();
 
     if (!this.user.gamesList) {
       this.user.gamesList = [];
@@ -28,10 +28,7 @@ export class LibraryPageComponent implements OnInit {
 
     this.gameService.getAllGames().subscribe(
       (res) => {
-        this.allGames = Object.keys(res).map((key: any) => {
-          res[key].id = key;
-          return res[key];
-        });
+        this.allGames = res;
 
         this.filterGames();
       },
@@ -41,14 +38,14 @@ export class LibraryPageComponent implements OnInit {
           this.errorMessage = '';
         });
       }
-    );
+    );*/
   }
 
   filterGames() {
-    if (this.user.gamesList && this.user.gamesList.length > 0) {
+   /* if (this.user.gamesList && this.user.gamesList.length > 0) {
       const userGames = this.user.gamesList;
 
       this.gamesList = this.allGames.filter((g) => userGames.includes(g.id));
     }
-  }
+  }*/}
 }

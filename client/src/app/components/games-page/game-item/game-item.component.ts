@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Game, User } from 'src/app/shared/interfaces';
-import { UserService } from 'src/app/shared/services/user.service';
+import { GameService } from 'src/app/shared/services/games.service';
 
 @Component({
   selector: 'app-game-item',
@@ -11,26 +12,33 @@ export class GameItemComponent implements OnInit {
   user: User;
   isSubmitted: boolean = false;
   errorMessage: string = '';
+  subs: Subscription[] = [];
 
   @Input() isOwned: boolean = false;
   @Input() game: Game;
+  @Input() isDev: boolean = false;
+  @ViewChild('gameItem') gameItem;
 
-  constructor(private userService: UserService) {}
+  constructor(private gameService: GameService) {}
 
-  ngOnInit(): void {
-    this.user = this.userService.getCurrentUserInfo();
+  ngOnInit(): void {}
 
-    if (!this.user.gamesList) {
-      this.user.gamesList = [];
-    }
+  deleteGame() {
+    const deleteSubscription = this.gameService
+      .deleteGame(this.game.id)
+      .subscribe(() => {
+        this.gameItem.nativeElement.style.display = 'none';
+      });
 
-    this.isSubmitted = !!this.user.gamesList.filter(
-      (gameID) => gameID == this.game.id
-    )[0];
+    this.subs.push(deleteSubscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   addGame() {
-    if (!this.isSubmitted) {
+    /*if (!this.isSubmitted) {
       this.isSubmitted = false;
 
       const newGame = this.game.id;
@@ -56,6 +64,6 @@ export class GameItemComponent implements OnInit {
           this.errorMessage = err.message;
         }
       );
-    }
+    }*/
   }
 }

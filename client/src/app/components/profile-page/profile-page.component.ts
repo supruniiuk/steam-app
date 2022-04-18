@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/newInterfaces';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -14,6 +15,7 @@ export class ProfilePageComponent implements OnInit {
   user: User;
   isSubmited: boolean;
   saved: boolean = false;
+  subs: Subscription[] = []
 
   constructor(
     private userService: UserService,
@@ -45,10 +47,17 @@ export class ProfilePageComponent implements OnInit {
       birthday: new Date(formData.birthday).toISOString(),
     };
 
-    this.userService.updateUser(userUpdated, this.user.id).subscribe(() => {
+    const updateSubscriber = this.userService.updateUser(userUpdated, this.user.id).subscribe(() => {
       this.isSubmited = true;
       this.user = { ...this.user, ...formData };
       this.authService.setUserInfo(this.user);
     });
+
+    this.subs.push(updateSubscriber)
+  }
+
+
+  ngOnDestroy() {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

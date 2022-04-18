@@ -12,7 +12,6 @@ import { LibraryPageComponent } from 'src/app/components/library-page/library-pa
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    GamesPageModule,
     RouterModule.forChild([
       {
         path: '',

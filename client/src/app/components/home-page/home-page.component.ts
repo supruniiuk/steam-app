@@ -15,6 +15,7 @@ export class HomePageComponent implements OnInit {
     { title: 'Library', path: '/library' },
     { title: 'Friends', path: '/friends' },
     { title: 'Profile', path: '/profile' },
+    { title: 'My games', path: '/dev-games' },
   ];
 
   @ViewChild('menu', { static: false }) nav: ElementRef;

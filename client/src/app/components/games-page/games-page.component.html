@@ -21,7 +21,7 @@
     <div class="content-display">
       <div class="games-list" *ngIf="currentPrice">
         <!--              | gameFilter: currentPrice:tags-->
-        <app-game-item
+        <!--<app-game-item
           *ngFor="
             let game of games
               | gameFilter: currentPrice:tags
@@ -29,16 +29,16 @@
             first as isFirst
           "
           [game]="game"
-        ></app-game-item>
+        ></app-game-item>-->
       </div>
 
-      <app-game-filter
+     <!--<app-game-filter
         *ngIf="games.length > 0"
         class="filters"
         [games]="games"
         (curPrice)="setCurrentPrice($event)"
         (gameTypes)="setTags($event)"
-      ></app-game-filter>
+      ></app-game-filter>--> 
     </div>
   </div>
 </div>

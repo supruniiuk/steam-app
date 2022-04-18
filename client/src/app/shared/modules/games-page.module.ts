@@ -5,7 +5,6 @@ import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { GamesPageComponent } from 'src/app/components/games-page/games-page.component';
 import { GameFilterComponent } from 'src/app/components/games-page/game-filter/game-filter.component';
-import { GameItemComponent } from 'src/app/components/games-page/game-item/game-item.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,8 +18,6 @@ import { GameItemComponent } from 'src/app/components/games-page/game-item/game-
       },
     ]),
   ],
-  declarations: [GamesPageComponent, GameFilterComponent, GameItemComponent],
-  exports: [GameItemComponent],
+  declarations: [GamesPageComponent, GameFilterComponent],
 })
-
 export class GamesPageModule {}

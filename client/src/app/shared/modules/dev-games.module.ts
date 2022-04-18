@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DevGamesComponent } from 'src/app/components/dev-games/dev-games.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProfilePageComponent } from '../../components/profile-page/profile-page.component';
-import { SharedModule } from 'src/app/shared/modules/shared.module';
+import { SharedModule } from './shared.module';
+import { CreateGameComponent } from 'src/app/components/dev-games/create-game/create-game.component';
 
 @NgModule({
   imports: [
@@ -14,10 +15,10 @@ import { SharedModule } from 'src/app/shared/modules/shared.module';
     RouterModule.forChild([
       {
         path: '',
-        component: ProfilePageComponent,
+        component: DevGamesComponent,
       },
     ]),
   ],
-  declarations: [ProfilePageComponent],
+  declarations: [DevGamesComponent, CreateGameComponent]
 })
-export class ProfilePageModule {}
+export class DevGamesModule { }
