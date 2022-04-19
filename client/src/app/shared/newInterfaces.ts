@@ -31,10 +31,11 @@ export interface GameRequest {
   title: string;
   price: number;
   description: string;
-  tag: string[];
+  tags: string[];
 }
 
 export interface Game extends GameRequest {
   id: string;
-  createdAt: string;
+  createdAt: string
+  creatorId: string;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Game } from 'src/app/shared/newInterfaces';
 import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
@@ -22,7 +22,7 @@ export class DevGamesComponent implements OnInit {
 
   ngOnInit(): void {
     const gamesSubscription = this.gameService
-      .getAllGames()
+      .getDevGames()
       .subscribe((res) => {
         this.games = res;
         this.games.sort(function (a, b) {

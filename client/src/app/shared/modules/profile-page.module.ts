@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfilePageComponent } from '../../components/profile-page/profile-page.component';
 import { SharedModule } from 'src/app/shared/modules/shared.module';
+import { AuthGuard } from '../services/auth.guard';
 
 @NgModule({
   imports: [
@@ -15,6 +16,8 @@ import { SharedModule } from 'src/app/shared/modules/shared.module';
       {
         path: '',
         component: ProfilePageComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['developer', 'gamer', 'admin'] },
       },
     ]),
   ],

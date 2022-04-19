@@ -12,8 +12,6 @@ import { CommonModule } from '@angular/common';
 import { SignInFormComponent } from './components/login-page/sign-in-form/sign-in-form.component';
 import { SignUpFormComponent } from './components/login-page/sign-up-form/sign-up-form.component';
 import { SharedModule } from './shared/modules/shared.module';
-import { GamesListComponent } from './shared/components/games-list/games-list.component';
-import { SearchComponent } from './shared/components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +19,7 @@ import { SearchComponent } from './shared/components/search/search.component';
     LoginPageComponent,
     HomePageComponent,
     SignInFormComponent,
-    SignUpFormComponent
+    SignUpFormComponent,
   ],
   imports: [
     BrowserModule,

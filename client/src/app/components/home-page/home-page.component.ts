@@ -10,21 +10,35 @@ import logo from '../../shared/svg/logo.js';
 })
 export class HomePageComponent implements OnInit {
   logo: SafeHtml;
-  navLinks: Array<{ title: string; path: string }> = [
-    { title: 'Games', path: '/games' },
-    { title: 'Library', path: '/library' },
-    { title: 'Friends', path: '/friends' },
-    { title: 'Profile', path: '/profile' },
-    { title: 'My games', path: '/dev-games' },
-  ];
-
+  navLinks: Array<{ title: string; path: string; show: boolean }> = [];
   @ViewChild('menu', { static: false }) nav: ElementRef;
 
   constructor(
     private router: Router,
     public authService: AuthService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+    let userRole = authService.getUserRole();
+    this.navLinks = [
+      { title: 'Games', path: '/games', show: true },
+      {
+        title: 'Library',
+        path: '/library',
+        show: userRole === 'gamer',
+      },
+      {
+        title: 'Friends',
+        path: '/friends',
+        show: userRole === 'gamer',
+      },
+      { title: 'Profile', path: '/profile', show: true },
+      {
+        title: 'My games',
+        path: '/dev-games',
+        show: userRole === 'developer',
+      },
+    ];
+  }
 
   ngOnInit(): void {
     this.logo = this.sanitizer.bypassSecurityTrustHtml(logo);

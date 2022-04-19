@@ -5,6 +5,7 @@ import { DevGamesComponent } from 'src/app/components/dev-games/dev-games.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared.module';
 import { CreateGameComponent } from 'src/app/components/dev-games/create-game/create-game.component';
+import { AuthGuard } from '../services/auth.guard';
 
 @NgModule({
   imports: [
@@ -16,9 +17,11 @@ import { CreateGameComponent } from 'src/app/components/dev-games/create-game/cr
       {
         path: '',
         component: DevGamesComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['developer'] },
       },
     ]),
   ],
-  declarations: [DevGamesComponent, CreateGameComponent]
+  declarations: [DevGamesComponent, CreateGameComponent],
 })
-export class DevGamesModule { }
+export class DevGamesModule {}

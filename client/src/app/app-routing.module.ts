@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
-import {
-  NoPreloading,
-  RouterModule,
-  Routes,
-} from '@angular/router';
+import { NoPreloading, RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { AuthGuard } from './shared/services/auth.guard';
@@ -21,7 +17,6 @@ const routes: Routes = [
           import('./shared/modules/friends-page.module').then(
             (m) => m.FriendsPageModule
           ),
-        canActivate: [AuthGuard],
       },
       {
         path: 'games',
@@ -29,7 +24,6 @@ const routes: Routes = [
           import('./shared/modules/games-page.module').then(
             (m) => m.GamesPageModule
           ),
-        canActivate: [AuthGuard],
       },
       {
         path: 'library',
@@ -37,7 +31,6 @@ const routes: Routes = [
           import('./shared/modules/library-page.module').then(
             (m) => m.LibraryPageModule
           ),
-        canActivate: [AuthGuard],
       },
       {
         path: 'profile',
@@ -45,7 +38,6 @@ const routes: Routes = [
           import('./shared/modules/profile-page.module').then(
             (m) => m.ProfilePageModule
           ),
-        canActivate: [AuthGuard],
       },
       {
         path: 'dev-games',
@@ -53,7 +45,6 @@ const routes: Routes = [
           import('./shared/modules/dev-games.module').then(
             (m) => m.DevGamesModule
           ),
-        canActivate: [AuthGuard],
       },
       {
         path: '**',

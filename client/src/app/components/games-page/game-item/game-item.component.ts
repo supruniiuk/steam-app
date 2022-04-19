@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game, User } from 'src/app/shared/interfaces';
+import { Game, User } from 'src/app/shared/newInterfaces';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { GameService } from 'src/app/shared/services/games.service';
 
 @Component({
@@ -13,13 +14,17 @@ export class GameItemComponent implements OnInit {
   isSubmitted: boolean = false;
   errorMessage: string = '';
   subs: Subscription[] = [];
+  updateId: string;
 
   @Input() isOwned: boolean = false;
   @Input() game: Game;
   @Input() isDev: boolean = false;
   @ViewChild('gameItem') gameItem;
 
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService,
+    public authService: AuthService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -35,6 +40,10 @@ export class GameItemComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
+  }
+
+  updateGame(updatedGame: Game): void {
+    this.game = updatedGame;
   }
 
   addGame() {

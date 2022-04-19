@@ -30,14 +30,13 @@
       *ngIf="isDev"
       href="#"
       class="btn w-100 btn-purple custom-shadow my-2"
-      (click)="addGame()"
-      [disabled]="isSubmitted || isOwned"
+      (click)="updateId = game.id"
     >
       Update
     </button>
 
     <button
-      *ngIf="!isOwned"
+      *ngIf="!isOwned && authService.getUserRole() === 'gamer'"
       href="#"
       class="btn w-100 btn-purple custom-shadow"
       (click)="addGame()"
@@ -52,3 +51,10 @@
     </div>
   </div>
 </div>
+
+<app-update-game
+  *ngIf="updateId"
+  [editGame]="game"
+  (close)="updateId = ''"
+  (updatedGame)="updateGame($event)"
+></app-update-game>

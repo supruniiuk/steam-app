@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { GamesPageComponent } from 'src/app/components/games-page/games-page.component';
 import { GameFilterComponent } from 'src/app/components/games-page/game-filter/game-filter.component';
+import { AuthGuard } from '../services/auth.guard';
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +16,8 @@ import { GameFilterComponent } from 'src/app/components/games-page/game-filter/g
       {
         path: '',
         component: GamesPageComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['developer', 'admin', 'gamer'] },
       },
     ]),
   ],

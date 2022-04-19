@@ -7,11 +7,12 @@ import { AllertComponent } from '../components/allert/allert.component';
 import { GameItemComponent } from 'src/app/components/games-page/game-item/game-item.component';
 import { GamesListComponent } from '../components/games-list/games-list.component';
 import { SearchComponent } from '../components/search/search.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UpdateGameComponent } from 'src/app/components/dev-games/update-game/update-game.component';
 
 @NgModule({
-  imports: [CommonModule, FormsModule],
-  providers: [SearchPipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  providers: [SearchPipe, GameFilterPipe],
   declarations: [
     SearchPipe,
     GameFilterPipe,
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     GameItemComponent,
     GamesListComponent,
     SearchComponent,
+    UpdateGameComponent,
   ],
   exports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     GameItemComponent,
     GamesListComponent,
     SearchComponent,
+    UpdateGameComponent,
   ],
 })
 export class SharedModule {}

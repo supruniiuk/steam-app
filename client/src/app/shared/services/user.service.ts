@@ -1,9 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LoginInfo, ResponseName, User } from '../interfaces';
-import { MessageResponse, RegisterInfo, Token } from '../newInterfaces';
+import { ResponseName, User } from '../interfaces';
+import { MessageResponse } from '../newInterfaces';
 import { RequestService } from './requests.service';
 
 @Injectable({

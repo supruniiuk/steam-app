@@ -23,15 +23,27 @@ export class GameService {
       .pipe(catchError(this.handleError.bind(this)));
   }
 
+  getDevGames(): Observable<Game[]> {
+    return this.requestService
+      .get<Game[]>(this.ROUTE + "/dev")
+      .pipe(catchError(this.handleError.bind(this)));
+  }
+
   getGameById(id: string | null): Observable<Game> {
     return this.requestService
-      .get<Game>(`games/${id}.json`)
+      .get<Game>(`games/${id}`)
       .pipe(catchError(this.handleError.bind(this)));
   }
 
   createGame(game: GameRequest): Observable<Game> {
     return this.requestService
       .create<Game>(this.ROUTE, game)
+      .pipe(catchError(this.handleError.bind(this)));
+  }
+
+  updateGame(game: GameRequest, id: string): Observable<void> {
+    return this.requestService
+      .update<Game>(`${this.ROUTE}/${id}`, game)
       .pipe(catchError(this.handleError.bind(this)));
   }
 

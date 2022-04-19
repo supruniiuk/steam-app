@@ -25,6 +25,7 @@
             class="nav-link text-dark"
             routerLink="{{ link.path }}"
             routerLinkActive="active"
+            *ngIf="link.show"
             >{{ link.title }}</a
           >
         </li>

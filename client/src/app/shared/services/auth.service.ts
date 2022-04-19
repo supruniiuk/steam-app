@@ -69,6 +69,11 @@ export class AuthService {
     }
   }
 
+  getUserRole() {
+    const info = AuthService.getTokenInfo();
+    return info.role;
+  }
+
   private createRoute = (route: string) => {
     return `${environment.apiUrl}/${route}`;
   };

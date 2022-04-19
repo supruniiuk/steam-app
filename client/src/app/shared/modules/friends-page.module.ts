@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { FriendsPageComponent } from 'src/app/components/friends-page/friends-page.component';
 import { FriendItemComponent } from 'src/app/components/friends-page/friend-item/friend-item.component';
+import { AuthGuard } from '../services/auth.guard';
 
 @NgModule({
   imports: [
@@ -16,6 +17,8 @@ import { FriendItemComponent } from 'src/app/components/friends-page/friend-item
       {
         path: '',
         component: FriendsPageComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['gamer'] },
       },
     ]),
   ],

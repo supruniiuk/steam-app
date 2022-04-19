@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Game } from '../interfaces';
+import { Game } from '../newInterfaces';
 
 @Pipe({
   name: 'gameFilter',
@@ -9,7 +9,7 @@ export class GameFilterPipe implements PipeTransform {
     games = games.filter((g) => {
       let consist = true;
       tags.map((t) => {
-        if (!g.tag.includes(t)) {
+        if (!g.tags.includes(t)) {
           consist = false;
         }
       });
