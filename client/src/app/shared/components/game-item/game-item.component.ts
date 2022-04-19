@@ -15,10 +15,11 @@ export class GameItemComponent implements OnInit {
   errorMessage: string = '';
   subs: Subscription[] = [];
   updateId: string;
+  role: string;
 
   @Input() isOwned: boolean = false;
   @Input() game: Game;
-  @Input() isDev: boolean = false;
+  @Input() main: boolean = false;
   @ViewChild('gameItem') gameItem;
 
   constructor(
@@ -26,24 +27,47 @@ export class GameItemComponent implements OnInit {
     public authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.role = this.authService.getUserRole();
+  }
+
+  hideGame():void {
+    this.gameItem.nativeElement.style.display = 'none';
+  }
 
   deleteGame() {
     const deleteSubscription = this.gameService
       .deleteGame(this.game.id)
       .subscribe(() => {
-        this.gameItem.nativeElement.style.display = 'none';
+        this.hideGame()
       });
 
     this.subs.push(deleteSubscription);
   }
 
-  ngOnDestroy(): void {
-    this.subs.forEach((sub) => sub.unsubscribe());
-  }
-
   updateGame(updatedGame: Game): void {
     this.game = updatedGame;
+  }
+
+  approve() {
+    this.isSubmitted = true;
+
+    this.gameService.approveGame(this.game.id).subscribe(() => {
+      this.isSubmitted = false;
+      this.hideGame()
+    });
+  }
+
+  isDev(): boolean {
+    return this.role === 'developer';
+  }
+
+  isAdmin(): boolean {
+    return this.role === 'admin';
+  }
+
+  isGamer(): boolean {
+    return this.role === 'gamer';
   }
 
   addGame() {
@@ -74,5 +98,8 @@ export class GameItemComponent implements OnInit {
         }
       );
     }*/
+  }
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

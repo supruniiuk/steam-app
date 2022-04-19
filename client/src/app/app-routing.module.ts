@@ -47,6 +47,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'new',
+        loadChildren: () =>
+          import('./shared/modules/approve-games.module').then(
+            (m) => m.ApproveGamesModule
+          ),
+      },
+      {
         path: '**',
         loadChildren: () =>
           import('./shared/modules/games-page.module').then(

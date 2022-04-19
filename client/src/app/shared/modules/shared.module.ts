@@ -4,7 +4,7 @@ import { SearchPipe } from '../pipes/search.pipe';
 import { GameFilterPipe } from '../pipes/gameFilter.pipe';
 import { LoaderComponent } from '../components/loader/loader.component';
 import { AllertComponent } from '../components/allert/allert.component';
-import { GameItemComponent } from 'src/app/components/games-page/game-item/game-item.component';
+import { GameItemComponent } from 'src/app/shared/components/game-item/game-item.component';
 import { GamesListComponent } from '../components/games-list/games-list.component';
 import { SearchComponent } from '../components/search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

@@ -2,7 +2,7 @@
   <div class="card-img-top img-imitation">
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      *ngIf="isDev"
+      *ngIf="isDev()"
       width="32"
       height="32"
       fill="currentColor"
@@ -26,28 +26,37 @@
       {{ game.description }}
     </p>
 
-    <button
-      *ngIf="isDev"
-      href="#"
-      class="btn w-100 btn-purple custom-shadow my-2"
-      (click)="updateId = game.id"
-    >
-      Update
-    </button>
+    <div *ngIf="!main">
+      <button
+        *ngIf="isDev()"
+        class="btn w-100 btn-purple custom-shadow my-2"
+        (click)="updateId = game.id"
+      >
+        Update
+      </button>
 
-    <button
-      *ngIf="!isOwned && authService.getUserRole() === 'gamer'"
-      href="#"
-      class="btn w-100 btn-purple custom-shadow"
-      (click)="addGame()"
-      [disabled]="isSubmitted || isOwned"
-    >
-      Add to library
-    </button>
+      <button
+        *ngIf="!isOwned && isGamer()"
+        class="btn w-100 btn-purple custom-shadow"
+        (click)="addGame()"
+        [disabled]="isSubmitted || isOwned"
+      >
+        Add to library
+      </button>
 
-    <div *ngIf="isOwned" class="d-flex justify-content-between">
-      <button href="#" class="btn btn-purple custom-shadow">Download</button>
-      <button href="#" class="btn btn-light custom-shadow">Share</button>
+      <button
+        *ngIf="role === 'admin'"
+        class="btn w-100 btn-purple custom-shadow"
+        (click)="approve()"
+        [disabled]="isSubmitted"
+      >
+        Approve
+      </button>
+
+      <div *ngIf="isOwned" class="d-flex justify-content-between">
+        <button href="#" class="btn btn-purple custom-shadow">Download</button>
+        <button href="#" class="btn btn-light custom-shadow">Share</button>
+      </div>
     </div>
   </div>
 </div>

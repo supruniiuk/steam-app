@@ -7,8 +7,8 @@ import { Game } from '../../newInterfaces';
 })
 export class GamesListComponent implements OnInit {
   @Input() games: Game[] = [];
-  @Input() isDev: boolean = true;
   @Input() isOwned: boolean = false;
+  @Input() main: boolean = false;
 
   constructor() {}
 

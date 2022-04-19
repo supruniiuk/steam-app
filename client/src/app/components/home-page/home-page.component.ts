@@ -18,26 +18,34 @@ export class HomePageComponent implements OnInit {
     public authService: AuthService,
     private sanitizer: DomSanitizer
   ) {
-    let userRole = authService.getUserRole();
-    this.navLinks = [
-      { title: 'Games', path: '/games', show: true },
-      {
-        title: 'Library',
-        path: '/library',
-        show: userRole === 'gamer',
-      },
-      {
-        title: 'Friends',
-        path: '/friends',
-        show: userRole === 'gamer',
-      },
-      { title: 'Profile', path: '/profile', show: true },
-      {
-        title: 'My games',
-        path: '/dev-games',
-        show: userRole === 'developer',
-      },
-    ];
+    if (authService.isAuthenticated()) {
+      let userRole = authService.getUserRole();
+      console.log(userRole)
+      this.navLinks = [
+        { title: 'Games', path: '/games', show: true },
+        {
+          title: 'Library',
+          path: '/library',
+          show: userRole === 'gamer',
+        },
+        {
+          title: 'Friends',
+          path: '/friends',
+          show: userRole === 'gamer',
+        },
+        { title: 'Profile', path: '/profile', show: true },
+        {
+          title: 'My games',
+          path: '/dev-games',
+          show: userRole === 'developer',
+        },
+        {
+          title: 'New games',
+          path: '/new',
+          show: userRole === 'admin',
+        },
+      ];
+    }
   }
 
   ngOnInit(): void {

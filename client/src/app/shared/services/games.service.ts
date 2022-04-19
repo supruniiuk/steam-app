@@ -25,7 +25,13 @@ export class GameService {
 
   getDevGames(): Observable<Game[]> {
     return this.requestService
-      .get<Game[]>(this.ROUTE + "/dev")
+      .get<Game[]>(this.ROUTE + '/dev')
+      .pipe(catchError(this.handleError.bind(this)));
+  }
+
+  getGamesForApprove(): Observable<Game[]> {
+    return this.requestService
+      .get<Game[]>(this.ROUTE + '/admin')
       .pipe(catchError(this.handleError.bind(this)));
   }
 
@@ -44,6 +50,12 @@ export class GameService {
   updateGame(game: GameRequest, id: string): Observable<void> {
     return this.requestService
       .update<Game>(`${this.ROUTE}/${id}`, game)
+      .pipe(catchError(this.handleError.bind(this)));
+  }
+
+  approveGame(id: string): Observable<void> {
+    return this.requestService
+      .patch(`${this.ROUTE}/${id}`)
       .pipe(catchError(this.handleError.bind(this)));
   }
 

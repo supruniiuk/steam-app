@@ -11,8 +11,8 @@
       <app-games-list
         *ngIf="currentPrice"
         class="games-list"
-        [isDev]="false"
         [games]="filteredGames"
+        [main]="true"
       ></app-games-list>
 
       <app-game-filter
