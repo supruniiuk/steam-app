@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-
+const { Schema, model } = require("mongoose");
+const ROLES = ["admin", "developer", "gamer"];
 const userSchema = new Schema(
   {
     username: {
@@ -16,6 +16,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+      enum: ROLES,
     },
     birthday: {
       type: Date,
@@ -29,4 +30,4 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = model('User', userSchema);
+module.exports = model("User", userSchema);

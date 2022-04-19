@@ -1,34 +1,47 @@
-const mongoose = require("mongoose");
 const ApiError = require("../errors/apiError");
 const Game = require("../models/game");
 
 class GameController {
+  static getGamesArray(games) {
+    return games.map((game) => {
+      game.id = game._id;
+      return {
+        id: game.id,
+        title: game.title,
+        price: game.price,
+        description: game.description,
+        tags: game.tags,
+        createdAt: game.createdAt,
+        creatorId: game.creatorId,
+      };
+    });
+  }
+
   async getAllGames(req, res, next) {
     try {
-      let games =
-        (await Game.find(
-          {},
-          {
-            _id: 1,
-            title: 1,
-            price: 1,
-            description: 1,
-            tags: 1,
-            createdAt: 1,
-          }
-        )) || [];
+      let games = (await Game.find({ approved: true })) || [];
+      games = GameController.getGamesArray(games);
+      res.json(games);
+    } catch (err) {
+      return next(ApiError.internal(`Server error`));
+    }
+  }
 
-      games = games.map((game) => {
-        game.id = game._id;
-        return {
-          id: game.id,
-          title: game.title,
-          price: game.price,
-          description: game.description,
-          tags: game.tags,
-          createdAt: game.createdAt,
-        };
-      });
+  async getDevGames(req, res, next) {
+    const creatorId = req.user.id;
+    try {
+      let games = (await Game.find({ creatorId })) || [];
+      games = GameController.getGamesArray(games);
+      res.json(games);
+    } catch (err) {
+      return next(ApiError.internal(`Server error`));
+    }
+  }
+
+  async getGamesForApprove(req, res, next) {
+    try {
+      let games = (await Game.find({ approved: false })) || [];
+      games = GameController.getGamesArray(games);
       res.json(games);
     } catch (err) {
       return next(ApiError.internal(`Server error`));
@@ -56,7 +69,7 @@ class GameController {
         tags,
         creatorId,
       });
-      
+
       const newGame = await game.save();
       newGame.id = newGame._id;
 
@@ -67,13 +80,9 @@ class GameController {
   }
 
   async updateGame(req, res, next) {
-    const game = req.body.game;
+    const game = req.body;
     const creatorId = req.user.id;
     const gameId = req.params.id;
-
-    if (!mongoose.isValidObjectId(gameId)) {
-      return next(ApiError.badRequest(`Invalid game id`));
-    }
 
     if (!game.creatorId) {
       return next(ApiError.badRequest(`Field 'creatorId' is required`));
@@ -91,13 +100,21 @@ class GameController {
     }
   }
 
+  async approveGame(req, res, next) {
+    const gameId = req.params.id;
+    const role = req.user.role;
+
+    try {
+      await Game.findOneAndUpdate({ _id: gameId }, { approved: true });
+      res.json({ message: "Game successfully approved" });
+    } catch (err) {
+      return next(ApiError.internal(`Server error`));
+    }
+  }
+
   async deleteGame(req, res, next) {
     const creatorId = req.user.id;
     const gameId = req.params.id;
-
-    if (!mongoose.isValidObjectId(gameId)) {
-      return next(ApiError.badRequest(`Invalid game id`));
-    }
 
     try {
       const game = await Game.findOne({ _id: gameId });
