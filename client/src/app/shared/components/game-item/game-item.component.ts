@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Game, User } from 'src/app/shared/newInterfaces';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { GameService } from 'src/app/shared/services/games.service';
+import { GameOwningService } from '../../services/gameOwning.service';
 
 @Component({
   selector: 'app-game-item',
@@ -12,7 +13,6 @@ import { GameService } from 'src/app/shared/services/games.service';
 export class GameItemComponent implements OnInit {
   user: User;
   isSubmitted: boolean = false;
-  errorMessage: string = '';
   subs: Subscription[] = [];
   updateId: string;
   role: string;
@@ -24,14 +24,15 @@ export class GameItemComponent implements OnInit {
 
   constructor(
     private gameService: GameService,
-    public authService: AuthService
+    public authService: AuthService,
+    private gameOwningService: GameOwningService
   ) {}
 
   ngOnInit(): void {
     this.role = this.authService.getUserRole();
   }
 
-  hideGame():void {
+  hideGame(): void {
     this.gameItem.nativeElement.style.display = 'none';
   }
 
@@ -39,7 +40,7 @@ export class GameItemComponent implements OnInit {
     const deleteSubscription = this.gameService
       .deleteGame(this.game.id)
       .subscribe(() => {
-        this.hideGame()
+        this.hideGame();
       });
 
     this.subs.push(deleteSubscription);
@@ -54,7 +55,7 @@ export class GameItemComponent implements OnInit {
 
     this.gameService.approveGame(this.game.id).subscribe(() => {
       this.isSubmitted = false;
-      this.hideGame()
+      this.hideGame();
     });
   }
 
@@ -71,34 +72,18 @@ export class GameItemComponent implements OnInit {
   }
 
   addGame() {
-    /*if (!this.isSubmitted) {
+    if (!this.isSubmitted) {
       this.isSubmitted = false;
 
       const newGame = this.game.id;
 
-      this.user.gamesList.push(newGame);
-      const updatedUser = {
-        ...this.user,
-        id: null,
-      };
-
-      this.userService.updateUser(updatedUser, this.user.id).subscribe(
-        (res) => {
-          this.isSubmitted = true;
-
-          const updUser = {
-            ...res,
-            id: this.user.id,
-          };
-
-          //this.userService.setCurrentUserInfo(updUser);
-        },
-        (err) => {
-          this.errorMessage = err.message;
-        }
-      );
-    }*/
+      this.gameOwningService.addGame(newGame).subscribe(() => {
+        this.isSubmitted = true;
+        this.isOwned = true;
+      });
+    }
   }
+
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
   }

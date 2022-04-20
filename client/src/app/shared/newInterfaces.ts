@@ -14,7 +14,6 @@ export interface RegisterInfo extends LoginInfo {
   password: string;
 }
 
-
 export interface User {
   id: string;
   email: string;
@@ -36,6 +35,10 @@ export interface GameRequest {
 
 export interface Game extends GameRequest {
   id: string;
-  createdAt: string
+  createdAt: string;
   creatorId: string;
+}
+
+export interface GameOwning extends Game {
+  ownId: string;
 }

@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { Game } from 'src/app/shared/newInterfaces';
 import { GameFilterPipe } from 'src/app/shared/pipes/gameFilter.pipe';
 import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { GameOwningService } from 'src/app/shared/services/gameOwning.service';
 import { GameService } from 'src/app/shared/services/games.service';
 
 @Component({
@@ -20,26 +22,42 @@ export class GamesPageComponent implements OnInit {
 
   constructor(
     public gameService: GameService,
+    private authService: AuthService,
+    private gameOwningService: GameOwningService,
     private searchPipe: SearchPipe,
     private filterPipe: GameFilterPipe
   ) {}
 
   ngOnInit(): void {
+    const role = this.authService.getUserRole();
     const gamesSubscription = this.gameService
       .getAllGames()
       .subscribe((res) => {
         this.games = res;
-        this.games.sort(function (a, b) {
-          return a.createdAt < b.createdAt
-            ? 1
-            : a.createdAt > b.createdAt
-            ? -1
-            : 0;
-        });
-        this.filteredGames = this.games;
+        this.sortGamesByDate();
+        this.filteredGames = [...this.games];
+        if (role == 'gamer') {
+          this.getOwnGames();
+        }
       });
 
     this.subs.push(gamesSubscription);
+  }
+
+  sortGamesByDate() {
+    this.games.sort(function (a, b) {
+      return a.createdAt < b.createdAt ? 1 : a.createdAt > b.createdAt ? -1 : 0;
+    });
+  }
+
+  getOwnGames() {
+    const getOwnGames = this.gameOwningService
+      .getAllOwnings()
+      .subscribe((res) => {
+        this.games = this.games.filter((game) => res.indexOf(game.id) === -1);
+        this.filteredGames = [...this.games];
+      });
+    this.subs.push(getOwnGames);
   }
 
   filterGame() {

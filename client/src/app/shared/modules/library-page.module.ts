@@ -15,7 +15,7 @@ import { AuthGuard } from '../services/auth.guard';
     RouterModule.forChild([
       {
         path: '',
-        component: LibraryPageModule,
+        component: LibraryPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['gamer'] },
       },

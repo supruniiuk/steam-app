@@ -1,8 +1,39 @@
-const mongoose = require('mongoose');
-const ApiError = require('../errors/apiError');
-const Friend = require('../models/friend');
+const mongoose = require("mongoose");
+const ApiError = require("../errors/apiError");
+const Friend = require("../models/friend");
+const User = require("../models/user");
 
 class FriendController {
+  async getPossibleFriends(req, res, next) {
+    const userId = req.user.id;
+
+
+    try {
+    const friends = await Friend.find({
+      $or: [{ publisherId: userId }, { subscriberId: userId }],
+    });
+
+    const friendsIdArr = friends.map(friend => friend._id).concat(userId);
+
+    let possibleFriends = await User.find({ _id: { $nin: friendsIdArr },  role: { $nin: 'admin' }}, {password: 0, updatedAt: 0, __v: 0})
+
+    possibleFriends = possibleFriends.map(friend => {
+      return {
+        id: friend._id,
+        username: friend.username,
+        email: friend.email,
+        role: friend.role,
+        birthday: friend.birthday,
+        createdAt: friend.createdAt,
+      }
+    })
+    
+    res.json(possibleFriends);
+  } catch (err) {
+      return next(ApiError.internal(`Server error`));
+    }
+  }
+
   async getFriends(req, res, next) {
     const userId = req.user.id;
 
@@ -62,7 +93,7 @@ class FriendController {
 
     try {
       await Friend.findByIdAndDelete({ _id: requestId });
-      res.json({ message: 'Friend successfully deleted' });
+      res.json({ message: "Friend successfully deleted" });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }

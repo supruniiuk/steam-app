@@ -2,7 +2,7 @@
   <div class="card-img-top img-imitation">
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      *ngIf="isDev()"
+      *ngIf="isDev() && !main"
       width="32"
       height="32"
       fill="currentColor"
@@ -36,15 +36,6 @@
       </button>
 
       <button
-        *ngIf="!isOwned && isGamer()"
-        class="btn w-100 btn-purple custom-shadow"
-        (click)="addGame()"
-        [disabled]="isSubmitted || isOwned"
-      >
-        Add to library
-      </button>
-
-      <button
         *ngIf="role === 'admin'"
         class="btn w-100 btn-purple custom-shadow"
         (click)="approve()"
@@ -52,11 +43,20 @@
       >
         Approve
       </button>
+    </div>
 
-      <div *ngIf="isOwned" class="d-flex justify-content-between">
-        <button href="#" class="btn btn-purple custom-shadow">Download</button>
-        <button href="#" class="btn btn-light custom-shadow">Share</button>
-      </div>
+    <button
+      *ngIf="!isOwned && isGamer()"
+      class="btn w-100 btn-purple custom-shadow"
+      (click)="addGame()"
+      [disabled]="isSubmitted || isOwned"
+    >
+      Add to library
+    </button>
+
+    <div *ngIf="isOwned" class="d-flex justify-content-between">
+      <button href="#" class="btn btn-purple custom-shadow">Download</button>
+      <button href="#" class="btn btn-light custom-shadow">Share</button>
     </div>
   </div>
 </div>

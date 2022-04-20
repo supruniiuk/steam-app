@@ -64,16 +64,8 @@ class AuthController {
   }
 
   async register(req, res, next) {
-    //const { username, password, email, role, birthday } = req.body;
+    const { username, password, email, role, birthday } = req.body;
 
-
-    const { username, password, email, role, birthday } = {
-      username: 'admin',
-      password: 'admin',
-      email: 'admin@gmail.com',
-      role: 'admin',
-      birthday: "2002-02-23T00:00:00.000+00:00"
-    }
     if (!username) {
       return next(ApiError.badRequest(`Field 'username' is required`));
     } else if (!password) {

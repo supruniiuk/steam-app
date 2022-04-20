@@ -25,17 +25,21 @@ export class DevGamesComponent implements OnInit {
       .getDevGames()
       .subscribe((res) => {
         this.games = res;
-        this.games.sort(function (a, b) {
-          return a.createdAt < b.createdAt
-            ? 1
-            : a.createdAt > b.createdAt
-            ? -1
-            : 0;
-        });
+        this.filterGames()
         this.filteredGames = this.games;
       });
 
     this.subs.push(gamesSubscription);
+  }
+
+  filterGames(){
+    this.games.sort(function (a, b) {
+      return a.createdAt < b.createdAt
+        ? 1
+        : a.createdAt > b.createdAt
+        ? -1
+        : 0;
+    });
   }
 
   addGame(game: any): void {

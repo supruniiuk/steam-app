@@ -31,7 +31,7 @@ export class HomePageComponent implements OnInit {
         {
           title: 'Friends',
           path: '/friends',
-          show: userRole === 'gamer',
+          show: userRole !== 'admin',
         },
         { title: 'Profile', path: '/profile', show: true },
         {

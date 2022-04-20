@@ -9,6 +9,7 @@ import { GamesListComponent } from '../components/games-list/games-list.componen
 import { SearchComponent } from '../components/search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateGameComponent } from 'src/app/components/dev-games/update-game/update-game.component';
+import { CompleteGameListComponent } from '../components/complete-game-list/complete-game-list.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -22,6 +23,7 @@ import { UpdateGameComponent } from 'src/app/components/dev-games/update-game/up
     GamesListComponent,
     SearchComponent,
     UpdateGameComponent,
+    CompleteGameListComponent,
   ],
   exports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { UpdateGameComponent } from 'src/app/components/dev-games/update-game/up
     GamesListComponent,
     SearchComponent,
     UpdateGameComponent,
+    CompleteGameListComponent,
   ],
 })
 export class SharedModule {}
