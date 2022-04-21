@@ -20,7 +20,6 @@ export class HomePageComponent implements OnInit {
   ) {
     if (authService.isAuthenticated()) {
       let userRole = authService.getUserRole();
-      console.log(userRole)
       this.navLinks = [
         { title: 'Games', path: '/games', show: true },
         {
@@ -52,8 +51,7 @@ export class HomePageComponent implements OnInit {
     this.logo = this.sanitizer.bypassSecurityTrustHtml(logo);
   }
 
-  logout(event: Event) {
-    event.preventDefault();
+  logout() {
     this.authService.logout();
     this.router.navigate(['/']);
   }

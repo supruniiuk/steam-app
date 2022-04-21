@@ -1,31 +1,49 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Friend, User } from 'src/app/shared/interfaces';
-import { UserService } from 'src/app/shared/services/user.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/shared/newInterfaces';
+import { FriendsService } from 'src/app/shared/services/friends.service';
 
 @Component({
   selector: 'app-friend-item',
   templateUrl: './friend-item.component.html',
 })
 export class FriendItemComponent implements OnInit {
-  user: User;
-  isSubmitted: boolean;
-  delete: boolean = false;
+  isRequestSend: boolean = false;
+  isSubmitted: boolean = false;
+  subs: Subscription[] = [];
 
-  @Input() isFriend: boolean = false;
-  @Input() friend: Friend | User = null;
-  @Output() addFriend = new EventEmitter<Friend>();
-  @Output() removeFriend = new EventEmitter<Friend>();
+  @Input() friend: User = null;
+  @Input() option: string = 'friends';
 
-  constructor(private userService: UserService) {}
+  constructor(private friendService: FriendsService) {}
 
   ngOnInit(): void {}
 
-  getUserInfo() {
+  addFriend() {
+    this.isRequestSend = true;
+    const addFriendSubscription = this.friendService
+      .addFriend(this.friend.id)
+      .subscribe();
+
+    this.subs.push(addFriendSubscription);
   }
 
-  add() {
+  approveRequest() {
+    this.isSubmitted = true;
+    this.friendService.approveRequest(this.friend.id).subscribe();
   }
 
-  remove() {
+  cancelRequest() {
+    this.isRequestSend = false;
+    this.isSubmitted = true;
+    const cancelSubscription = this.friendService
+      .deleteFriend(this.friend.id)
+      .subscribe();
+
+    this.subs.push(cancelSubscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

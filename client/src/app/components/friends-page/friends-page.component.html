@@ -1,31 +1,28 @@
 <div class="custom-container bg-light p-4">
-  <div class="w-90">
+  <div class="w-90 h-100">
     <ul class="nav nav-tabs mb-4">
-      <li class="nav-item">
+      <li class="nav-item" *ngFor="let page of subPages; let i = index">
         <a
           class="nav-link heading-custom pb-2 text-dark"
-          [class.active]="requests"
-          (click)="requests = true"
-        >
-          Friends
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a
-          class="nav-link heading-custom pb-2  text-dark"
-          [class.active]="!requests"
-          (click)="requests = false"
-          >Friends request
+          [class.active]="page.active"
+          (click)="changeSubPage(i)"
+          >{{ page.title }}
         </a>
       </li>
     </ul>
 
-    <div class="search input-group mb-3" *ngIf="requests">
-      <div class="w-100">
-        <app-friend-item *ngFor="let friend of possibleFriends; first as isFirst" [friend]="friend"></app-friend-item>
+    <app-allert></app-allert>
 
-        </div>
+    <app-loader *ngIf="!friends"></app-loader>
+
+    <div class="search input-group mb-3" *ngIf="friends">
+      <div class="w-100">
+        <app-friend-item
+          *ngFor="let friend of friends; first as isFirst"
+          [friend]="friend"
+          [option]="subPages[activePageId].option"
+        ></app-friend-item>
+      </div>
     </div>
   </div>
 </div>

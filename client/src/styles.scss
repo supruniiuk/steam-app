@@ -5,6 +5,9 @@
 @use "./scss/font-sizes";
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
+.loader {
+  height: 100%;
+}
 body {
   display: flex;
   flex-direction: column;

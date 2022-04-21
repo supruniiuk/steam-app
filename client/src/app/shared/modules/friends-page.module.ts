@@ -18,7 +18,7 @@ import { AuthGuard } from '../services/auth.guard';
         path: '',
         component: FriendsPageComponent,
         canActivate: [AuthGuard],
-        data: { allowedRoles: ['gamer'] },
+        data: { allowedRoles: ['gamer', 'developer'] },
       },
     ]),
   ],

@@ -41,7 +41,6 @@ export class RequestService {
   }
 
   public update<T>(route: string, body: any): Observable<T> {
-    console.log(body);
     return this.http
       .put<T>(this.createRoute(route), body, {
         headers: this.generateHeaders(),

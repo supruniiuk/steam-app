@@ -43,7 +43,6 @@ export class DevGamesComponent implements OnInit {
   }
 
   addGame(game: any): void {
-    console.log(game);
     this.games.unshift(game);
   }
 

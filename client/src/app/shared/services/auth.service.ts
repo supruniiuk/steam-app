@@ -34,7 +34,7 @@ export class AuthService {
   registration(credentials: RegisterInfo): any {
     return this.http
       .post(`${this.createRoute('users')}/registration`, credentials)
-      .pipe(catchError(this.handleError.bind(this)), tap(this.setMessage));
+      .pipe( tap(this.setMessage), catchError(this.handleError.bind(this)));
   }
 
   logout() {
