@@ -56,7 +56,7 @@
 
     <div *ngIf="isOwned" class="d-flex justify-content-between">
       <button href="#" class="btn btn-purple custom-shadow">Download</button>
-      <button href="#" class="btn btn-light custom-shadow">Share</button>
+      <button href="#" class="btn btn-remove custom-shadow" (click)="deleteGameOwning()"> Delete</button>
     </div>
   </div>
 </div>

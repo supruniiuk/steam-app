@@ -24,18 +24,18 @@ export class ApproveGamesComponent implements OnInit {
       .getGamesForApprove()
       .subscribe((res) => {
         this.games = res;
-        this.games.sort(function (a, b) {
-          return a.createdAt < b.createdAt
-            ? 1
-            : a.createdAt > b.createdAt
-            ? -1
-            : 0;
-        });
+        this.sortGames();
 
         this.filteredGames = this.games;
       });
 
     this.subs.push(gamesSubscription);
+  }
+
+  sortGames(): void {
+    this.games.sort(function (a, b) {
+      return a.createdAt < b.createdAt ? 1 : a.createdAt > b.createdAt ? -1 : 0;
+    });
   }
 
   updateSrc(str: string): void {

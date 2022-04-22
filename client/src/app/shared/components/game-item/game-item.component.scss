@@ -10,12 +10,12 @@
 }
 
 .card-text {
-  height: 150px;
+  height: 120px;
   overflow: scroll;
 }
 
 .btn-purple,
-.btn-light {
+.btn-remove {
   width: 48%;
 }
 
@@ -24,6 +24,6 @@
 }
 
 .card-text {
-  -ms-overflow-style: none;  
-  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

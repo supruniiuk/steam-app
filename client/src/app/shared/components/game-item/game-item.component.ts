@@ -33,17 +33,8 @@ export class GameItemComponent implements OnInit {
   }
 
   hideGame(): void {
-    this.gameItem.nativeElement.style.display = 'none';
-  }
-
-  deleteGame() {
-    const deleteSubscription = this.gameService
-      .deleteGame(this.game.id)
-      .subscribe(() => {
-        this.hideGame();
-      });
-
-    this.subs.push(deleteSubscription);
+    this.gameItem.nativeElement.style.pointerEvents = 'none';
+    this.gameItem.nativeElement.style.opacity = 0.5;
   }
 
   updateGame(updatedGame: Game): void {
@@ -82,6 +73,26 @@ export class GameItemComponent implements OnInit {
         this.isOwned = true;
       });
     }
+  }
+
+  deleteGame() {
+    const deleteSubscription = this.gameService
+      .deleteGame(this.game.id)
+      .subscribe(() => {
+        this.hideGame();
+      });
+
+    this.subs.push(deleteSubscription);
+  }
+
+  deleteGameOwning() {
+    const deleteOwningSubscription = this.gameOwningService
+      .deleteGame(this.game.id)
+      .subscribe(() => {
+        this.hideGame();
+      });
+
+    this.subs.push(deleteOwningSubscription);
   }
 
   ngOnDestroy(): void {

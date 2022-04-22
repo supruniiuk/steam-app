@@ -11,6 +11,8 @@ export class CompleteGameListComponent implements OnInit {
   srcStr: string = '';
 
   @Input() games: Game[] | GameOwning[] = [];
+  @Input() isOwned: boolean = false;
+
   constructor(private searchPipe: SearchPipe) {}
 
   ngOnInit(): void {

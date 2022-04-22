@@ -12,9 +12,7 @@ export class GameOwningService {
   ROUTE: string = 'games/owning';
   public error$: Subject<string> = new Subject<string>();
 
-  constructor(
-    private requestService: RequestService
-  ) {}
+  constructor(private requestService: RequestService) {}
 
   getAllOwnings(): Observable<string[]> {
     return this.requestService
