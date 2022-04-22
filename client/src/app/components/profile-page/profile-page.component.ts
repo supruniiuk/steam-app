@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/shared/newInterfaces';
+import { User } from 'src/app/shared/interfaces';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -45,7 +45,7 @@ export class ProfilePageComponent implements OnInit {
     const userUpdated = {
       email: formData.email,
       username: formData.username.trim(),
-      birthday: new Date(formData.birthday).toISOString(),
+      birthday: new Date(formData.birthday).toISOString()
     };
 
     const updateSub = this.userService
