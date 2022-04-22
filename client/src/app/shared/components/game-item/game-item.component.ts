@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game, User } from 'src/app/shared/newInterfaces';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { GameService } from 'src/app/shared/services/games.service';
+import { Game, User } from '../../interfaces';
 import { GameOwningService } from '../../services/gameOwning.service';
 
 @Component({
@@ -16,6 +16,9 @@ export class GameItemComponent implements OnInit {
   subs: Subscription[] = [];
   updateId: string;
   role: string;
+
+  deleteGame: boolean = false;
+  deleteGameOwning: boolean = false;
 
   @Input() isOwned: boolean = false;
   @Input() game: Game;
@@ -81,24 +84,30 @@ export class GameItemComponent implements OnInit {
     }
   }
 
-  deleteGame() {
-    const deleteSubscription = this.gameService
-      .deleteGame(this.game.id)
-      .subscribe(() => {
-        this.hideGame();
-      });
+  delete(confirm: boolean): void {
+    if (confirm) {
+      if (this.deleteGame) {
+        const deleteSubscription = this.gameService
+          .deleteGame(this.game.id)
+          .subscribe(() => {
+            this.hideGame();
+          });
 
-    this.subs.push(deleteSubscription);
-  }
+        this.subs.push(deleteSubscription);
+      }
+      if (this.deleteGameOwning) {
+        const deleteOwningSubscription = this.gameOwningService
+          .deleteGame(this.game.id)
+          .subscribe(() => {
+            this.hideGame();
+          });
 
-  deleteGameOwning() {
-    const deleteOwningSubscription = this.gameOwningService
-      .deleteGame(this.game.id)
-      .subscribe(() => {
-        this.hideGame();
-      });
-
-    this.subs.push(deleteOwningSubscription);
+        this.subs.push(deleteOwningSubscription);
+      }
+    } else {
+      this.deleteGame = false;
+      this.deleteGameOwning = false;
+    }
   }
 
   ngOnDestroy(): void {

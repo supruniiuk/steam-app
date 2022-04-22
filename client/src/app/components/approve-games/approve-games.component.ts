@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game } from 'src/app/shared/newInterfaces';
+import { Game } from 'src/app/shared/interfaces';
 import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 import { GameService } from 'src/app/shared/services/games.service';
 

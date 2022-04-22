@@ -6,7 +6,7 @@
 
     <p class="heading-custom pb-2">Featured Games</p>
 
-    <app-loader *ngIf="!currentPrice"></app-loader>
+    <app-loader *ngIf="!filteredGames"></app-loader>
     <div class="content-display">
       <app-games-list
         *ngIf="currentPrice"

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Game } from 'src/app/shared/newInterfaces';
+import { Game } from 'src/app/shared/interfaces';
 import { GameService } from 'src/app/shared/services/games.service';
 
 @Component({

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfilePageComponent } from '../../components/profile-page/profile-page.component';
 import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { AuthGuard } from '../services/auth.guard';
-import { ConfirmationComponent } from 'src/app/components/profile-page/confirmation/confirmation.component';
 
 @NgModule({
   imports: [
@@ -22,6 +21,6 @@ import { ConfirmationComponent } from 'src/app/components/profile-page/confirmat
       },
     ]),
   ],
-  declarations: [ProfilePageComponent, ConfirmationComponent],
+  declarations: [ProfilePageComponent],
 })
 export class ProfilePageModule {}

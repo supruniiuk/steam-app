@@ -1,8 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Game, GameOwning, GameRequest } from '../newInterfaces';
+import { Game, GameOwning } from '../interfaces';
 import { RequestService } from './requests.service';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GameOwning } from 'src/app/shared/newInterfaces';
+import { GameOwning } from 'src/app/shared/interfaces';
 import { GameOwningService } from 'src/app/shared/services/gameOwning.service';
 @Component({
   selector: 'app-library-page',

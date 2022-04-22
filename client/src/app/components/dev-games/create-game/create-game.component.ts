@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Game } from 'src/app/shared/newInterfaces';
+import { Game } from 'src/app/shared/interfaces';
 import { GameService } from 'src/app/shared/services/games.service';
 
 @Component({
@@ -29,9 +29,9 @@ export class CreateGameComponent implements OnInit {
 
   ngOnInit(): void {
     this.game = new FormGroup({
-      title: new FormControl('',),
-      price: new FormControl('',),
-      description: new FormControl('',),
+      title: new FormControl('', Validators.required),
+      price: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
       tags: new FormControl([]),
     });
   }

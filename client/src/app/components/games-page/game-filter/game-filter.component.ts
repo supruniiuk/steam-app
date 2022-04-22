@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
-import { Game } from 'src/app/shared/newInterfaces';
+import { Game } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-game-filter',

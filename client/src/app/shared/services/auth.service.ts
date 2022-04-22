@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
-import { LoginInfo, RegisterInfo, Token } from '../newInterfaces';
+import { LoginInfo, RegisterInfo, Token } from '../interfaces';
 import jwt_decode from 'jwt-decode';
 import { environment } from 'src/environments/environment';
 

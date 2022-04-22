@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Game } from '../newInterfaces';
+import { Game } from '../interfaces';
 
 @Pipe({
   name: 'gameFilter',

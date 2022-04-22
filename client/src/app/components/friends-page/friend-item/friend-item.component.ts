@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/shared/newInterfaces';
+import { User } from 'src/app/shared/interfaces';
 import { FriendsService } from 'src/app/shared/services/friends.service';
 
 @Component({

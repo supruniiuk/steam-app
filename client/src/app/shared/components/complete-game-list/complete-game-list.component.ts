@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Game, GameOwning } from '../../newInterfaces';
+import { Game, GameOwning } from '../../interfaces';
 import { SearchPipe } from '../../pipes/search.pipe';
 
 @Component({

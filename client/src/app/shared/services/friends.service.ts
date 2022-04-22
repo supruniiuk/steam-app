@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MessageResponse, User } from '../newInterfaces';
+import { MessageResponse, User } from '../interfaces';
 import { RequestService } from './requests.service';
 
 @Injectable({

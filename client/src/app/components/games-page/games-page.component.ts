@@ -1,6 +1,6 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game } from 'src/app/shared/newInterfaces';
+import { Game } from 'src/app/shared/interfaces';
 import { GameFilterPipe } from 'src/app/shared/pipes/gameFilter.pipe';
 import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -14,8 +14,8 @@ import { GameService } from 'src/app/shared/services/games.service';
 })
 export class GamesPageComponent implements OnInit {
   subs: Subscription[] = [];
-  games: Game[] = [];
-  filteredGames: Game[] = [];
+  games: Game[];
+  filteredGames: Game[];
   srcStr: string = '';
   currentPrice: number;
   tags: Array<string> = [];
