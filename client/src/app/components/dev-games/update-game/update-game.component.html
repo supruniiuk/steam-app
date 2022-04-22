@@ -58,7 +58,7 @@
         type="checkbox"
         name="tag"
         value="{{ tag }}"
-        [checked]="editGame.tags.indexOf(tag)"
+        [checked]="editGame.tags.indexOf(tag) !== -1"
       />
       <label class="form-check-label" for="flexCheckIndeterminate"
         >{{ tag[0].toLocaleUpperCase() + tag.slice(1) }}

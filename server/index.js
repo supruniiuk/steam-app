@@ -23,7 +23,7 @@ async function start() {
     useNewUrlParser: true,
   });
   app.listen(PORT, () => {
-    console.log(`Server startes on port ${PORT}`);
+    console.log(`Server started on port ${PORT}`);
   });
 }
 

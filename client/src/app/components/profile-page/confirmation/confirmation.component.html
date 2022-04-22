@@ -1,0 +1,24 @@
+<div class="backdrop"></div>
+
+<div class="center-block modalWindow p-3 border border-danger">
+  <h6>To delete your profile, type your <b>username</b> to confirm.</h6>
+  <input
+    class="form-control"
+    [(ngModel)]="username"
+    type="text"
+    placeholder="Username"
+  />
+
+  <div class="d-flex justify-content-between my-3">
+    <button
+      class="btn btn-remove custom-shadow w-100 mx-1"
+      [disabled]="isBtnDisabled()"
+      (click)="confirm()"
+    >
+      Confirm
+    </button>
+    <button class="btn btn-purple custom-shadow w-100 mx-1" (click)="cancel()">
+      Cancel
+    </button>
+  </div>
+</div>

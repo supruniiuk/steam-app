@@ -46,7 +46,7 @@ export class UserService {
     return this.requestService.update(`${this.ROUTE}/${id}`, user);
   }
 
-  private createRoute = (route: string) => {
-    return `${environment.apiUrl}/${route}`;
-  };
+  deleteProfile(): Observable<MessageResponse> {
+    return this.requestService.delete(`${this.ROUTE}`)
+  }
 }

@@ -1,16 +1,16 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const SECRET_KEY = process.env.SECRET_KEY;
-const ApiError = require('../errors/apiError');
+const ApiError = require("../errors/apiError");
 
 module.exports = async function (req, res, next) {
-  if (req.method == 'OPTIONS') {
+  if (req.method == "OPTIONS") {
     next();
   }
   try {
-    const token = req.headers.authorization.split(' ')[1];
-    const bearer = req.headers.authorization.split(' ')[0];
+    const token = req.headers.authorization.split(" ")[1];
+    const bearer = req.headers.authorization.split(" ")[0];
 
-    if (!token || bearer !== 'Bearer') {
+    if (!token || bearer !== "Bearer") {
       return next(ApiError.badRequest(`Not Authorized`));
     }
 

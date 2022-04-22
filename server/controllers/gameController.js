@@ -4,9 +4,8 @@ const Game = require("../models/game");
 class GameController {
   static getGamesArray(games) {
     return games.map((game) => {
-      game.id = game._id;
       return {
-        id: game.id,
+        id: game._id,
         title: game.title,
         price: game.price,
         description: game.description,
@@ -17,7 +16,7 @@ class GameController {
     });
   }
 
-  async getAllGames(req, res, next) {
+  async getApprovedGames(req, res, next) {
     try {
       let games = (await Game.find({ approved: true })) || [];
       games = GameController.getGamesArray(games);
@@ -29,6 +28,7 @@ class GameController {
 
   async getDevGames(req, res, next) {
     const creatorId = req.user.id;
+
     try {
       let games = (await Game.find({ creatorId })) || [];
       games = GameController.getGamesArray(games);
@@ -49,13 +49,8 @@ class GameController {
   }
 
   async createGame(req, res, next) {
-    const role = req.user.role;
     const creatorId = req.user.id;
     const { title, price, description, tags } = req.body;
-
-    if (role !== "developer") {
-      return next(ApiError.badRequest(`You're not allowed to create games`));
-    }
 
     try {
       const checkGame = await Game.findOne({ title });
@@ -93,7 +88,10 @@ class GameController {
     }
 
     try {
-      await Game.findOneAndUpdate({ _id: gameId }, { ...game });
+      await Game.findOneAndUpdate(
+        { _id: gameId },
+        { ...game, approved: false }
+      );
       res.json({ message: "Game successfully updated" });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
@@ -102,7 +100,6 @@ class GameController {
 
   async approveGame(req, res, next) {
     const gameId = req.params.id;
-    const role = req.user.role;
 
     try {
       await Game.findOneAndUpdate({ _id: gameId }, { approved: true });

@@ -37,24 +37,13 @@ class AuthController {
   async login(req, res, next) {
     const { password, email } = req.body;
 
-    if (!email) {
-      return next(ApiError.badRequest(`Field 'email' is required`));
-    } else if (!password) {
-      return next(ApiError.badRequest(`Field 'password' is required`));
-    }
-
     try {
       const user = await User.findOne({ email });
-
       if (!user) {
         return next(ApiError.badRequest("User not found"));
       }
 
-      const comparePassword = await bcrypt.compare(password, user.password);
-
-      if (!comparePassword) {
-        return next(ApiError.badRequest("Wrong password"));
-      }
+      await AuthController.checkPassword(next, password, user.password);
 
       const token = generateToken(user);
       return res.json({ jwt_token: token });
@@ -65,18 +54,6 @@ class AuthController {
 
   async register(req, res, next) {
     const { username, password, email, role, birthday } = req.body;
-
-    if (!username) {
-      return next(ApiError.badRequest(`Field 'username' is required`));
-    } else if (!password) {
-      return next(ApiError.badRequest(`Field 'password' is required`));
-    } else if (!email) {
-      return next(ApiError.badRequest(`Field 'email' is required`));
-    } else if (!role) {
-      return next(ApiError.badRequest(`Field 'role' is required`));
-    } else if (!birthday) {
-      return next(ApiError.badRequest(`Field 'birthday' is required`));
-    }
 
     try {
       const checkUser = await User.findOne({ email: email });

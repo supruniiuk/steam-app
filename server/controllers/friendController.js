@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const ApiError = require("../errors/apiError");
 const Friend = require("../models/friend");
 const User = require("../models/user");
@@ -129,11 +128,12 @@ class FriendController {
     const publisherId = req.body.publisherId;
     const userId = req.user.id;
 
-    if (!publisherId) {
-      return next(ApiError.badRequest(`Field 'publisherId' is required`));
-    }
-
     try {
+      const user = await User.findOne({ _id: userId });
+      if (!user) {
+        return next(ApiError.badRequest(`User does not exist`));
+      }
+
       const isExist = await Friend.find({
         $or: [
           { publisherId: userId, subscriberId: publisherId },
@@ -158,6 +158,11 @@ class FriendController {
     const friendId = req.params.id;
 
     try {
+      const user = await User.findOne({ _id: friendId });
+      if (!user) {
+        return next(ApiError.badRequest(`User does not exist`));
+      }
+
       const request = await Friend.findOne({
         publisherId: userId,
         subscriberId: friendId,
@@ -183,6 +188,18 @@ class FriendController {
       });
 
       res.json({ message: "Friend request successfully canceled" });
+    } catch (err) {
+      return next(ApiError.internal(`Server error`));
+    }
+  }
+
+  async deleteAllFriendsConnections(req, res, next) {
+    const userId = req.user.id;
+
+    try {
+      await Friend.deleteMany({
+        $or: [{ publisherId: userId }, { subscriberId: userId }],
+      });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }

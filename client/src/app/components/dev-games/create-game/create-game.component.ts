@@ -29,9 +29,9 @@ export class CreateGameComponent implements OnInit {
 
   ngOnInit(): void {
     this.game = new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      price: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
+      title: new FormControl('',),
+      price: new FormControl('',),
+      description: new FormControl('',),
       tags: new FormControl([]),
     });
   }
@@ -45,7 +45,6 @@ export class CreateGameComponent implements OnInit {
     this.isSubmited = true;
     this.game.value.tags = this.getCheckedTags();
     const newGame = this.game.value;
-
     const createGame = this.gameService.createGame(newGame).subscribe(() => {
       this.newGame.emit(this.game.value);
       this.game.reset();

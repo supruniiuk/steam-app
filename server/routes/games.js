@@ -4,16 +4,19 @@ const router = new Router();
 const GameController = require("../controllers/gameController");
 const authMiddleware = require("../middleware/authMiddleware");
 const idMiddleware = require("../middleware/idMiddleware");
-const { isDev, isAdmin, isGamer } = require("../middleware/roleMiddleware");
+const { isDev, isAdmin } = require("../middleware/roleMiddleware");
+const {
+  gameCreationValidation,
+} = require("../middleware/validationMiddleware");
 
-router.get("/", authMiddleware, GameController.getAllGames);
+router.get("/", authMiddleware, GameController.getApprovedGames);
 router.get("/dev", [authMiddleware, isDev], GameController.getDevGames);
 router.get(
   "/admin",
   [authMiddleware, isAdmin],
   GameController.getGamesForApprove
 );
-router.post("/", [authMiddleware, isDev], GameController.createGame);
+router.post("/", [authMiddleware, isDev, gameCreationValidation], GameController.createGame);
 router.put(
   "/:id",
   [authMiddleware, isDev, idMiddleware],

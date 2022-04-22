@@ -34,6 +34,17 @@
       >
         Save
       </button>
+
+      <button
+        type="button"
+        class="btn btn-remove custom-shadow w-100 my-2"
+        (click)="deleteProfile = true"
+      >
+        Delete profile
+      </button>
     </form>
   </div>
 </div>
+
+
+<app-confirmation *ngIf="deleteProfile" [user]="user" (close)="deleteUserProfile($event)"></app-confirmation>

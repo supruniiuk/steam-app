@@ -16,6 +16,7 @@ export class ProfilePageComponent implements OnInit {
   isSubmited: boolean;
   saved: boolean = false;
   subs: Subscription[] = []
+  deleteProfile: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -56,6 +57,14 @@ export class ProfilePageComponent implements OnInit {
     this.subs.push(updateSubscriber)
   }
 
+  deleteUserProfile(confirm: boolean): void {
+    this.deleteProfile = false;
+    if(confirm) {
+      this.userService.deleteProfile().subscribe(()=>{
+        this.authService.logout()
+      })
+    }
+  }
 
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());

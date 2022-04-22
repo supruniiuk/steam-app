@@ -56,10 +56,6 @@ class GameOwningController {
     const gameId = req.params.id;
     const userId = req.user.id;
 
-    if (!mongoose.isValidObjectId(gameId)) {
-      return next(ApiError.badRequest(`Invalid game id`));
-    }
-
     try {
       const ifExist = await GameOwning.findOne({ userId, gameId });
 
@@ -76,16 +72,22 @@ class GameOwningController {
   }
 
   async deleteGame(req, res, next) {
-    const gameOwningId = req.params.id;
+    const gameId = req.params.id;
     const userId = req.user.id;
 
-    if (!mongoose.isValidObjectId(gameOwningId)) {
-      return next(ApiError.badRequest(`Invalid game id`));
+    try {
+      await GameOwning.findOneAndDelete({ userId, gameId });
+      res.json({ message: "Game successfully deleted" });
+    } catch (err) {
+      return next(ApiError.internal(`Server error`));
     }
+  }
+
+  async deleteAllOwnings(req, res, next) {
+    const userId = req.user.id;
 
     try {
-      await GameOwning.findByIdAndDelete({ _id: gameOwningId });
-      res.json({ message: "Game successfully deleted" });
+      await GameOwning.deleteMany({ userId });
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
