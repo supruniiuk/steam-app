@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/newInterfaces';
 import { FriendsService } from 'src/app/shared/services/friends.service';
 
@@ -11,6 +12,7 @@ export class FriendsPageComponent implements OnInit {
   srcStr: string = '';
   requests: boolean = false;
   activePageId: number = 0;
+  subs: Subscription[] = [];
 
   subPages: Array<{
     title: string;
@@ -51,27 +53,41 @@ export class FriendsPageComponent implements OnInit {
   }
 
   getFriends(): void {
-    this.friendsService.getFriends().subscribe((res) => {
+    const getFriendsSub = this.friendsService.getFriends().subscribe((res) => {
       this.friends = res;
     });
+
+    this.subs.push(getFriendsSub);
   }
 
   getPossibleFriends(): void {
-    this.friendsService.getAllPossibleFriends().subscribe((res) => {
-      this.friends = res;
-    });
+    const getPossibleFriendsSub = this.friendsService
+      .getAllPossibleFriends()
+      .subscribe((res) => {
+        this.friends = res;
+      });
+
+    this.subs.push(getPossibleFriendsSub);
   }
 
   getSubscriptions(): void {
-    this.friendsService.getSubscriptions().subscribe((res) => {
-      this.friends = res;
-    });
+    const getSubscriptionsSub = this.friendsService
+      .getSubscriptions()
+      .subscribe((res) => {
+        this.friends = res;
+      });
+      
+    this.subs.push(getSubscriptionsSub);
   }
 
   getFriendsRequests() {
-    this.friendsService.getFriendsRequests().subscribe((res) => {
-      this.friends = res;
-    });
+    const getFriendsRequestsSub = this.friendsService
+      .getFriendsRequests()
+      .subscribe((res) => {
+        this.friends = res;
+      });
+
+    this.subs.push(getFriendsRequestsSub);
   }
 
   changeSubPage(id: number) {
@@ -80,5 +96,9 @@ export class FriendsPageComponent implements OnInit {
     this.activePageId = id;
     this.friends = null;
     this.subPages[id].method();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

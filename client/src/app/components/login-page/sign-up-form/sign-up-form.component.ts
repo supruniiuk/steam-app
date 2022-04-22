@@ -43,13 +43,13 @@ export class SignUpFormComponent implements OnInit {
     user.username = user.username.trim();
     user.birthday = new Date(user.birthday).toISOString();
 
-    const registrationSubscriber = this.authService
+    const registrationSub = this.authService
       .registration(user)
       .subscribe(() => {
         this.isSubmited = true;
         this.registrationForm.reset();
       });
-    this.subs.push(registrationSubscriber);
+    this.subs.push(registrationSub);
   }
 
   isBtnDisabled(): boolean {

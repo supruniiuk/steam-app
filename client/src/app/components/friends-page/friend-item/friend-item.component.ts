@@ -30,7 +30,10 @@ export class FriendItemComponent implements OnInit {
 
   approveRequest() {
     this.isSubmitted = true;
-    this.friendService.approveRequest(this.friend.id).subscribe();
+    const approveRequest = this.friendService
+      .approveRequest(this.friend.id)
+      .subscribe();
+    this.subs.push(approveRequest);
   }
 
   cancelRequest() {

@@ -43,12 +43,12 @@ export class SignInFormComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-    const loginSubscriber = this.authService.login(user).subscribe(() => {
+    const loginSub = this.authService.login(user).subscribe(() => {
       this.isSubmited = true;
       this.loginForm.reset();
       this.router.navigate(['/games']);
     });
-    this.subs.push(loginSubscriber);
+    this.subs.push(loginSub);
   }
 
   isBtnDisabled(): boolean {

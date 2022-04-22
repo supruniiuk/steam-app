@@ -44,10 +44,14 @@ export class GameItemComponent implements OnInit {
   approve() {
     this.isSubmitted = true;
 
-    this.gameService.approveGame(this.game.id).subscribe(() => {
-      this.isSubmitted = false;
-      this.hideGame();
-    });
+    const approveSub = this.gameService
+      .approveGame(this.game.id)
+      .subscribe(() => {
+        this.isSubmitted = false;
+        this.hideGame();
+      });
+
+    this.subs.push(approveSub);
   }
 
   isDev(): boolean {
@@ -68,10 +72,12 @@ export class GameItemComponent implements OnInit {
 
       const newGame = this.game.id;
 
-      this.gameOwningService.addGame(newGame).subscribe(() => {
+      const addSub = this.gameOwningService.addGame(newGame).subscribe(() => {
         this.isSubmitted = true;
         this.isOwned = true;
       });
+
+      this.subs.push(addSub);
     }
   }
 

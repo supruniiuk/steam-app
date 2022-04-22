@@ -46,4 +46,9 @@ export class ApproveGamesComponent implements OnInit {
       this.srcStr
     );
   }
+
+
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
+  }
 }

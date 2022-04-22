@@ -15,7 +15,7 @@ export class ProfilePageComponent implements OnInit {
   user: User;
   isSubmited: boolean;
   saved: boolean = false;
-  subs: Subscription[] = []
+  subs: Subscription[] = [];
   deleteProfile: boolean = false;
 
   constructor(
@@ -48,21 +48,25 @@ export class ProfilePageComponent implements OnInit {
       birthday: new Date(formData.birthday).toISOString(),
     };
 
-    const updateSubscriber = this.userService.updateUser(userUpdated, this.user.id).subscribe(() => {
-      this.isSubmited = true;
-      this.user = { ...this.user, ...formData };
-      this.authService.setUserInfo(this.user);
-    });
+    const updateSub = this.userService
+      .updateUser(userUpdated, this.user.id)
+      .subscribe(() => {
+        this.isSubmited = true;
+        this.user = { ...this.user, ...formData };
+        this.authService.setUserInfo(this.user);
+      });
 
-    this.subs.push(updateSubscriber)
+    this.subs.push(updateSub);
   }
 
   deleteUserProfile(confirm: boolean): void {
     this.deleteProfile = false;
-    if(confirm) {
-      this.userService.deleteProfile().subscribe(()=>{
-        this.authService.logout()
-      })
+    if (confirm) {
+      const deleteSub = this.userService.deleteProfile().subscribe(() => {
+        this.authService.logout();
+      });
+
+      this.subs.push(deleteSub);
     }
   }
 
