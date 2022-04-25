@@ -37,8 +37,6 @@ async function loginValidation(req, res, next) {
 }
 
 async function gameCreationValidation(req, res, next) {
-  title, price, description, tags;
-
   const schema = joi.object({
     title: joi.string().required(),
     price: joi.number().required(),
