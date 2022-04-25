@@ -10,27 +10,48 @@ import logo from '../../shared/svg/logo.js';
 })
 export class HomePageComponent implements OnInit {
   logo: SafeHtml;
-  navLinks: Array<{ title: string; path: string }> = [
-    { title: 'Games', path: '/games' },
-    { title: 'Library', path: '/library' },
-    { title: 'Friends', path: '/friends' },
-    { title: 'Profile', path: '/profile' },
-  ];
-
+  navLinks: Array<{ title: string; path: string; show: boolean }> = [];
   @ViewChild('menu', { static: false }) nav: ElementRef;
 
   constructor(
     private router: Router,
     public authService: AuthService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+    if (authService.isAuthenticated()) {
+      let userRole = authService.getUserRole();
+      this.navLinks = [
+        { title: 'Games', path: '/games', show: true },
+        {
+          title: 'Library',
+          path: '/library',
+          show: userRole === 'gamer',
+        },
+        {
+          title: 'Friends',
+          path: '/friends',
+          show: userRole !== 'admin',
+        },
+        { title: 'Profile', path: '/profile', show: true },
+        {
+          title: 'My games',
+          path: '/dev-games',
+          show: userRole === 'developer',
+        },
+        {
+          title: 'New games',
+          path: '/new',
+          show: userRole === 'admin',
+        },
+      ];
+    }
+  }
 
   ngOnInit(): void {
     this.logo = this.sanitizer.bypassSecurityTrustHtml(logo);
   }
 
-  logout(event: Event) {
-    event.preventDefault();
+  logout() {
     this.authService.logout();
     this.router.navigate(['/']);
   }

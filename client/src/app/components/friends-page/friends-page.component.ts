@@ -1,59 +1,104 @@
 import { Component, OnInit } from '@angular/core';
-import { Friend, User } from 'src/app/shared/interfaces';
-import { UserService } from 'src/app/shared/services/user.service';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/shared/interfaces';
+import { FriendsService } from 'src/app/shared/services/friends.service';
 
 @Component({
   selector: 'app-friends-page',
-  templateUrl: './friends-page.component.html'
+  templateUrl: './friends-page.component.html',
 })
 export class FriendsPageComponent implements OnInit {
-  public users: User[] = [];
-  errorMessage: string = '';
+  friends: User[];
   srcStr: string = '';
-  user: User;
-  friendsList: Friend[];
+  requests: boolean = false;
+  activePageId: number = 0;
+  subs: Subscription[] = [];
 
-  constructor(private userService: UserService) {}
+  subPages: Array<{
+    title: string;
+    active: boolean;
+    option: string;
+    method: Function;
+  }> = [
+    {
+      title: 'Friends',
+      active: true,
+      option: 'friends',
+      method: this.getFriends.bind(this),
+    },
+    {
+      title: 'My requests',
+      active: false,
+      option: 'publishers',
+      method: this.getSubscriptions.bind(this),
+    },
+    {
+      title: 'Friend requests',
+      active: false,
+      option: 'subscribers',
+      method: this.getFriendsRequests.bind(this),
+    },
+    {
+      title: 'Search friends',
+      active: false,
+      option: 'search',
+      method: this.getPossibleFriends.bind(this),
+    },
+  ];
+
+  constructor(private friendsService: FriendsService) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getCurrentUserInfo();
-
-    if (this.user.friendsList && this.user.friendsList.length > 0) {
-      this.friendsList = this.user.friendsList;
-    } else {
-      this.friendsList = [];
-    }
-
-    this.userService.getAllUsers().subscribe(
-      (res) => {
-        this.users = Object.keys(res).map((key: any) => {
-          res[key].id = key;
-          return res[key];
-        });
-
-        this.filterUsers();
-      },
-      (err) => {
-        this.errorMessage = err.message;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 2000);
-      }
-    );
+    this.getFriends();
   }
 
-  filterUsers() {
-    const friends = this.friendsList.map((f) => f.id);
-    this.users = this.users.filter(
-      (u) => u.email !== this.user.email && !friends.includes(u.id)
-    );
+  getFriends(): void {
+    const getFriendsSub = this.friendsService.getFriends().subscribe((res) => {
+      this.friends = res;
+    });
+
+    this.subs.push(getFriendsSub);
   }
 
-  remove(exFriend: Friend) {
-    this.friendsList = this.friendsList.filter((f) => f.id != exFriend.id);
+  getPossibleFriends(): void {
+    const getPossibleFriendsSub = this.friendsService
+      .getAllPossibleFriends()
+      .subscribe((res) => {
+        this.friends = res;
+      });
+
+    this.subs.push(getPossibleFriendsSub);
   }
 
-  add(newFriend: Friend) {
-    this.friendsList.unshift(newFriend);
+  getSubscriptions(): void {
+    const getSubscriptionsSub = this.friendsService
+      .getSubscriptions()
+      .subscribe((res) => {
+        this.friends = res;
+      });
+      
+    this.subs.push(getSubscriptionsSub);
+  }
+
+  getFriendsRequests() {
+    const getFriendsRequestsSub = this.friendsService
+      .getFriendsRequests()
+      .subscribe((res) => {
+        this.friends = res;
+      });
+
+    this.subs.push(getFriendsRequestsSub);
+  }
+
+  changeSubPage(id: number) {
+    this.subPages[this.activePageId].active = false;
+    this.subPages[id].active = true;
+    this.activePageId = id;
+    this.friends = null;
+    this.subPages[id].method();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

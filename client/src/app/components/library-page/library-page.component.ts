@@ -1,54 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { Game, User } from 'src/app/shared/interfaces';
-import { GameService } from 'src/app/shared/services/games.service';
-import { UserService } from 'src/app/shared/services/user.service';
-
+import { Subscription } from 'rxjs';
+import { GameOwning } from 'src/app/shared/interfaces';
+import { GameOwningService } from 'src/app/shared/services/gameOwning.service';
 @Component({
   selector: 'app-library-page',
   templateUrl: './library-page.component.html',
   styleUrls: ['./library-page.component.scss'],
 })
 export class LibraryPageComponent implements OnInit {
-  user: User;
-  gamesList: Array<Game>;
-  allGames: Array<Game>;
-  errorMessage: string = '';
+  ownGames: GameOwning[];
+  subs: Subscription[] = [];
 
-  constructor(
-    private gameService: GameService,
-    private userService: UserService
-  ) {}
+  constructor(private gameOwningService: GameOwningService) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getCurrentUserInfo();
+    const getGames = this.gameOwningService.getAllGame().subscribe((res) => {
+      this.ownGames = res;
+      this.filterGames();
+    });
 
-    if (!this.user.gamesList) {
-      this.user.gamesList = [];
-    }
-
-    this.gameService.getAllGames().subscribe(
-      (res) => {
-        this.allGames = Object.keys(res).map((key: any) => {
-          res[key].id = key;
-          return res[key];
-        });
-
-        this.filterGames();
-      },
-      (err) => {
-        this.errorMessage = err.message;
-        setTimeout(() => {
-          this.errorMessage = '';
-        });
-      }
-    );
+    this.subs.push(getGames);
   }
 
   filterGames() {
-    if (this.user.gamesList && this.user.gamesList.length > 0) {
-      const userGames = this.user.gamesList;
+    this.ownGames.sort(function (a, b) {
+      return a.createdAt < b.createdAt ? 1 : a.createdAt > b.createdAt ? -1 : 0;
+    });
+  }
 
-      this.gamesList = this.allGames.filter((g) => userGames.includes(g.id));
-    }
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

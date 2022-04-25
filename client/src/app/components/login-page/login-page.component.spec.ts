@@ -1,8 +1,5 @@
 import {
-  ComponentFixture,
-  fakeAsync,
   TestBed,
-  tick,
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -13,7 +10,6 @@ import { LoginPageComponent } from './login-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EMPTY, of } from 'rxjs';
-import { User } from 'src/app/shared/interfaces';
 
 describe('LoginPageComponent', () => {
   let component: LoginPageComponent;

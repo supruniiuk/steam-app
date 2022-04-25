@@ -1,7 +1,4 @@
 export interface Environment {
-  apiKey: string;
+  apiUrl: string;
   production: boolean;
-  dbURL: string;
-  loginURL: string;
-  registrationURL: string;
 }

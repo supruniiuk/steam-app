@@ -1,0 +1,8 @@
+<div class="custom-container bg-light p-4">
+  <div class="w-100">
+    <app-allert></app-allert>
+    <app-search (search)="updateSrc($event)"></app-search>
+
+    <app-games-list class="games-list" [games]="filteredGames"></app-games-list>
+  </div>
+</div>

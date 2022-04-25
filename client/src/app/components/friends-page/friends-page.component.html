@@ -1,43 +1,28 @@
 <div class="custom-container bg-light p-4">
-  <div class="w-90">
-    <p class="heading-custom pb-2">Friends</p>
+  <div class="w-90 h-100">
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item" *ngFor="let page of subPages; let i = index">
+        <a
+          class="nav-link heading-custom pb-2 text-dark"
+          [class.active]="page.active"
+          (click)="changeSubPage(i)"
+          >{{ page.title }}
+        </a>
+      </li>
+    </ul>
 
-    <div class="search input-group mb-3">
-      <input
-        type="text"
-        class="form-control search border-dark"
-        placeholder="Search friends"
-        id="basic-url"
-        [(ngModel)]="srcStr"
-      />
-      <button class="btn btn-purple custom-shadow" (click)="srcStr = ' '">
-        Search
-      </button>
-    </div>
+    <app-allert></app-allert>
 
-    <div class="alert alert-danger" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </div>
+    <app-loader *ngIf="!friends"></app-loader>
 
-    <div *ngIf="friendsList && !srcStr">
-      <p class="heading-custom pb-2">My friends</p>
-      <app-friend-item
-        *ngFor="let f of friendsList; first as isFirst"
-        [friend]="f"
-        [isFriend]="true"
-        (removeFriend)="remove($event)"
-      ></app-friend-item>
-    </div>
-
-    <div
-      *ngIf="(users && srcStr) || (users && friendsList.length == 0 && !srcStr)"
-    >
-      <p class="heading-custom pb-2">Search Friends: {{ srcStr }}</p>
-      <app-friend-item
-        *ngFor="let u of users | search: 'email':srcStr; first as isFirst"
-        [friend]="u"
-        (addFriend)="add($event)"
-      ></app-friend-item>
+    <div class="search input-group mb-3" *ngIf="friends">
+      <div class="w-100">
+        <app-friend-item
+          *ngFor="let friend of friends; first as isFirst"
+          [friend]="friend"
+          [option]="subPages[activePageId].option"
+        ></app-friend-item>
+      </div>
     </div>
   </div>
 </div>

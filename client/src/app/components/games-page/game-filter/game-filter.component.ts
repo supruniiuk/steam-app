@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { Game } from 'src/app/shared/interfaces';
 
 @Component({
@@ -16,11 +16,17 @@ export class GameFilterComponent implements OnInit {
   @Input() games: Game[] = [];
   @Output() curPrice = new EventEmitter<number>();
   @Output() gameTypes = new EventEmitter<string[]>();
+  @ViewChildren('tag') checked: QueryList<ElementRef>;
 
   constructor() {}
 
   ngOnInit(): void {
     this.setPricesRange();
+  }
+
+  getCheckedTags() {
+    const tags = this.checked.toArray().filter((t) => t.nativeElement.checked);
+    return tags.map((tag) => tag.nativeElement.value);
   }
 
   setPricesRange() {
@@ -37,14 +43,7 @@ export class GameFilterComponent implements OnInit {
   }
 
   pickTag(): void {
-    // Renderer2!!!!!!!!
-
-    this.tags = [];
-    const checked = document.querySelectorAll('input[name=tag]:checked');
-    for (let i = 0; i < checked.length; i++) {
-      this.tags.push(checked[i].getAttribute('value'));
-    }
-
+    this.tags = this.getCheckedTags();
     this.gameTypes.emit(this.tags);
   }
 }

@@ -1,0 +1,29 @@
+.img-imitation {
+  position: relative;
+}
+
+.card {
+  width: 95% !important;
+  max-width: 300px !important;
+  overflow: hidden !important;
+  margin: 0 auto !important;
+}
+
+.card-text {
+  height: 120px;
+  overflow: scroll;
+}
+
+.btn-purple,
+.btn-remove {
+  width: 48%;
+}
+
+.card-text::-webkit-scrollbar {
+  display: none;
+}
+
+.card-text {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

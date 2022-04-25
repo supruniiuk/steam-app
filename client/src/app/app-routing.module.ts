@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
-import {
-  NoPreloading,
-  RouterModule,
-  Routes,
-} from '@angular/router';
+import { NoPreloading, RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { AuthGuard } from './shared/services/auth.guard';
@@ -18,39 +14,49 @@ const routes: Routes = [
       {
         path: 'friends',
         loadChildren: () =>
-          import('./components/friends-page/friends-page.module').then(
+          import('./shared/modules/friends-page.module').then(
             (m) => m.FriendsPageModule
           ),
-        canActivate: [AuthGuard],
       },
       {
         path: 'games',
         loadChildren: () =>
-          import('./components/games-page/games-page.module').then(
+          import('./shared/modules/games-page.module').then(
             (m) => m.GamesPageModule
           ),
-        canActivate: [AuthGuard],
       },
       {
         path: 'library',
         loadChildren: () =>
-          import('./components/library-page/library-page.module').then(
+          import('./shared/modules/library-page.module').then(
             (m) => m.LibraryPageModule
           ),
-        canActivate: [AuthGuard],
       },
       {
         path: 'profile',
         loadChildren: () =>
-          import('./components/profile-page/profile-page.module').then(
+          import('./shared/modules/profile-page.module').then(
             (m) => m.ProfilePageModule
           ),
-        canActivate: [AuthGuard],
+      },
+      {
+        path: 'dev-games',
+        loadChildren: () =>
+          import('./shared/modules/dev-games.module').then(
+            (m) => m.DevGamesModule
+          ),
+      },
+      {
+        path: 'new',
+        loadChildren: () =>
+          import('./shared/modules/approve-games.module').then(
+            (m) => m.ApproveGamesModule
+          ),
       },
       {
         path: '**',
         loadChildren: () =>
-          import('./components/games-page/games-page.module').then(
+          import('./shared/modules/games-page.module').then(
             (m) => m.GamesPageModule
           ),
         canActivate: [AuthGuard],

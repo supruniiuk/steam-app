@@ -2,7 +2,7 @@ const logo = `<svg
   xmlns="http://www.w3.org/2000/svg"
   width="39"
   height="39"
-  fill="var(--main-purple)"
+  fill="#6c69ff"
   class="bi bi-steam"
   viewBox="0 0 16 16"
 >

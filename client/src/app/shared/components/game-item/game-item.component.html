@@ -1,0 +1,81 @@
+<div class="card" *ngIf="game" #gameItem>
+  <div class="card-img-top img-imitation">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      *ngIf="isDev() && !main"
+      width="32"
+      height="32"
+      fill="currentColor"
+      class="bi bi-x-circle-fill delete-item"
+      viewBox="0 0 16 16"
+      (click)="deleteGame = true"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"
+      />
+    </svg>
+
+    <p class="game-name heading-custom pb-2">{{ game.title }}</p>
+    <p *ngIf="!isOwned" class="game-price heading-custom pb-2">
+      {{ game.price }} UAH
+    </p>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text">
+      {{ game.description }}
+    </p>
+
+    <div *ngIf="!main">
+      <button
+        *ngIf="isDev()"
+        class="btn w-100 btn-purple custom-shadow my-2"
+        (click)="updateId = game.id"
+      >
+        Update
+      </button>
+
+      <button
+        *ngIf="role === 'admin'"
+        class="btn w-100 btn-purple custom-shadow"
+        (click)="approve()"
+        [disabled]="isSubmitted"
+      >
+        Approve
+      </button>
+    </div>
+
+    <button
+      *ngIf="!isOwned && isGamer()"
+      class="btn w-100 btn-purple custom-shadow"
+      (click)="addGame()"
+      [disabled]="isSubmitted || isOwned"
+    >
+      Add to library
+    </button>
+
+    <div *ngIf="isOwned" class="d-flex justify-content-between">
+      <button href="#" class="btn btn-purple custom-shadow">Download</button>
+      <button
+        href="#"
+        class="btn btn-remove custom-shadow"
+        (click)="deleteGameOwning = true"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-update-game
+  *ngIf="updateId"
+  [editGame]="game"
+  (close)="updateId = ''"
+  (updatedGame)="updateGame($event)"
+></app-update-game>
+
+<app-confirmation
+  *ngIf="deleteGame || deleteGameOwning"
+  [game]="game"
+  (close)="delete($event)"
+></app-confirmation>

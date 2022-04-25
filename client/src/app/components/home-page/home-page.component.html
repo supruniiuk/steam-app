@@ -25,12 +25,13 @@
             class="nav-link text-dark"
             routerLink="{{ link.path }}"
             routerLinkActive="active"
+            *ngIf="link.show"
             >{{ link.title }}</a
           >
         </li>
 
         <li class="nav-item">
-          <a class="nav-link text-dark" (click)="logout($event)">Log out</a>
+          <a class="nav-link text-dark" (click)="logout()">Log out</a>
         </li>
       </ul>
     </div>

@@ -13,8 +13,16 @@
 }
 
 .center-block {
-  position: absolute;
+  position: fixed;
   @include center;
+  z-index: 1;
+}
+
+.modalWindow {
+  background-color: var(--bs-light);
+  z-index: 3;
+  width: 35%;
+  border-radius: 4px;
 }
 
 .custom-container {

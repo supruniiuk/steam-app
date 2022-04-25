@@ -9,7 +9,7 @@ export class GameFilterPipe implements PipeTransform {
     games = games.filter((g) => {
       let consist = true;
       tags.map((t) => {
-        if (!g.tag.includes(t)) {
+        if (!g.tags.includes(t)) {
           consist = false;
         }
       });

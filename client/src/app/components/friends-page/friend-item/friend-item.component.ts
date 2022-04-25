@@ -1,82 +1,52 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Friend, User } from 'src/app/shared/interfaces';
-import { UserService } from 'src/app/shared/services/user.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/shared/interfaces';
+import { FriendsService } from 'src/app/shared/services/friends.service';
 
 @Component({
   selector: 'app-friend-item',
   templateUrl: './friend-item.component.html',
 })
 export class FriendItemComponent implements OnInit {
-  user: User;
-  isSubmitted: boolean;
-  delete: boolean = false;
+  isRequestSend: boolean = false;
+  isSubmitted: boolean = false;
+  subs: Subscription[] = [];
 
-  @Input() isFriend: boolean = false;
-  @Input() friend: Friend | User = null;
-  @Output() addFriend = new EventEmitter<Friend>();
-  @Output() removeFriend = new EventEmitter<Friend>();
+  @Input() friend: User = null;
+  @Input() option: string = 'friends';
 
-  constructor(private userService: UserService) {}
+  constructor(private friendService: FriendsService) {}
 
   ngOnInit(): void {}
 
-  getUserInfo() {
-    this.user = this.userService.getCurrentUserInfo();
+  addFriend() {
+    this.isRequestSend = true;
+    const addFriendSubscription = this.friendService
+      .addFriend(this.friend.id)
+      .subscribe();
 
-    if (!this.user.friendsList) {
-      this.user.friendsList = [];
-    }
+    this.subs.push(addFriendSubscription);
   }
 
-  add() {
-    this.isSubmitted = false;
-    this.getUserInfo();
-
-    const newFriend: Friend = {
-      email: this.friend.email,
-      id: this.friend.id,
-    };
-
-    this.user.friendsList.push(newFriend);
-    const updatedUser = {
-      ...this.user,
-      id: null,
-    };
-
-    this.userService.updateUser(updatedUser, this.user.id).subscribe((res) => {
-      this.isSubmitted = true;
-
-      const updUser = {
-        ...res,
-        id: this.user.id,
-      };
-      localStorage.setItem('userInfo', JSON.stringify(updUser));
-      this.addFriend.emit(newFriend);
-    });
+  approveRequest() {
+    this.isSubmitted = true;
+    const approveRequest = this.friendService
+      .approveRequest(this.friend.id)
+      .subscribe();
+    this.subs.push(approveRequest);
   }
 
-  remove() {
-    this.isSubmitted = false;
+  cancelRequest() {
+    this.isRequestSend = false;
+    this.isSubmitted = true;
+    const cancelSubscription = this.friendService
+      .deleteFriend(this.friend.id)
+      .subscribe();
 
-    this.getUserInfo();
-    const friendsList = this.user.friendsList.filter(
-      (f) => f.id != this.friend.id
-    );
+    this.subs.push(cancelSubscription);
+  }
 
-    const updatedUser = {
-      ...this.user,
-      id: null,
-      friendsList,
-    };
-
-    this.userService.updateUser(updatedUser, this.user.id).subscribe((res) => {
-      this.isSubmitted = true;
-      const updUser = {
-        ...res,
-        id: this.user.id,
-      };
-      localStorage.setItem('userInfo', JSON.stringify(updUser));
-      this.removeFriend.emit({ email: this.friend.email, id: this.friend.id });
-    });
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

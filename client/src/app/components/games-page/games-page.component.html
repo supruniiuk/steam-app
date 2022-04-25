@@ -1,36 +1,19 @@
 <div class="custom-container bg-light p-4">
   <div class="w-90">
     <p class="heading-custom pb-2">Games</p>
-    <label>Search games</label>
 
-    <div class="search input-group mb-3">
-      <input
-        type="text"
-        class="form-control search border-dark"
-        placeholder="Search games"
-        [(ngModel)]="srcStr"
-      />
-      <button class="btn btn-purple custom-shadow" (click)="srcStr = ' '">
-        Search
-      </button>
-    </div>
+    <app-search (search)="updateSrc($event)"></app-search>
 
     <p class="heading-custom pb-2">Featured Games</p>
 
-    <app-loader *ngIf="!currentPrice"></app-loader>
+    <app-loader *ngIf="!filteredGames"></app-loader>
     <div class="content-display">
-      <div class="games-list" *ngIf="currentPrice">
-        <!--              | gameFilter: currentPrice:tags-->
-        <app-game-item
-          *ngFor="
-            let game of games
-              | gameFilter: currentPrice:tags
-              | search: 'title':srcStr;
-            first as isFirst
-          "
-          [game]="game"
-        ></app-game-item>
-      </div>
+      <app-games-list
+        *ngIf="currentPrice"
+        class="games-list"
+        [games]="filteredGames"
+        [main]="true"
+      ></app-games-list>
 
       <app-game-filter
         *ngIf="games.length > 0"

@@ -1,41 +1,35 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ResponseName, User } from '../interfaces';
+import { MessageResponse, User } from '../interfaces';
+import { RequestService } from './requests.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  ROUTE: string = 'users';
 
-  getCurrentUserInfo(): User {
-    const userInfo: string | null = localStorage.getItem('userInfo');
-    const user = JSON.parse(userInfo ? userInfo : '');
-    return user;
-  }
+  constructor(
+    private http: HttpClient,
+    private requestService: RequestService
+  ) {}
 
-  setCurrentUserInfo(user: User): void {
-    localStorage.setItem('userInfo', JSON.stringify(user));
-  }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.dbURL}/users.json`);
+    return this.http.get<User[]>(`${environment.apiUrl}/users.json`);
   }
 
   getUserById(id: string | null): Observable<User> {
-    return this.http.get<User>(`${environment.dbURL}/users/${id}.json`);
+    return this.http.get<User>(`${environment.apiUrl}/users/${id}.json`);
   }
 
-  createUser(user: User): Observable<ResponseName> {
-    return this.http.post<ResponseName>(
-      `${environment.dbURL}/users.json`,
-      user
-    );
+  updateUser(user, id: string): Observable<MessageResponse> {
+    return this.requestService.update(`${this.ROUTE}/${id}`, user);
   }
 
-  updateUser(user: User, id: string): any {
-    return this.http.patch<User>(`${environment.dbURL}/users/${id}.json`, user);
+  deleteProfile(): Observable<MessageResponse> {
+    return this.requestService.delete(`${this.ROUTE}`)
   }
 }
