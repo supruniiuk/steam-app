@@ -4,8 +4,8 @@ const { ROLES } = require("../constants/userRoles");
 
 async function registrationValidation(req, res, next) {
   const schema = joi.object({
-    username: joi.string().email().required(),
-    email: joi.string().required(),
+    username: joi.string().required(),
+    email: joi.email().string().required(),
     role: joi
       .string()
       .valid(...ROLES)
