@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateGameComponent } from 'src/app/components/dev-games/update-game/update-game.component';
 import { CompleteGameListComponent } from '../components/complete-game-list/complete-game-list.component';
 import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
+import { PaginationComponent } from '../components/pagination/pagination.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -25,7 +26,8 @@ import { ConfirmationComponent } from 'src/app/shared/components/confirmation/co
     SearchComponent,
     UpdateGameComponent,
     CompleteGameListComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    PaginationComponent
   ],
   exports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { ConfirmationComponent } from 'src/app/shared/components/confirmation/co
     SearchComponent,
     UpdateGameComponent,
     CompleteGameListComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    PaginationComponent
   ],
 })
 export class SharedModule {}

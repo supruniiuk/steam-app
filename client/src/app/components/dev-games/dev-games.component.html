@@ -1,5 +1,5 @@
 <div class="custom-container bg-light p-4">
-  <div class="d-flex">
+  <div class="dev-wrapper">
     <div class="creation-form">
       <app-create-game (newGame)="addGame($event)"></app-create-game>
     </div>
@@ -11,6 +11,11 @@
         class="games-list"
         [games]="filteredGames"
       ></app-games-list>
+
+      <app-pagination
+        [pages]="count"
+        (nextPage)="changePage($event)"
+      ></app-pagination>
     </div>
   </div>
 </div>

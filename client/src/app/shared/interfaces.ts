@@ -37,8 +37,14 @@ export interface Game extends GameRequest {
   id: string;
   createdAt: string;
   creatorId: string;
+  approved: boolean;
 }
 
 export interface GameOwning extends Game {
   ownId: string;
+}
+
+export interface GameResponse {
+  count: number;
+  games: Game[];
 }

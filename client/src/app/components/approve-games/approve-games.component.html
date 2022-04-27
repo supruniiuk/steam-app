@@ -2,7 +2,17 @@
   <div class="w-100">
     <app-allert></app-allert>
     <app-search (search)="updateSrc($event)"></app-search>
+    <app-loader *ngIf="!filteredGames"></app-loader>
 
-    <app-games-list class="games-list" [games]="filteredGames"></app-games-list>
+    <div *ngIf="count">
+      <app-games-list
+        class="games-list"
+        [games]="filteredGames"
+      ></app-games-list>
+      <app-pagination
+        [pages]="count"
+        (nextPage)="changePage($event)"
+      ></app-pagination>
+    </div>
   </div>
 </div>

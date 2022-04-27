@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game } from 'src/app/shared/interfaces';
+import { Game, GameResponse } from 'src/app/shared/interfaces';
 import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 import { GameService } from 'src/app/shared/services/games.service';
 
@@ -10,9 +10,11 @@ import { GameService } from 'src/app/shared/services/games.service';
 })
 export class ApproveGamesComponent implements OnInit {
   games: Game[] = [];
-  filteredGames: Game[] = [];
+  filteredGames: Game[];
   srcStr: string = '';
   subs: Subscription[] = [];
+
+  count: number;
 
   constructor(
     public gameService: GameService,
@@ -20,10 +22,15 @@ export class ApproveGamesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getGamesForApprove();
+  }
+
+  getGamesForApprove(page: number = 1) {
     const gamesSubscription = this.gameService
-      .getGamesForApprove()
-      .subscribe((res) => {
-        this.games = res;
+      .getGamesForApprove(page)
+      .subscribe((res: GameResponse) => {
+        this.games = res.games;
+        this.count = Math.ceil(res.count / 15);
         this.sortGames();
 
         this.filteredGames = this.games;
@@ -47,6 +54,9 @@ export class ApproveGamesComponent implements OnInit {
     );
   }
 
+  changePage(page: number): void {
+    this.getGamesForApprove(page);
+  }
 
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());

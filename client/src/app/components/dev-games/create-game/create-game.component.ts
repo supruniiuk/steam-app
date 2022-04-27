@@ -41,16 +41,20 @@ export class CreateGameComponent implements OnInit {
     return tags.map((tag) => tag.nativeElement.value);
   }
 
+  resetForm() {
+    this.game.reset();
+    this.checked.forEach((box) => (box.nativeElement.checked = false));
+  }
+
   create(): void {
     this.isSubmited = true;
     this.game.value.tags = this.getCheckedTags();
     const newGame = this.game.value;
     const createGame = this.gameService.createGame(newGame).subscribe(() => {
       this.newGame.emit(this.game.value);
-      this.game.reset();
-      this.isSubmited = false;
+      this.resetForm();
     });
-
+    this.isSubmited = false;
     this.subs.push(createGame);
   }
 

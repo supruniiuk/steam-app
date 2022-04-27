@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game } from 'src/app/shared/interfaces';
+import { Game, GameResponse } from 'src/app/shared/interfaces';
 import { GameFilterPipe } from 'src/app/shared/pipes/gameFilter.pipe';
 import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -19,6 +19,8 @@ export class GamesPageComponent implements OnInit {
   srcStr: string = '';
   currentPrice: number;
   tags: Array<string> = [];
+  count: number;
+  role: string;
 
   constructor(
     public gameService: GameService,
@@ -29,14 +31,20 @@ export class GamesPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const role = this.authService.getUserRole();
+    this.role = this.authService.getUserRole();
+    this.getAllGames();
+  }
+
+  getAllGames(page: number = 1) {
     const gamesSubscription = this.gameService
-      .getAllGames()
-      .subscribe((res) => {
-        this.games = res;
+      .getAllGames(page)
+      .subscribe((res: GameResponse) => {
+        this.games = res.games;
+        this.count = Math.ceil(res.count/15)
+
         this.sortGamesByDate();
         this.filteredGames = [...this.games];
-        if (role == 'gamer') {
+        if (this.role == 'gamer') {
           this.getOwnGames();
         }
       });
@@ -89,7 +97,12 @@ export class GamesPageComponent implements OnInit {
     this.filterGame();
   }
 
+  changePage(page: number): void {
+    this.getAllGames(page);
+  }
+
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
+
 }

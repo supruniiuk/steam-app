@@ -9,12 +9,18 @@
     <app-loader *ngIf="!filteredGames"></app-loader>
 
     <div class="content-display">
-      <app-games-list
-        *ngIf="currentPrice"
-        class="games-list"
-        [games]="filteredGames"
-        [main]="true"
-      ></app-games-list>
+      <div class="w-100">
+        <app-games-list
+          *ngIf="currentPrice"
+          class="games-list"
+          [games]="filteredGames"
+          [main]="true"
+        ></app-games-list>
+        <app-pagination
+          [pages]="count"
+          (nextPage)="changePage($event)"
+        ></app-pagination>
+      </div>
 
       <app-game-filter
         *ngIf="games.length > 0"

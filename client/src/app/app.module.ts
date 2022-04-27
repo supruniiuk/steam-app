@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 import { SignInFormComponent } from './components/login-page/sign-in-form/sign-in-form.component';
 import { SignUpFormComponent } from './components/login-page/sign-up-form/sign-up-form.component';
 import { SharedModule } from './shared/modules/shared.module';
-import { ConfirmationComponent } from './shared/components/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,7 @@ import { ConfirmationComponent } from './shared/components/confirmation/confirma
     LoginPageComponent,
     HomePageComponent,
     SignInFormComponent,
-    SignUpFormComponent,
+    SignUpFormComponent
   ],
   imports: [
     BrowserModule,
