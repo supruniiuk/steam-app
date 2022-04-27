@@ -48,3 +48,8 @@ export interface GameResponse {
   count: number;
   games: Game[];
 }
+
+export interface FriendResponse {
+  friends: User[];
+  count: number;
+}

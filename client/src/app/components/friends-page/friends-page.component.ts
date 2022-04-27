@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/shared/interfaces';
+import { FriendResponse, User } from 'src/app/shared/interfaces';
 import { FriendsService } from 'src/app/shared/services/friends.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class FriendsPageComponent implements OnInit {
   requests: boolean = false;
   activePageId: number = 0;
   subs: Subscription[] = [];
+  count: number = 0;
 
   subPages: Array<{
     title: string;
@@ -52,10 +53,27 @@ export class FriendsPageComponent implements OnInit {
     this.getFriends();
   }
 
-  getFriends(): void {
-    const getFriendsSub = this.friendsService.getFriends().subscribe((res) => {
-      this.friends = res;
+  setFriends(res: FriendResponse) {
+    this.friends = res.friends;
+    this.count = Math.ceil(res.count / 15);
+
+    this.friends.sort(function (a, b) {
+      if (a.username < b.username) {
+        return -1;
+      }
+      if (a.username > b.username) {
+        return 1;
+      }
+      return 0;
     });
+  }
+
+  getFriends(): void {
+    const getFriendsSub = this.friendsService
+      .getFriends()
+      .subscribe((res: FriendResponse) => {
+        this.setFriends(res);
+      });
 
     this.subs.push(getFriendsSub);
   }
@@ -63,8 +81,8 @@ export class FriendsPageComponent implements OnInit {
   getPossibleFriends(): void {
     const getPossibleFriendsSub = this.friendsService
       .getAllPossibleFriends()
-      .subscribe((res) => {
-        this.friends = res;
+      .subscribe((res: FriendResponse) => {
+        this.setFriends(res);
       });
 
     this.subs.push(getPossibleFriendsSub);
@@ -73,18 +91,18 @@ export class FriendsPageComponent implements OnInit {
   getSubscriptions(): void {
     const getSubscriptionsSub = this.friendsService
       .getSubscriptions()
-      .subscribe((res) => {
-        this.friends = res;
+      .subscribe((res: FriendResponse) => {
+        this.setFriends(res);
       });
-      
+
     this.subs.push(getSubscriptionsSub);
   }
 
   getFriendsRequests() {
     const getFriendsRequestsSub = this.friendsService
       .getFriendsRequests()
-      .subscribe((res) => {
-        this.friends = res;
+      .subscribe((res: FriendResponse) => {
+        this.setFriends(res);
       });
 
     this.subs.push(getFriendsRequestsSub);

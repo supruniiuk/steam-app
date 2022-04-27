@@ -27,7 +27,7 @@ class GameController {
   async getApprovedGames(req, res, next) {
     let { limit, page } = req.query;
     page = page || 1;
-    limit = limit || 9;
+    limit = limit || 30;
     const offset = page * limit - limit;
 
     try {
@@ -46,7 +46,7 @@ class GameController {
     const creatorId = req.user.id;
     let { limit, page } = req.query;
     page = page || 1;
-    limit = limit || 9;
+    limit = limit || 30;
     const offset = page * limit - limit;
 
     try {
@@ -64,7 +64,7 @@ class GameController {
   async getGamesForApprove(req, res, next) {
     let { limit, page } = req.query;
     page = page || 1;
-    limit = limit || 15;
+    limit = limit || 30;
     const offset = page * limit - limit;
 
     try {

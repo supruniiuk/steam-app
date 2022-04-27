@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MessageResponse, User } from '../interfaces';
+import { FriendResponse, MessageResponse, User } from '../interfaces';
 import { RequestService } from './requests.service';
 
 @Injectable({
@@ -14,25 +14,25 @@ export class FriendsService {
 
   constructor(private requestService: RequestService) {}
 
-  getFriends(): Observable<User[]> {
+  getFriends(): Observable<FriendResponse> {
     return this.requestService
     .get<User[]>(this.ROUTE)
     .pipe(catchError(this.handleError.bind(this)));
   }
 
-  getAllPossibleFriends(): Observable<User[]> {
+  getAllPossibleFriends(): Observable<FriendResponse> {
     return this.requestService
       .get<User[]>(this.ROUTE + '/search')
       .pipe(catchError(this.handleError.bind(this)));
   }
 
-  getSubscriptions(): Observable<User[]> {
+  getSubscriptions(): Observable<FriendResponse> {
     return this.requestService
       .get<User[]>(this.ROUTE + '/subs')
       .pipe(catchError(this.handleError.bind(this)));
   }
 
-  getFriendsRequests(): Observable<User[]> {
+  getFriendsRequests(): Observable<FriendResponse> {
     return this.requestService
       .get<User[]>(this.ROUTE + '/new')
       .pipe(catchError(this.handleError.bind(this)));
