@@ -22,6 +22,12 @@
           [friend]="friend"
           [option]="subPages[activePageId].option"
         ></app-friend-item>
+
+        <app-pagination
+          *ngIf="count > 1"
+          [pages]="count"
+          (nextPage)="changePage($event)"
+        ></app-pagination>
       </div>
     </div>
   </div>

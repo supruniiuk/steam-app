@@ -30,7 +30,7 @@ export class DevGamesComponent implements OnInit {
       .getDevGames(page)
       .subscribe((res: GameResponse) => {
         this.games = res.games;
-        this.count = Math.ceil(res.count / 9);
+        this.count = Math.ceil(res.count / 15);
 
         this.filterGames();
         this.filteredGames = this.games;
@@ -45,7 +45,7 @@ export class DevGamesComponent implements OnInit {
     });
   }
 
-  addGame(game: any): void {
+  addGame(game: Game): void {
     this.games.unshift(game);
   }
 

@@ -40,7 +40,7 @@ export class GamesPageComponent implements OnInit {
       .getAllGames(page)
       .subscribe((res: GameResponse) => {
         this.games = res.games;
-        this.count = Math.ceil(res.count/15)
+        this.count = Math.ceil(res.count/30)
 
         this.sortGamesByDate();
         this.filteredGames = [...this.games];

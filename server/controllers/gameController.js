@@ -46,7 +46,7 @@ class GameController {
     const creatorId = req.user.id;
     let { limit, page } = req.query;
     page = page || 1;
-    limit = limit || 30;
+    limit = limit || 15;
     const offset = page * limit - limit;
 
     try {

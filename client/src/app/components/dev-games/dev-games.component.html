@@ -13,6 +13,7 @@
       ></app-games-list>
 
       <app-pagination
+        *ngIf="count > 1"
         [pages]="count"
         (nextPage)="changePage($event)"
       ></app-pagination>

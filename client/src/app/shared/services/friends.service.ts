@@ -14,27 +14,27 @@ export class FriendsService {
 
   constructor(private requestService: RequestService) {}
 
-  getFriends(): Observable<FriendResponse> {
+  getFriends(page: number): Observable<FriendResponse> {
     return this.requestService
-    .get<User[]>(this.ROUTE)
-    .pipe(catchError(this.handleError.bind(this)));
-  }
-
-  getAllPossibleFriends(): Observable<FriendResponse> {
-    return this.requestService
-      .get<User[]>(this.ROUTE + '/search')
+      .get<User[]>(this.ROUTE + `?page=${page}`)
       .pipe(catchError(this.handleError.bind(this)));
   }
 
-  getSubscriptions(): Observable<FriendResponse> {
+  getAllPossibleFriends(page: number): Observable<FriendResponse> {
     return this.requestService
-      .get<User[]>(this.ROUTE + '/subs')
+      .get<User[]>(this.ROUTE + '/search' + `?page=${page}`)
       .pipe(catchError(this.handleError.bind(this)));
   }
 
-  getFriendsRequests(): Observable<FriendResponse> {
+  getSubscriptions(page: number): Observable<FriendResponse> {
     return this.requestService
-      .get<User[]>(this.ROUTE + '/new')
+      .get<User[]>(this.ROUTE + '/subs' + `?page=${page}`)
+      .pipe(catchError(this.handleError.bind(this)));
+  }
+
+  getFriendsRequests(page: number): Observable<FriendResponse> {
+    return this.requestService
+      .get<User[]>(this.ROUTE + '/new' + `?page=${page}`)
       .pipe(catchError(this.handleError.bind(this)));
   }
 
@@ -46,8 +46,8 @@ export class FriendsService {
 
   approveRequest(id: string): Observable<MessageResponse> {
     return this.requestService
-    .patch<MessageResponse[]>(this.ROUTE + `/${id}`)
-    .pipe(catchError(this.handleError.bind(this)));
+      .patch<MessageResponse[]>(this.ROUTE + `/${id}`)
+      .pipe(catchError(this.handleError.bind(this)));
   }
 
   deleteFriend(publisherId: string): Observable<MessageResponse> {

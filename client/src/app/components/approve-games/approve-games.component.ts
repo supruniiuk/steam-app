@@ -30,7 +30,7 @@ export class ApproveGamesComponent implements OnInit {
       .getGamesForApprove(page)
       .subscribe((res: GameResponse) => {
         this.games = res.games;
-        this.count = Math.ceil(res.count / 15);
+        this.count = Math.ceil(res.count / 30);
         this.sortGames();
 
         this.filteredGames = this.games;

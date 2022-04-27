@@ -14,6 +14,8 @@ export class FriendsPageComponent implements OnInit {
   activePageId: number = 0;
   subs: Subscription[] = [];
   count: number = 0;
+  currentMethod: Function;
+  friendsPerPage = 50;
 
   subPages: Array<{
     title: string;
@@ -55,7 +57,7 @@ export class FriendsPageComponent implements OnInit {
 
   setFriends(res: FriendResponse) {
     this.friends = res.friends;
-    this.count = Math.ceil(res.count / 15);
+    this.count = Math.ceil(res.count / this.friendsPerPage);
 
     this.friends.sort(function (a, b) {
       if (a.username < b.username) {
@@ -68,9 +70,9 @@ export class FriendsPageComponent implements OnInit {
     });
   }
 
-  getFriends(): void {
+  getFriends(page: number = 1): void {
     const getFriendsSub = this.friendsService
-      .getFriends()
+      .getFriends(page)
       .subscribe((res: FriendResponse) => {
         this.setFriends(res);
       });
@@ -78,9 +80,9 @@ export class FriendsPageComponent implements OnInit {
     this.subs.push(getFriendsSub);
   }
 
-  getPossibleFriends(): void {
+  getPossibleFriends(page: number = 1): void {
     const getPossibleFriendsSub = this.friendsService
-      .getAllPossibleFriends()
+      .getAllPossibleFriends(page)
       .subscribe((res: FriendResponse) => {
         this.setFriends(res);
       });
@@ -88,9 +90,9 @@ export class FriendsPageComponent implements OnInit {
     this.subs.push(getPossibleFriendsSub);
   }
 
-  getSubscriptions(): void {
+  getSubscriptions(page: number = 1): void {
     const getSubscriptionsSub = this.friendsService
-      .getSubscriptions()
+      .getSubscriptions(page)
       .subscribe((res: FriendResponse) => {
         this.setFriends(res);
       });
@@ -98,9 +100,9 @@ export class FriendsPageComponent implements OnInit {
     this.subs.push(getSubscriptionsSub);
   }
 
-  getFriendsRequests() {
+  getFriendsRequests(page: number = 1) {
     const getFriendsRequestsSub = this.friendsService
-      .getFriendsRequests()
+      .getFriendsRequests(page)
       .subscribe((res: FriendResponse) => {
         this.setFriends(res);
       });
@@ -114,6 +116,10 @@ export class FriendsPageComponent implements OnInit {
     this.activePageId = id;
     this.friends = null;
     this.subPages[id].method();
+  }
+
+  changePage(page: number): void {
+    this.subPages[this.activePageId].method(page);
   }
 
   ngOnDestroy(): void {

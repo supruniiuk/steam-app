@@ -1,10 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Game } from '../interfaces';
 
 @Pipe({
   name: 'search',
 })
 export class SearchPipe implements PipeTransform {
-  transform(array: any, field: string, str = ''): any {
+  transform(array: Game[], field: string, str = ''): Game[] {
     if (!str?.trim()) {
       return array;
     }
