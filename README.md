@@ -1,12 +1,12 @@
 # SteamApp
 This is an imitation of steam. Applications were created for the practice of creating projects using the Angular framework. 
-Server was made using Node.js
+Server was made using Node.js.
 As data storage, was used MongoDB (library - mongoose).
 For authorization was used JSON Web Token (JWT, libraries: jwt-decode, jsonwebtoken)
 
 ## Main Deployment
 https://supruniuk-steam.herokuapp.com/
-## Server Deployment(if you want to test reqests)
+## Server Deployment(if you want to test requests)
 https://supruniuk-steam-server.herokuapp.com/
 
 ## How to run?
