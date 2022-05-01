@@ -1,0 +1,8 @@
+<div class="px-3 h-100 games-list">
+  <app-game-item
+    *ngFor="let game of games; first as isFirst"
+    [game]="game"
+    [isOwned]="isOwned"
+    [main]="main"
+  ></app-game-item>
+</div>

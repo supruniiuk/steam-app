@@ -1,0 +1,22 @@
+<div class="custom-container bg-light p-4">
+  <div class="dev-wrapper">
+    <div class="creation-form">
+      <app-create-game (newGame)="addGame($event)"></app-create-game>
+    </div>
+
+    <div class="w-100">
+      <app-search (search)="updateSrc($event)"></app-search>
+
+      <app-games-list
+        class="games-list"
+        [games]="filteredGames"
+      ></app-games-list>
+
+      <app-pagination
+        *ngIf="count > 1"
+        [pages]="count"
+        (nextPage)="changePage($event)"
+      ></app-pagination>
+    </div>
+  </div>
+</div>

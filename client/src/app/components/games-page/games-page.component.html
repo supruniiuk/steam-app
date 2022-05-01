@@ -1,0 +1,35 @@
+<div class="custom-container bg-light p-4">
+  <div class="w-90">
+    <p class="heading-custom pb-2">Games</p>
+
+    <app-search (search)="updateSrc($event)"></app-search>
+
+    <p class="heading-custom pb-2">Featured Games</p>
+
+    <app-loader *ngIf="!filteredGames"></app-loader>
+
+    <div class="content-display">
+      <div class="w-100">
+        <app-games-list
+          *ngIf="currentPrice"
+          class="games-list"
+          [games]="filteredGames"
+          [main]="true"
+        ></app-games-list>
+        <app-pagination
+          *ngIf="count > 1"
+          [pages]="count"
+          (nextPage)="changePage($event)"
+        ></app-pagination>
+      </div>
+
+      <app-game-filter
+        *ngIf="games.length > 0"
+        class="filters"
+        [games]="games"
+        (curPrice)="setCurrentPrice($event)"
+        (gameTypes)="setTags($event)"
+      ></app-game-filter>
+    </div>
+  </div>
+</div>
