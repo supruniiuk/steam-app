@@ -104,10 +104,9 @@ export class GameItemComponent implements OnInit {
 
         this.subs.push(deleteOwningSubscription);
       }
-    } else {
-      this.deleteGame = false;
-      this.deleteGameOwning = false;
     }
+    this.deleteGame = false;
+    this.deleteGameOwning = false;
   }
 
   ngOnDestroy(): void {

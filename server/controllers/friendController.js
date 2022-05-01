@@ -16,6 +16,17 @@ class FriendController {
     });
   }
 
+  static async findFriends(filter, limit, offset) {
+    const count = await User.find(filter).count();
+    let friends =
+      (await User.find(filter, { password: 0, updatedAt: 0, __v: 0 })
+        .skip(offset)
+        .limit(limit)) || [];
+    friends = FriendController.getFriendsArray(friends);
+
+    return { count, friends };
+  }
+
   static getFriendsId(connections, userId) {
     return connections.map((friend) => {
       if (friend.publisherId.toString() === userId) {
@@ -28,6 +39,10 @@ class FriendController {
 
   async getFriends(req, res, next) {
     const userId = req.user.id;
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 50;
+    const offset = page * limit - limit;
 
     try {
       const connections = await Friend.find({
@@ -39,12 +54,11 @@ class FriendController {
 
       const friendsId = FriendController.getFriendsId(connections, userId);
 
-      let friends = await User.find(
+      const friends = await FriendController.findFriends(
         { _id: { $in: friendsId } },
-        { password: 0, updatedAt: 0, __v: 0 }
+        limit,
+        offset
       );
-      friends = FriendController.getFriendsArray(friends);
-
       res.json(friends);
     } catch (err) {
       return next(ApiError.internal(`Server error`));
@@ -53,6 +67,10 @@ class FriendController {
 
   async getSubscriptions(req, res, next) {
     const userId = req.user.id;
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 50;
+    const offset = page * limit - limit;
 
     try {
       const connections = await Friend.find({
@@ -62,13 +80,11 @@ class FriendController {
 
       const publishersId = FriendController.getFriendsId(connections, userId);
 
-      let subscriptions = await User.find(
+      const subscriptions = await FriendController.findFriends(
         { _id: { $in: publishersId } },
-        { password: 0, updatedAt: 0, __v: 0 }
+        limit,
+        offset
       );
-
-      subscriptions = FriendController.getFriendsArray(subscriptions);
-
       res.json(subscriptions);
     } catch (err) {
       return next(ApiError.internal(`Server error`));
@@ -77,6 +93,10 @@ class FriendController {
 
   async getPossibleFriends(req, res, next) {
     const userId = req.user.id;
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 50;
+    const offset = page * limit - limit;
 
     try {
       const friends = await Friend.find({
@@ -88,13 +108,11 @@ class FriendController {
         userId
       ).concat(userId);
 
-      let possibleFriends = await User.find(
+      const possibleFriends = await FriendController.findFriends(
         { _id: { $nin: friendsIdArr }, role: { $nin: "admin" } },
-        { password: 0, updatedAt: 0, __v: 0 }
+        limit,
+        offset
       );
-
-      possibleFriends = FriendController.getFriendsArray(possibleFriends);
-
       res.json(possibleFriends);
     } catch (err) {
       return next(ApiError.internal(`Server error`));
@@ -103,6 +121,10 @@ class FriendController {
 
   async getFriendRequests(req, res, next) {
     const userId = req.user.id;
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 50;
+    const offset = page * limit - limit;
 
     try {
       const requests = await Friend.find({
@@ -112,12 +134,11 @@ class FriendController {
 
       const subscribersIdArr = FriendController.getFriendsId(requests, userId);
 
-      let subscribers = await User.find(
+      const subscribers = await FriendController.findFriends(
         { _id: { $in: subscribersIdArr } },
-        { password: 0, updatedAt: 0, __v: 0 }
+        limit,
+        offset
       );
-
-      subscribers = FriendController.getFriendsArray(subscribers);
       res.json(subscribers);
     } catch (err) {
       return next(ApiError.internal(`Server error`));

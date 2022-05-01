@@ -31,7 +31,7 @@ export class AuthService {
       .pipe(tap(this.setToken), catchError(this.handleError.bind(this)));
   }
 
-  registration(credentials: RegisterInfo): any {
+  registration(credentials: RegisterInfo) {
     return this.http
       .post(`${this.createRoute('users')}/registration`, credentials)
       .pipe( tap(this.setMessage), catchError(this.handleError.bind(this)));

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game } from 'src/app/shared/interfaces';
+import { Game, GameResponse } from 'src/app/shared/interfaces';
 import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 import { GameService } from 'src/app/shared/services/games.service';
 
@@ -14,6 +14,7 @@ export class DevGamesComponent implements OnInit {
   filteredGames: Game[] = [];
   srcStr: string = '';
   subs: Subscription[] = [];
+  count: number;
 
   constructor(
     public gameService: GameService,
@@ -21,28 +22,30 @@ export class DevGamesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getDevGames();
+  }
+
+  getDevGames(page: number = 1) {
     const gamesSubscription = this.gameService
-      .getDevGames()
-      .subscribe((res) => {
-        this.games = res;
-        this.filterGames()
+      .getDevGames(page)
+      .subscribe((res: GameResponse) => {
+        this.games = res.games;
+        this.count = Math.ceil(res.count / 15);
+
+        this.filterGames();
         this.filteredGames = this.games;
       });
 
     this.subs.push(gamesSubscription);
   }
 
-  filterGames(){
+  filterGames() {
     this.games.sort(function (a, b) {
-      return a.createdAt < b.createdAt
-        ? 1
-        : a.createdAt > b.createdAt
-        ? -1
-        : 0;
+      return a.createdAt < b.createdAt ? 1 : a.createdAt > b.createdAt ? -1 : 0;
     });
   }
 
-  addGame(game: any): void {
+  addGame(game: Game): void {
     this.games.unshift(game);
   }
 
@@ -53,6 +56,10 @@ export class DevGamesComponent implements OnInit {
       'title',
       this.srcStr
     );
+  }
+
+  changePage(page: number): void {
+    this.getDevGames(page);
   }
 
   ngOnDestroy(): void {

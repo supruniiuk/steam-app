@@ -12,15 +12,31 @@ class GameController {
         tags: game.tags,
         createdAt: game.createdAt,
         creatorId: game.creatorId,
+        approved: game.approved,
       };
     });
   }
 
+  static async findGames(filter, offset, limit) {
+    const count = await Game.find(filter).count();
+    let games = (await Game.find(filter).skip(offset).limit(limit)) || [];
+    games = GameController.getGamesArray(games);
+    return { count, games };
+  }
+
   async getApprovedGames(req, res, next) {
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 30;
+    const offset = page * limit - limit;
+
     try {
-      let games = (await Game.find({ approved: true })) || [];
-      games = GameController.getGamesArray(games);
-      res.json(games);
+      const response = await GameController.findGames(
+        { approved: true },
+        offset,
+        limit
+      );
+      res.json(response);
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
@@ -28,21 +44,36 @@ class GameController {
 
   async getDevGames(req, res, next) {
     const creatorId = req.user.id;
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 15;
+    const offset = page * limit - limit;
 
     try {
-      let games = (await Game.find({ creatorId })) || [];
-      games = GameController.getGamesArray(games);
-      res.json(games);
+      const response = await GameController.findGames(
+        { creatorId },
+        offset,
+        limit
+      );
+      res.json(response);
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }
   }
 
   async getGamesForApprove(req, res, next) {
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 30;
+    const offset = page * limit - limit;
+
     try {
-      let games = (await Game.find({ approved: false })) || [];
-      games = GameController.getGamesArray(games);
-      res.json(games);
+      const response = await GameController.findGames(
+        { approved: false },
+        offset,
+        limit
+      );
+      res.json(response);
     } catch (err) {
       return next(ApiError.internal(`Server error`));
     }

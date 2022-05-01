@@ -14,9 +14,7 @@ export class ConfirmationComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.game);
-  }
+  ngOnInit(): void {}
 
   confirm() {
     this.close.emit(true);

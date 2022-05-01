@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/shared/interfaces';
+import { FriendResponse, User } from 'src/app/shared/interfaces';
 import { FriendsService } from 'src/app/shared/services/friends.service';
 
 @Component({
@@ -13,6 +13,9 @@ export class FriendsPageComponent implements OnInit {
   requests: boolean = false;
   activePageId: number = 0;
   subs: Subscription[] = [];
+  count: number = 0;
+  currentMethod: Function;
+  friendsPerPage = 50;
 
   subPages: Array<{
     title: string;
@@ -52,39 +55,56 @@ export class FriendsPageComponent implements OnInit {
     this.getFriends();
   }
 
-  getFriends(): void {
-    const getFriendsSub = this.friendsService.getFriends().subscribe((res) => {
-      this.friends = res;
+  setFriends(res: FriendResponse) {
+    this.friends = res.friends;
+    this.count = Math.ceil(res.count / this.friendsPerPage);
+
+    this.friends.sort(function (a, b) {
+      if (a.username < b.username) {
+        return -1;
+      }
+      if (a.username > b.username) {
+        return 1;
+      }
+      return 0;
     });
+  }
+
+  getFriends(page: number = 1): void {
+    const getFriendsSub = this.friendsService
+      .getFriends(page)
+      .subscribe((res: FriendResponse) => {
+        this.setFriends(res);
+      });
 
     this.subs.push(getFriendsSub);
   }
 
-  getPossibleFriends(): void {
+  getPossibleFriends(page: number = 1): void {
     const getPossibleFriendsSub = this.friendsService
-      .getAllPossibleFriends()
-      .subscribe((res) => {
-        this.friends = res;
+      .getAllPossibleFriends(page)
+      .subscribe((res: FriendResponse) => {
+        this.setFriends(res);
       });
 
     this.subs.push(getPossibleFriendsSub);
   }
 
-  getSubscriptions(): void {
+  getSubscriptions(page: number = 1): void {
     const getSubscriptionsSub = this.friendsService
-      .getSubscriptions()
-      .subscribe((res) => {
-        this.friends = res;
+      .getSubscriptions(page)
+      .subscribe((res: FriendResponse) => {
+        this.setFriends(res);
       });
-      
+
     this.subs.push(getSubscriptionsSub);
   }
 
-  getFriendsRequests() {
+  getFriendsRequests(page: number = 1) {
     const getFriendsRequestsSub = this.friendsService
-      .getFriendsRequests()
-      .subscribe((res) => {
-        this.friends = res;
+      .getFriendsRequests(page)
+      .subscribe((res: FriendResponse) => {
+        this.setFriends(res);
       });
 
     this.subs.push(getFriendsRequestsSub);
@@ -96,6 +116,10 @@ export class FriendsPageComponent implements OnInit {
     this.activePageId = id;
     this.friends = null;
     this.subPages[id].method();
+  }
+
+  changePage(page: number): void {
+    this.subPages[this.activePageId].method(page);
   }
 
   ngOnDestroy(): void {

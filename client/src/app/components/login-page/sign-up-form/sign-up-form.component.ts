@@ -45,10 +45,9 @@ export class SignUpFormComponent implements OnInit {
 
     const registrationSub = this.authService
       .registration(user)
-      .subscribe(() => {
-        this.isSubmited = true;
-        this.registrationForm.reset();
-      });
+      .subscribe(() => {});
+    this.registrationForm.reset();
+    this.isSubmited = true;
     this.subs.push(registrationSub);
   }
 

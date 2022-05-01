@@ -1,8 +1,12 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Game, GameRequest } from '../interfaces';
+import { Game, GameRequest, GameResponse } from '../interfaces';
 import { RequestService } from './requests.service';
 
 @Injectable({
@@ -17,21 +21,21 @@ export class GameService {
     private requestService: RequestService
   ) {}
 
-  getAllGames(): Observable<Game[]> {
+  getAllGames(page: number): Observable<GameResponse> {
     return this.requestService
-      .get<Game[]>(this.ROUTE)
+      .get<Game[]>(this.ROUTE + `?page=${page}`)
       .pipe(catchError(this.handleError.bind(this)));
   }
 
-  getDevGames(): Observable<Game[]> {
+  getDevGames(page: number): Observable<GameResponse> {
     return this.requestService
-      .get<Game[]>(this.ROUTE + '/dev')
+      .get<Game[]>(this.ROUTE + `/dev?page=${page}`)
       .pipe(catchError(this.handleError.bind(this)));
   }
 
-  getGamesForApprove(): Observable<Game[]> {
+  getGamesForApprove(page: number): Observable<GameResponse> {
     return this.requestService
-      .get<Game[]>(this.ROUTE + '/admin')
+      .get<Game[]>(this.ROUTE + `/admin?page=${page}`)
       .pipe(catchError(this.handleError.bind(this)));
   }
 
