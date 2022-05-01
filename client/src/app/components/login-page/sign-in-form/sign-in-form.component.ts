@@ -47,6 +47,7 @@ export class SignInFormComponent implements OnInit {
       this.isSubmited = true;
       this.loginForm.reset();
       this.router.navigate(['/games']);
+      location.reload();
     });
     this.subs.push(loginSub);
   }
