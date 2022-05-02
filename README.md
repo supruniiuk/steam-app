@@ -4,6 +4,12 @@ Server was made using Node.js.
 As data storage, was used MongoDB (library - mongoose).
 For authorization was used JSON Web Token (JWT, libraries: jwt-decode, jsonwebtoken)
 
+
+## Roles
+- gamer (email: gamer@gmail.com, pw: gamer)
+- developer (email: developer@gmail.com, pw: developer)
+- admin (email: admin@gmail.com, pw: admin)
+
 ## Main Deployment
 https://supruniuk-steam.herokuapp.com/
 ## Server Deployment(if you want to test requests)
