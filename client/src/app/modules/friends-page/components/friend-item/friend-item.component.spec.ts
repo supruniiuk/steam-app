@@ -5,36 +5,27 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EMPTY } from 'rxjs';
 import { User } from 'src/app/shared/interfaces';
 import { UserService } from 'src/app/core/services/user.service';
-import { GameItemComponent } from './game-item.component';
+import { FriendItemComponent } from './friend-item.component';
 
-describe('GameItemComponent', () => {
-  let component: GameItemComponent;
+describe('FriendItemComponent', () => {
+  let component: FriendItemComponent;
   let userService: UserService;
-  let newGame = {
-    description: 'description3',
-    id: 'id3',
-    price: 150,
-    tag: ['adventure'],
-    title: 'title3',
-  };
-  let existingGame = {
-    description: 'description1',
-    id: 'id1',
-    price: 150,
-    tag: ['adventure'],
-    title: 'title1',
-  };
   let info: User = {
     age: 50,
     email: 'exmple@gmail.com',
-    friendsList: [],
-    gamesList: ['id1'],
+    friendsList: [
+      { email: 'bcd@gmail.com', id: '-MwDEvoJA0MuEMAwUPLu' },
+      { email: 'ijkl@gmail.com', id: '-MwDFYPchUDxdD9rcHze' },
+    ],
+    gamesList: [{ id: 'id1' }],
     id: '-MwDFeGzNW8gbGRQicfQ',
     username: 'test',
   };
+  let newFriend = { id: '-MwDErAZp7iK98goW2PU', email: 'abc@gmail.com' };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GameItemComponent],
+      declarations: [FriendItemComponent],
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
@@ -43,12 +34,10 @@ describe('GameItemComponent', () => {
     }).compileComponents();
 
     userService = TestBed.inject(UserService);
-    component = new GameItemComponent(userService);
+    component = new FriendItemComponent(userService);
+
     spyOn(userService, 'getCurrentUserInfo').and.callFake(() => {
       return info;
-    });
-    spyOn(userService, 'setCurrentUserInfo').and.callFake(() => {
-      return EMPTY;
     });
   });
 
@@ -56,27 +45,27 @@ describe('GameItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call updateUser when saving game', () => {
-    component.game = newGame;
+  it('should call updateUser when adding friend', () => {
+    component.friend = newFriend;
 
     component.ngOnInit();
     const spy = spyOn(userService, 'updateUser').and.callFake(() => {
       return EMPTY;
     });
 
-    component.addGame();
+    component.add();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('shouldn`t add game if user saved it', () => {
-    component.game = existingGame;
+  it('should call updateUser when remove friend', () => {
+    component.friend = newFriend;
 
     component.ngOnInit();
     const spy = spyOn(userService, 'updateUser').and.callFake(() => {
       return EMPTY;
     });
 
-    component.addGame();
-    expect(component.isSubmitted).toBeTruthy();
+    component.remove();
+    expect(spy).toHaveBeenCalled();
   });
 });

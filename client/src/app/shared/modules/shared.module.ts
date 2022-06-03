@@ -8,7 +8,7 @@ import { GameItemComponent } from 'src/app/shared/components/game-item/game-item
 import { GamesListComponent } from '../components/games-list/games-list.component';
 import { SearchComponent } from '../components/search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UpdateGameComponent } from 'src/app/components/dev-games/update-game/update-game.component';
+import { UpdateGameComponent } from 'src/app/modules/dev-games-page/components/update-game/update-game.component';
 import { CompleteGameListComponent } from '../components/complete-game-list/complete-game-list.component';
 import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
 import { PaginationComponent } from '../components/pagination/pagination.component';

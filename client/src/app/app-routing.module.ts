@@ -1,62 +1,74 @@
 import { NgModule } from '@angular/core';
 import { NoPreloading, RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './components/home-page/home-page.component';
-import { LoginPageComponent } from './components/login-page/login-page.component';
-import { AuthGuard } from './shared/services/auth.guard';
+import { HomePageComponent } from './core/components/home-page/home-page.component';
+import { LoginPageComponent } from './core/components/login-page/components/login-page/login-page.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
     children: [
-      { path: '', redirectTo: '/', pathMatch: 'full' },
-      { path: '', component: LoginPageComponent },
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: 'login', component: LoginPageComponent },
       {
         path: 'friends',
         loadChildren: () =>
-          import('./shared/modules/friends-page.module').then(
+          import('./modules/friends-page/friends-page.module').then(
             (m) => m.FriendsPageModule
           ),
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['gamer', 'developer'] },
       },
       {
         path: 'games',
         loadChildren: () =>
-          import('./shared/modules/games-page.module').then(
+          import('./modules/games-page/games-page.module').then(
             (m) => m.GamesPageModule
           ),
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['developer', 'admin', 'gamer'] },
       },
       {
         path: 'library',
         loadChildren: () =>
-          import('./shared/modules/library-page.module').then(
+          import('./modules/library-page/library-page.module').then(
             (m) => m.LibraryPageModule
           ),
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['gamer'] },
       },
       {
         path: 'profile',
         loadChildren: () =>
-          import('./shared/modules/profile-page.module').then(
+          import('./modules/profile-page/profile-page.module').then(
             (m) => m.ProfilePageModule
           ),
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['developer', 'gamer', 'admin'] },
       },
       {
         path: 'dev-games',
         loadChildren: () =>
-          import('./shared/modules/dev-games.module').then(
+          import('./modules/dev-games-page/dev-games.module').then(
             (m) => m.DevGamesModule
           ),
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['developer'] },
       },
       {
         path: 'new',
         loadChildren: () =>
-          import('./shared/modules/approve-games.module').then(
+          import('./modules/admin-games-page/approve-games.module').then(
             (m) => m.ApproveGamesModule
           ),
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['admin'] },
       },
       {
         path: '**',
         loadChildren: () =>
-          import('./shared/modules/games-page.module').then(
+          import('./modules/games-page/games-page.module').then(
             (m) => m.GamesPageModule
           ),
         canActivate: [AuthGuard],

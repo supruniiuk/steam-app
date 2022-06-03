@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { GameService } from 'src/app/shared/services/games.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { GameService } from 'src/app/core/services/games.service';
 import { Game, User } from '../../interfaces';
-import { GameOwningService } from '../../services/gameOwning.service';
+import { GameOwningService } from '../../../core/services/gameOwning.service';
 
 @Component({
   selector: 'app-game-item',
