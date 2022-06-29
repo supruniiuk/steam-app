@@ -10,11 +10,6 @@ For authorization was used JSON Web Token (JWT, libraries: jwt-decode, jsonwebto
 - developer (email: developer@gmail.com, pw: developer)
 - admin (email: admin@gmail.com, pw: admin)
 
-## Main Deployment
-https://supruniuk-steam.herokuapp.com/
-## Server Deployment(if you want to test requests)
-https://supruniuk-steam-server.herokuapp.com/
-
 ## How to run?
  Please make sure you have installed node and npm in your system.
  ```
