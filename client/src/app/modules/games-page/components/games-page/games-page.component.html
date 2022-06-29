@@ -24,7 +24,7 @@
       </div>
 
       <app-game-filter
-        *ngIf="games.length > 0"
+        *ngIf="games"
         class="filters"
         [games]="games"
         (curPrice)="setCurrentPrice($event)"

@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+
 import { AuthService } from 'src/app/core/services/auth.service';
-import { navigationLinks } from 'src/app/shared/constants/routes.constants';
+import { Router } from '@angular/router';
 import logo from '../../../shared/svg/logo.js';
+import { navigationLinks } from 'src/app/shared/constants/routes.constants';
 
 @Component({
   selector: 'app-home-page',
@@ -19,12 +20,11 @@ export class HomePageComponent implements OnInit {
     private router: Router,
     public authService: AuthService,
     private sanitizer: DomSanitizer
-  ) {
-    this.userRole = this.authService.getUserRole();
-    this.navLinks = navigationLinks;
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.userRole = this.authService.getUserRole();
+    this.navLinks = navigationLinks;
     this.logo = this.sanitizer.bypassSecurityTrustHtml(logo);
   }
 

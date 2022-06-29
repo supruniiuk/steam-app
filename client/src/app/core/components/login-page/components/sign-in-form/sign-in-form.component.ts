@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+
 import { AuthService } from 'src/app/core/services/auth.service';
 import { RequestService } from 'src/app/core/services/requests.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -32,7 +33,7 @@ export class SignInFormComponent implements OnInit {
     this.subs.push(errorSubscription);
   }
 
-  login() {
+  login(): void {
     this.isSubmited = false;
     if (this.loginForm.invalid) {
       return;
@@ -45,6 +46,7 @@ export class SignInFormComponent implements OnInit {
 
     const loginSub = this.authService.login(user).subscribe(() => {
       this.isSubmited = true;
+      window.location.reload(); //temp
       this.loginForm.reset();
       this.router.navigate(['/games']);
     });
