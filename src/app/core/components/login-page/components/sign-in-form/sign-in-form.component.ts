@@ -46,9 +46,9 @@ export class SignInFormComponent implements OnInit {
 
     const loginSub = this.authService.login(user).subscribe(() => {
       this.isSubmited = true;
-      window.location.reload(); //temp
       this.loginForm.reset();
       this.router.navigate(['/games']);
+      window.location.reload(); //temp
     });
     this.subs.push(loginSub);
   }
